@@ -10,20 +10,11 @@ import com.google.firebase.database.Exclude;
 public class Book implements Serializable {
 
     @Exclude
-    public static ArrayList<Book> allBooks = new ArrayList<>();    // Realtime Synced with database
-
-    private ArrayList<Integer> favoriteBookIds = new ArrayList<>();
-
-    private Map<String, Integer> quantityByBookId = new HashMap<>();
-
-    // Attributes
+    public static ArrayList<Book> allBooks = new ArrayList<>();
     private String name, author, type, description, imageURL, downloadURL;
-
     private int price;
 
-    public Book(ArrayList<Integer> favoriteBookIds, Map<String, Integer> quantityByBookId, String name, String author, String type, String description, String imageURL, String downloadURL, int price) {
-        this.favoriteBookIds = favoriteBookIds;
-        this.quantityByBookId = quantityByBookId;
+    public Book(String name, String author, String type, String description, String imageURL, String downloadURL, int price) {
         this.name = name;
         this.author = author;
         this.type = type;
@@ -39,22 +30,6 @@ public class Book implements Serializable {
 
     public static void setAllBooks(ArrayList<Book> allBooks) {
         Book.allBooks = allBooks;
-    }
-
-    public ArrayList<Integer> getFavoriteBookIds() {
-        return favoriteBookIds;
-    }
-
-    public void setFavoriteBookIds(ArrayList<Integer> favoriteBookIds) {
-        this.favoriteBookIds = favoriteBookIds;
-    }
-
-    public Map<String, Integer> getQuantityByBookId() {
-        return quantityByBookId;
-    }
-
-    public void setQuantityByBookId(Map<String, Integer> quantityByBookId) {
-        this.quantityByBookId = quantityByBookId;
     }
 
     public String getName() {
