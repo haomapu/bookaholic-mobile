@@ -1,5 +1,7 @@
 package com.example.bookaholic.details;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +10,6 @@ import java.util.Map;
 import com.google.firebase.database.Exclude;
 
 public class Book implements Serializable {
-
     @Exclude
     public static ArrayList<Book> allBooks = new ArrayList<>();
     private String name, author, type, description, imageURL, downloadURL;
@@ -86,5 +87,11 @@ public class Book implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @NonNull
+    @Exclude
+    public Book deepCopy() {
+        return new Book(this.name, this.author, this.type, this.description, this.imageURL, this.downloadURL, this.price);
     }
 }

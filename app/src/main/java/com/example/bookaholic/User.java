@@ -5,10 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-
     private String fullName, phoneNumber, address, email;
     private ArrayList<Integer> favoriteBookIds = new ArrayList<>();
-    private Map<String, Integer> quantityByBookId = new HashMap<>();    // key: catId, value: quantity
+    private Map<String, Integer> quantityByBookId = new HashMap<>();
+    public User(String fullName, String phoneNumber, String address, String email) {
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.email = email;
+    }
 
     public User(String fullName, String phoneNumber, String address, String email, ArrayList<Integer> favoriteBookIds, Map<String, Integer> quantityByBookId) {
         this.fullName = fullName;
