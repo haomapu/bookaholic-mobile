@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
+import com.example.bookaholic.details.Detail;
 interface UserDataChangedListener {
     void updateUserRelatedViews();
 }
@@ -50,7 +50,14 @@ public class MainActivity extends AppCompatActivity {
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
         buttonMap.setOnClickListener(onBottomNavBarButtonClicked);
         buttonFavorite.setOnClickListener(onBottomNavBarButtonClicked);
-        buttonProfile.setOnClickListener(onBottomNavBarButtonClicked);
+        buttonProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Detail.class);
+                intent.putExtra("myKey", "Test");
+                startActivity(intent);
+            }
+        });
 
         setUpDefaultFragment();
     }

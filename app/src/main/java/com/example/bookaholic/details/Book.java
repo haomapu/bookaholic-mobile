@@ -1,24 +1,26 @@
 package com.example.bookaholic.details;
 
+import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
+import com.example.bookaholic.R;
 import com.google.firebase.database.Exclude;
 
 public class Book implements Serializable {
     @Exclude
     public static ArrayList<Book> allBooks = new ArrayList<>();
-    private String name, author, type, description, imageURL, downloadURL;
+    private String title, author, category, description, downloadURL;
     private int price;
+    int imageURL;
 
-    public Book(String name, String author, String type, String description, String imageURL, String downloadURL, int price) {
-        this.name = name;
+    public Book(String title, String author, String type, String description, int imageURL, String downloadURL, int price) {
+        this.title = title;
         this.author = author;
-        this.type = type;
+        this.category = type;
         this.description = description;
         this.imageURL = imageURL;
         this.downloadURL = downloadURL;
@@ -33,12 +35,12 @@ public class Book implements Serializable {
         Book.allBooks = allBooks;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {
@@ -49,12 +51,12 @@ public class Book implements Serializable {
         this.author = author;
     }
 
-    public String getType() {
-        return type;
+    public String getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getDescription() {
@@ -65,11 +67,11 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-    public String getImageURL() {
+    public int getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImageURL(int imageURL) {
         this.imageURL = imageURL;
     }
 
@@ -92,6 +94,10 @@ public class Book implements Serializable {
     @NonNull
     @Exclude
     public Book deepCopy() {
-        return new Book(this.name, this.author, this.type, this.description, this.imageURL, this.downloadURL, this.price);
+        return new Book(this.title, this.author, this.category, this.description, this.imageURL, this.downloadURL, this.price);
+    }
+
+    public int getImageResId() {
+        return imageURL;
     }
 }
