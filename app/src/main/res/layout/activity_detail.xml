@@ -1,33 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".details.Detail"
-    android:orientation="vertical">
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="?attr/colorOnPrimary">
     
-    <TextView android:id="@+id/txtMsg"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:background="#ff00ff00" android:text="scroll and click to select ..."
-    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView android:id="@+id/imageSelected"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_weight="2"/>
 
     <HorizontalScrollView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#44aaaaaa" >
-    <LinearLayout android:id="@+id/imageListView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-        android:padding="10dip">
-    </LinearLayout>
-    </HorizontalScrollView>
-
-    <ImageView android:id="@+id/imageSelected"
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+        android:id="@+id/imageListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="2"></ImageView>
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:padding="5dip"/>
+    </HorizontalScrollView>
 
-
-
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/titleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="27dip"
+        android:text="Harry Potter"
+        android:layout_marginHorizontal="10dp"
+        android:textStyle="bold"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal">
+    <com.google.android.material.textview.MaterialTextView android:id="@+id/priceTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="10000vnd"
+        android:textSize="16dp"
+        android:layout_alignParentStart="true"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buy Now"
+        android:textSize="16dp"
+        app:iconPadding="4dp"
+        android:layout_alignParentEnd="true"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addToCartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add to Cart"
+        android:textSize="16dp"
+        app:iconPadding="4dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@id/buyBtn"/>
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:rating="3.5"
+        android:layout_below="@id/priceTxt"
+        style="?android:attr/ratingBarStyleSmall" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/soldTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sold: 1k"
+        android:textSize="18dp"
+        android:layout_below="@id/ratingBar"/>
+    </RelativeLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/descriptionTxt"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/example_description"
+        android:textAlignment="textStart"
+        android:padding="10dp"
+        android:maxLines="4"
+        android:ellipsize="end" />
+    <com.google.android.material.circularreveal.CircularRevealGridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2" />
 </LinearLayout>
+</ScrollView>
