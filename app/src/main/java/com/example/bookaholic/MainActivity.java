@@ -67,7 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
         buttonMap.setOnClickListener(onBottomNavBarButtonClicked);
-        buttonFavorite.setOnClickListener(onBottomNavBarButtonClicked);
+        buttonFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             Log.d(TAG, "All cats database changed.");
             Book.allBooks = new ArrayList<>();
-            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                Book.allBooks.add(dataSnapshot.getValue(Book.class));
-            }
+//            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                Book.allBooks.add(dataSnapshot.getValue(Book.class));
+//            }
             booksDataChangedListener.updateBooksRelatedViews();
         }
 
