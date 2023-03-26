@@ -14,7 +14,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ProductListFragment extends Fragment implements UserDataChangedListener, CatsDataChangedListener{
+public class ProductListFragment extends Fragment implements UserDataChangedListener, BooksDataChangedListener{
 
     private TextView usernameView;
     private ImageButton buttonGoToCart, buttonFilter;
@@ -29,6 +29,11 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     private SpeechRecognizer speechRecognizer;
     private ImageView micButton;
     private ActivityResultLauncher<String> requestPermissionLauncher;
+
+
+    public ProductListFragment() {
+
+    }
     @Override
     public void updateUserRelatedViews() {
 

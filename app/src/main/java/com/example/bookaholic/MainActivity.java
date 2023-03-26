@@ -1,8 +1,13 @@
 package com.example.bookaholic;
 
 import static android.content.ContentValues.TAG;
+import static com.example.bookaholic.FirebaseHelper.initBooksDatabaseReference;
+import static com.example.bookaholic.FirebaseHelper.initCurrentUserDatabaseReference;
 
+import com.example.bookaholic.details.Book;
 import com.example.bookaholic.details.Detail;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -13,25 +18,38 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.example.bookaholic.details.Detail;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 interface UserDataChangedListener {
     void updateUserRelatedViews();
 }
 
-interface CatsDataChangedListener {
+interface BooksDataChangedListener {
     void updateCatsRelatedViews();
 }
 
 public class MainActivity extends AppCompatActivity {
 
+    public static FirebaseAuth firebaseAuth;
+    public static FirebaseUser firebaseUser;
+    public static User currentSyncedUser;
+
     private ImageButton buttonHome;
     private ImageButton buttonMap;
     private ImageButton buttonFavorite;
     private ImageButton buttonProfile;
-    private ImageButton buttonMic;
     private Fragment fragmentMap, fragmentProfile;
     private ProductListFragment fragmentHome;
+
     private UserDataChangedListener userDataChangedListener;
-    private CatsDataChangedListener catsDataChangedListener;
+    private BooksDataChangedListener booksDataChangedListener;
+    public static UserDataChangedListener listenerForBookDetailsActivity, listenerForBookClassifyActivity;
 
 
     @Override
@@ -66,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         resetSelectedBottomNavbarButton();
         buttonHome.setImageResource(R.drawable.home_selected);
         userDataChangedListener = fragmentHome;
-        catsDataChangedListener = fragmentHome;
+        booksDataChangedListener = fragmentHome;
         switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
     }
 
@@ -79,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Home button clicked!");
                 buttonHome.setImageResource(R.drawable.home_selected);
                 userDataChangedListener = fragmentHome;
-                catsDataChangedListener = fragmentHome;
+                booksDataChangedListener = fragmentHome;
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
             } else {
                 Log.d(TAG, "Don't know which button clicked!");
@@ -90,6 +108,59 @@ public class MainActivity extends AppCompatActivity {
     private void resetSelectedBottomNavbarButton() {
         buttonHome.setImageResource(R.drawable.home_unselected);
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        if (!Tools.isOnline())
+//            startActivity(new Intent(this, NoInternetActivity.class));
+//        else {
+//            firebaseUser = firebaseAuth.getCurrentUser();
+//            if (firebaseUser == null) {
+//                Intent signInSignUpIntent = new Intent(MainActivity.this, SignInSignUpActivity.class);
+//                startActivity(signInSignUpIntent);
+//            } else {
+//                initCurrentUserDatabaseReference(currentUserDatabaseListener);
+//                initBooksDatabaseReference(booksDatabaseListener);
+//            }
+//        }
+//    }
+
+    private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            Log.d(TAG, "Detected a data change of current user on the database.");
+            currentSyncedUser = snapshot.getValue(User.class);
+            userDataChangedListener.updateUserRelatedViews();
+            if (listenerForBookDetailsActivity != null)
+                listenerForBookDetailsActivity.updateUserRelatedViews();
+            if (listenerForBookClassifyActivity != null)
+                listenerForBookClassifyActivity.updateUserRelatedViews();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.d(TAG, error.toString());
+        }
+    };
+
+    private final ValueEventListener booksDatabaseListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            Log.d(TAG, "All cats database changed.");
+            Book.allBooks = new ArrayList<>();
+            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                Book.allBooks.add(dataSnapshot.getValue(Book.class));
+            }
+            booksDataChangedListener.updateCatsRelatedViews();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+            Log.d(TAG, error.toString());
+        }
+    };
 
     private void switchFragment(int fragmentContainerResourceId, Fragment fragmentObject) {
         getSupportFragmentManager().beginTransaction()
