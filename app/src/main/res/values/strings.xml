@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">bookaholic</string>
+    <string name="app_name">Bookaholic</string>
     <string name="home_english">Home</string>
     <string name="book_image">Book Image</string>
     <string name="book_type">Phân loại:</string>
