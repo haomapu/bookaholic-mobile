@@ -31,7 +31,7 @@ interface UserDataChangedListener {
 }
 
 interface BooksDataChangedListener {
-    void updateCatsRelatedViews();
+    void updateBooksRelatedViews();
 }
 
 public class MainActivity extends AppCompatActivity {
@@ -116,16 +116,13 @@ public class MainActivity extends AppCompatActivity {
         if (!Tools.isOnline(this))
             startActivity(new Intent(this, NoInternetActivity.class));
         else {
-            Intent intent = new Intent(MainActivity.this, Detail.class);
-            intent.putExtra("myKey", "Test");
-            startActivity(intent);
 //            firebaseUser = firebaseAuth.getCurrentUser();
 //            if (firebaseUser == null) {
 //                Intent signInSignUpIntent = new Intent(MainActivity.this, SignInSignUpActivity.class);
 //                startActivity(signInSignUpIntent);
 //            } else {
 //                initCurrentUserDatabaseReference(currentUserDatabaseListener);
-//                initBooksDatabaseReference(booksDatabaseListener);
+                initBooksDatabaseReference(booksDatabaseListener);
 //            }
         }
     }
@@ -156,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 Book.allBooks.add(dataSnapshot.getValue(Book.class));
             }
-            booksDataChangedListener.updateCatsRelatedViews();
+            booksDataChangedListener.updateBooksRelatedViews();
         }
 
         @Override

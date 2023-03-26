@@ -4,6 +4,7 @@
     <string name="book_image">Book Image</string>
     <string name="book_type">Phân loại:</string>
     <string name="book_title">example</string>
+    <string name="book_author">Tác giả:</string>
     <string name="buy_btn">Buy</string>
     <string name="price">example</string>
     <string name="app_banner">App Banner</string>

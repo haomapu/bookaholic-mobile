@@ -1,12 +1,17 @@
 package com.example.bookaholic.details;
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
 import com.google.firebase.database.Exclude;
 
@@ -14,17 +19,19 @@ public class Book implements Serializable {
     @Exclude
     public static ArrayList<Book> allBooks = new ArrayList<>();
     private String title, author, category, description, downloadURL;
+    private ArrayList<Comment> comments;
     private int price;
     int imageURL;
 
-    public Book(String title, String author, String type, String description, int imageURL, String downloadURL, int price) {
+    public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, int imageURL) {
         this.title = title;
         this.author = author;
-        this.category = type;
+        this.category = category;
         this.description = description;
-        this.imageURL = imageURL;
         this.downloadURL = downloadURL;
+        this.comments = comments;
         this.price = price;
+        this.imageURL = imageURL;
     }
 
     public static ArrayList<Book> getAllBooks() {
@@ -94,10 +101,20 @@ public class Book implements Serializable {
     @NonNull
     @Exclude
     public Book deepCopy() {
-        return new Book(this.title, this.author, this.category, this.description, this.imageURL, this.downloadURL, this.price);
+        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.imageURL);
     }
 
     public int getImageResId() {
         return imageURL;
+    }
+
+    @SuppressLint("DefaultLocale")
+    public String getDisplayablePrice() {
+        try {
+            return String.format("%, d đ", price);
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+            return "N/A";
+        }
     }
 }

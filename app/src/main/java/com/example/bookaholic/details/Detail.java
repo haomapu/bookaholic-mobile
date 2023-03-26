@@ -29,14 +29,14 @@ public class Detail extends Activity {
             new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),
             new ImageDetail(R.drawable.img4)};
     ArrayList<Book> itemList = new ArrayList<>();
-    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
-    Book book2 = new Book("Haha","Hao","Hao","Hao",R.drawable.img2,"Hao",100);
+//    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
+//    Book book2 = new Book("Haha","Hao","Hao","Hao",R.drawable.img2,"Hao",100);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        initRecommend();
+//        initRecommend();
         initDescription();
         ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
 
@@ -79,14 +79,14 @@ public class Detail extends Activity {
         });
     }
 
-    public void initRecommend(){
-        itemList.add(book1);
-        itemList.add(book2);
-        gridView = findViewById(R.id.gridview);
-        GridAdapter adapter = new GridAdapter(this, itemList);
-        System.out.println(itemList.get(1).getTitle());
-        gridView.setAdapter(adapter);
-    }
+//    public void initRecommend(){
+//        itemList.add(book1);
+//        itemList.add(book2);
+//        gridView = findViewById(R.id.gridview);
+//        GridAdapter adapter = new GridAdapter(this, itemList);
+//        System.out.println(itemList.get(1).getTitle());
+//        gridView.setAdapter(adapter);
+//    }
 
     private void toggleTextView(TextView textView) {
         if (textView.getMaxLines() == 4) {
