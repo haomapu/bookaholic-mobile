@@ -4,6 +4,8 @@ public class Comment {
     private String content;
     private int rate;
 
+    public Comment(){
+    }
     public Comment(String content, int rate) {
         this.content = content;
         this.rate = rate;
