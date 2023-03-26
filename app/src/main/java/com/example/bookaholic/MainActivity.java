@@ -127,16 +127,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (!Tools.isOnline(this))
             startActivity(new Intent(this, NoInternetActivity.class));
-        else {
-//            firebaseUser = firebaseAuth.getCurrentUser();
-//            if (firebaseUser == null) {
-                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
-                startActivity(signInIntent);
-//            } else {
-//                initCurrentUserDatabaseReference(currentUserDatabaseListener);
-//                initBooksDatabaseReference(booksDatabaseListener);
-//            }
-        }
+//        else {
+////            firebaseUser = firebaseAuth.getCurrentUser();
+////            if (firebaseUser == null) {
+//                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
+//                startActivity(signInIntent);
+////            } else {
+////                initCurrentUserDatabaseReference(currentUserDatabaseListener);
+////                initBooksDatabaseReference(booksDatabaseListener);
+////            }
+//        }
     }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {

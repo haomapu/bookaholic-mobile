@@ -3,12 +3,14 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:background="@drawable/rounded_rectangle"
+    android:padding="16dp"
+    >
 
     <ImageView
         android:id="@+id/bookImageView"
         android:layout_width="80dp"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         />
 
 
@@ -20,6 +22,7 @@
 
         <TextView
             android:id="@+id/bookNameTextView"
+            android:textColor="?attr/colorOnPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Book name"
@@ -28,6 +31,7 @@
 
         <TextView
             android:id="@+id/bookQuantityTextView"
+            android:textColor="?attr/colorOnPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Quantity: 1"
@@ -35,6 +39,7 @@
 
         <TextView
             android:id="@+id/bookPriceTextView"
+            android:textColor="?attr/colorOnPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="$9.99"

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public CartAdapter(List<Book> bookList) {
         mBookList = bookList;
+        Log.e("CartViewHolder", "CartViewHolder: hello therer");
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
@@ -30,15 +32,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         public CartViewHolder(View itemView) {
             super(itemView);
+            Log.e("CartViewHolder", "CartViewHolder: hello");
             bookImageView = itemView.findViewById(R.id.bookImageView);
             bookNameTextView = itemView.findViewById(R.id.bookNameTextView);
             bookQuantityTextView = itemView.findViewById(R.id.bookQuantityTextView);
             bookPriceTextView = itemView.findViewById(R.id.bookPriceTextView);
         }
     }
-
-
-
     @Override
     public CartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -56,9 +56,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 //        holder.bookQuantityTextView.setText("Quantity: " + book.getQuantity());
 //        holder.bookPriceTextView.setText("$" + book.getPrice());
 
-        holder.bookNameTextView.setText("Default");
-        holder.bookQuantityTextView.setText("5");
-        holder.bookPriceTextView.setText("20");
+        holder.bookNameTextView.setText(book.getTitle());
+        holder.bookQuantityTextView.setText("1");
+        holder.bookPriceTextView.setText("10");
+        holder.bookImageView.setImageResource(book.getImageResId());
     }
 
     @Override
