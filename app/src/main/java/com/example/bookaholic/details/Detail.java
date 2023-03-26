@@ -66,8 +66,7 @@ public class Detail extends Activity {
                 }
             });
         }
-
-        }
+    }
 
     public void initDescription(){
         descriptionTxt = findViewById(R.id.descriptionTxt);

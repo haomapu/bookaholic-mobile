@@ -19,10 +19,13 @@ public class Book implements Serializable {
     @Exclude
     public static ArrayList<Book> allBooks = new ArrayList<>();
     private String title, author, category, description, downloadURL;
-    private ArrayList<Comment> comments;
+    private ArrayList<Comment> comments = new ArrayList<>();
     private int price;
     int imageURL;
 
+    public Book(){
+
+    }
     public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, int imageURL) {
         this.title = title;
         this.author = author;
@@ -96,6 +99,14 @@ public class Book implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
     }
 
     @NonNull

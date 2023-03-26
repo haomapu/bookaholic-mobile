@@ -17,14 +17,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
 import com.example.bookaholic.details.Detail;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 interface UserDataChangedListener {
     void updateUserRelatedViews();
@@ -67,7 +73,13 @@ public class MainActivity extends AppCompatActivity {
 
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
         buttonMap.setOnClickListener(onBottomNavBarButtonClicked);
-        buttonFavorite.setOnClickListener(onBottomNavBarButtonClicked);
+        buttonFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
 //            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 //                Book.allBooks.add(dataSnapshot.getValue(Book.class));
 //            }
-//            booksDataChangedListener.updateBooksRelatedViews();
+            booksDataChangedListener.updateBooksRelatedViews();
         }
 
         @Override
