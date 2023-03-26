@@ -118,11 +118,11 @@ public class MainActivity extends AppCompatActivity {
         else {
 //            firebaseUser = firebaseAuth.getCurrentUser();
 //            if (firebaseUser == null) {
-//                Intent signInSignUpIntent = new Intent(MainActivity.this, SignInSignUpActivity.class);
-//                startActivity(signInSignUpIntent);
+                Intent signInSignUpIntent = new Intent(MainActivity.this, SignInSignUpActivity.class);
+                startActivity(signInSignUpIntent);
 //            } else {
 //                initCurrentUserDatabaseReference(currentUserDatabaseListener);
-                initBooksDatabaseReference(booksDatabaseListener);
+//                initBooksDatabaseReference(booksDatabaseListener);
 //            }
         }
     }
@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             Log.d(TAG, "All cats database changed.");
             Book.allBooks = new ArrayList<>();
-            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                Book.allBooks.add(dataSnapshot.getValue(Book.class));
-            }
-            booksDataChangedListener.updateBooksRelatedViews();
+//            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                Book.allBooks.add(dataSnapshot.getValue(Book.class));
+//            }
+//            booksDataChangedListener.updateBooksRelatedViews();
         }
 
         @Override
