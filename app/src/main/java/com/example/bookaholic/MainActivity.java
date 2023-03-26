@@ -130,8 +130,8 @@ public class MainActivity extends AppCompatActivity {
         else {
 //            firebaseUser = firebaseAuth.getCurrentUser();
 //            if (firebaseUser == null) {
-                Intent signInSignUpIntent = new Intent(MainActivity.this, SignInSignUpActivity.class);
-                startActivity(signInSignUpIntent);
+                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
+                startActivity(signInIntent);
 //            } else {
 //                initCurrentUserDatabaseReference(currentUserDatabaseListener);
 //                initBooksDatabaseReference(booksDatabaseListener);
