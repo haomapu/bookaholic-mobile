@@ -109,13 +109,16 @@ public class MainActivity extends AppCompatActivity {
         buttonHome.setImageResource(R.drawable.home_unselected);
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        if (!Tools.isOnline())
-//            startActivity(new Intent(this, NoInternetActivity.class));
-//        else {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (!Tools.isOnline(this))
+            startActivity(new Intent(this, NoInternetActivity.class));
+        else {
+            Intent intent = new Intent(MainActivity.this, Detail.class);
+            intent.putExtra("myKey", "Test");
+            startActivity(intent);
 //            firebaseUser = firebaseAuth.getCurrentUser();
 //            if (firebaseUser == null) {
 //                Intent signInSignUpIntent = new Intent(MainActivity.this, SignInSignUpActivity.class);
@@ -124,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
 //                initCurrentUserDatabaseReference(currentUserDatabaseListener);
 //                initBooksDatabaseReference(booksDatabaseListener);
 //            }
-//        }
-//    }
+        }
+    }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {
         @Override

@@ -28,7 +28,7 @@ public class FirebaseHelper {
     public static void initBooksDatabaseReference(ValueEventListener listener) {
         try {
             if (database == null) database = FirebaseDatabase.getInstance();
-            booksRef = database.getReference("Cats");
+            booksRef = database.getReference("Books");
             booksRef.addValueEventListener(listener);
         } catch (Exception exception) {
             Log.d(TAG, exception.toString());

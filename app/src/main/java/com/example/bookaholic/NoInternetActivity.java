@@ -17,7 +17,7 @@ public class NoInternetActivity extends AppCompatActivity {
     }
 
     private void checkConnection() {
-        if (Tools.isOnline())
+        if (Tools.isOnline(this))
             NoInternetActivity.this.finish();
         else
             showToast(this, R.string.still_no_internet);
