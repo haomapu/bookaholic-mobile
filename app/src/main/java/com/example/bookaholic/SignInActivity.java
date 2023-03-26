@@ -39,7 +39,7 @@ public class SignInActivity extends AppCompatActivity{
                 boolean validInputs = !email.equals("") && !password.equals("");
 
                 if (!validInputs)
-                    showToast(SignInActivity.this, R.string.empty_login);
+                    showToast(SignInActivity.this, R.string.empty_text);
 //                valid với firebase ở đây
                 else if (email.equals("giahai") && password.equals("123")) {
                     Intent intent = new Intent(SignInActivity.this, Detail.class);

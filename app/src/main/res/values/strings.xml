@@ -15,5 +15,7 @@
     <string name="oops_no_internet">Kết nối thất bại!</string>
     <string name="still_no_internet"><![CDATA[Vẫn chưa có kết nối internet]]></string>
     <string name="fail_login">Tài khoản hoặc mật khẩu không chính xác</string>
-    <string name="empty_login">Vui lòng không để trống</string>
+    <string name="empty_text">Vui lòng không để trống ô nhập</string>
+    <string name="confirm_password">Mật khẩu không trùng khớp</string>
+
 </resources>

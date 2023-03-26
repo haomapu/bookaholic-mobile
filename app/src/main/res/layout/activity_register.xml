@@ -56,6 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/registerImage">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editEmailRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -77,6 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailRegister">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPasswordRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
@@ -99,6 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordRegister">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editConfirmRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
