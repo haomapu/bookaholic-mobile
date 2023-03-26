@@ -14,4 +14,6 @@
     <string name="please_check_your_internet">Vui lòng kiểm tra lại kết nối internet!</string>
     <string name="oops_no_internet">Kết nối thất bại!</string>
     <string name="still_no_internet"><![CDATA[Vẫn chưa có kết nối internet]]></string>
+    <string name="fail_login">Tài khoản hoặc mật khẩu không chính xác</string>
+    <string name="empty_login">Vui lòng không để trống</string>
 </resources>

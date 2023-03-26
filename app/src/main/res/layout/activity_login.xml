@@ -58,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/loginImage">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editEmailLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" />
@@ -81,6 +82,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailLogin">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPasswordLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
