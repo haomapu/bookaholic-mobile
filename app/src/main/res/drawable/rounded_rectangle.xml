@@ -2,15 +2,15 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item>
-        <shape  android:shape="rectangle">
-            <solid android:color="?attr/colorSecondary" />
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/colorPrimaryInverse" />
             <corners android:radius="10dp" />
         </shape>
     </item>
 
     <item android:bottom="10px">
         <shape  android:shape="rectangle">
-            <solid android:color="?attr/colorSecondaryVariant" />
+            <solid android:color="?attr/colorPrimaryInverse" />
             <corners android:radius="10dp" />
         </shape>
     </item>

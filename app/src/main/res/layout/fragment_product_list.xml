@@ -161,7 +161,7 @@
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
                 android:text="@string/science"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/title_type_filter"
                 app:layout_constraintTop_toBottomOf="@id/title_type_filter" />
@@ -173,7 +173,7 @@
                 android:layout_marginStart="10dp"
                 android:backgroundTint="@color/white"
                 android:text="@string/lifestyle"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/button_select_filter_type_science"
                 app:layout_constraintTop_toTopOf="@id/button_select_filter_type_science" />
@@ -197,7 +197,7 @@
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
                 android:text="@string/black"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/title_author_filter"
                 app:layout_constraintTop_toBottomOf="@id/title_author_filter" />
@@ -210,7 +210,7 @@
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
                 android:text="@string/white"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/button_select_filter_color_black"
                 app:layout_constraintTop_toBottomOf="@id/title_author_filter" />
@@ -223,7 +223,7 @@
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
                 android:text="@string/gray"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/button_select_filter_color_white"
                 app:layout_constraintTop_toBottomOf="@id/title_author_filter" />
@@ -235,7 +235,7 @@
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
                 android:text="@string/yellow"
-                android:textColor="@color/gray"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/title_author_filter"
                 app:layout_constraintTop_toBottomOf="@id/button_select_filter_color_black" />

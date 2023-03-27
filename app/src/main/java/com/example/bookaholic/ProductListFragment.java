@@ -245,7 +245,7 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         if (!maxPriceString.isEmpty())
             maxPrice = Integer.parseInt(inputMaxPrice.getText().toString());
 
-//        adapter.filterByOptions(selectedSex, selectedAge, minPrice, maxPrice, selectedColor);
+        adapter.filterByOptions(selectedType, minPrice, maxPrice, selectedAuthor);
     }
     @Override
     public void updateBooksRelatedViews() {

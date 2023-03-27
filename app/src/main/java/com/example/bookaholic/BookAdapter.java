@@ -44,38 +44,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         }
     }
 
-    @NonNull
-    @Override
-    public BookAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.home_book_itemview, parent, false);
-        return new ViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull BookAdapter.ViewHolder holder, int position) {
-        try {
-            Book book = books.get(position);
-            Log.d(TAG, book.toString());
-            holder.imageView.setImageResource(book.getImageURL());
-            holder.nameView.setText(book.getTitle());
-            holder.priceView.setText(book.getDisplayablePrice());
-            holder.typesView.setText(book.getCategory());
-            holder.authorView.setText(book.getAuthor());
-            holder.layout.setOnClickListener(v -> startBookDetailsActivity(book));
-
-            OnSuccessListener<byte[]> onDownloadImageSuccessListener = bytes -> {
-                Bitmap imageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                holder.imageView.setImageBitmap(imageBitmap);
-            };
-
-//            downloadFile(book.getImageURL(), onDownloadImageSuccessListener);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void startBookDetailsActivity(Book book) {
         try {
             Intent intent = new Intent(context, Detail.class);
@@ -120,4 +88,68 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             layout = itemView.findViewById(R.id.layout_book_home_itemview);
         }
     }
+
+    @NonNull
+    @Override
+    public BookAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.home_book_itemview, parent, false);
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull BookAdapter.ViewHolder holder, int position) {
+        try {
+            Book book = books.get(position);
+            Log.d(TAG, book.toString());
+            holder.imageView.setImageResource(book.getImageResId());
+            holder.nameView.setText(book.getTitle());
+            holder.priceView.setText(book.getDisplayablePrice());
+            holder.typesView.setText(book.getCategory());
+            holder.authorView.setText(book.getAuthor());
+            holder.layout.setOnClickListener(v -> startBookDetailsActivity(book));
+
+            OnSuccessListener<byte[]> onDownloadImageSuccessListener = bytes -> {
+                Bitmap imageBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                holder.imageView.setImageBitmap(imageBitmap);
+            };
+
+//            downloadFile(book.getImageURL(), onDownloadImageSuccessListener);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterByOptions(ArrayList<String> selectedType, Integer minPrice, Integer maxPrice, ArrayList<String> selectedAuthor) {
+        this.books.clear();
+        for (Book book : Book.allBooks) {
+            boolean matchAuthor = false;
+            boolean matchType = false;
+            String[] authors = book.getAuthor().replaceAll(" ", "").split(",");
+            String[] types = book.getCategory().replaceAll(" ", "").split(",");
+            for (String author : authors) {
+                if (selectedAuthor.contains(author)) {
+                    matchAuthor = true;
+                    break;
+                }
+            }
+
+            for (String type : types) {
+                if (selectedType.contains(type)) {
+                    matchType = true;
+                    break;
+                }
+            }
+
+            if ((selectedType.isEmpty() || matchType)
+                    && book.hasPriceInRange(minPrice, maxPrice)
+                    && (selectedAuthor.isEmpty() || matchAuthor)) {
+                this.books.add(book.deepCopy());
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 }
