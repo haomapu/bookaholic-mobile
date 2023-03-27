@@ -2,6 +2,7 @@ package com.example.bookaholic;
 
 import static android.content.ContentValues.TAG;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -46,7 +47,7 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     private SpeechRecognizer speechRecognizer;
     private ImageView micButton;
     private ActivityResultLauncher<String> requestPermissionLauncher;
-
+    private int minPrice, maxPrice;
 
     public ProductListFragment() {
 
@@ -68,21 +69,21 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
 
         progressBar = view.findViewById(R.id.progressbar_home_fragment);
         updateProgressBar();
-//
-//        searchView = view.findViewById(R.id.searchview_home);
+
+        searchView = view.findViewById(R.id.searchview_home);
 //        searchView.setOnQueryTextListener(searchQueryTextListener);
 //
-//        buttonGoToCart = view.findViewById(R.id.imagebutton_home_mycart);
+        buttonGoToCart = view.findViewById(R.id.imagebutton_home_mycart);
 //        updateCartButton();
 //        buttonGoToCart.setOnClickListener(v -> startMyCartActivity());
 //
-//        filterContainer = view.findViewById(R.id.filters_container);
-//
-//        filterConfirmButton = view.findViewById(R.id.button_filter_confirm);
-//        filterResetButton = view.findViewById(R.id.button_filter_reset);
-//        filterConfirmButton.setOnClickListener(v -> onConfirm());
+        filterContainer = view.findViewById(R.id.filters_container);
+
+        filterConfirmButton = view.findViewById(R.id.button_filter_confirm);
+        filterResetButton = view.findViewById(R.id.button_filter_reset);
+        filterConfirmButton.setOnClickListener(v -> onConfirm());
 //        filterResetButton.setOnClickListener(v -> resetFilters());
-//
+
 //        buttonSexMale = view.findViewById(R.id.button_select_filter_sex_male);
 //        buttonSexFemale = view.findViewById(R.id.button_select_filter_sex_female);
 //        buttonSexMale.setOnClickListener(filterSelectListener);
@@ -92,9 +93,9 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
 //        buttonAgeHigh = view.findViewById(R.id.button_select_filter_age_high);
 //        buttonAgeLow.setOnClickListener(filterSelectListener);
 //        buttonAgeHigh.setOnClickListener(filterSelectListener);
-//
-//        inputMinPrice = view.findViewById(R.id.edittextMinimumPrice);
-//        inputMaxPrice = view.findViewById(R.id.edittextMaximumPrice);
+
+        inputMinPrice = view.findViewById(R.id.edittextMinimumPrice);
+        inputMaxPrice = view.findViewById(R.id.edittextMaximumPrice);
 //
 //        buttonColorBlack = view.findViewById(R.id.button_select_filter_color_black);
 //        buttonColorWhite = view.findViewById(R.id.button_select_filter_color_white);
@@ -107,8 +108,8 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
 //        buttonColorWhite.setOnClickListener(filterSelectListener);
 //        buttonColorBlack.setOnClickListener(filterSelectListener);
 //
-//        buttonFilter = view.findViewById(R.id.imagebutton_filter);
-//        buttonFilter.setOnClickListener(v -> showFilterMenu());
+        buttonFilter = view.findViewById(R.id.imagebutton_filter);
+        buttonFilter.setOnClickListener(v -> showFilterMenu());
 //
 //        micButton = view.findViewById(R.id.img_mic);
 
@@ -132,7 +133,33 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     public void updateUserRelatedViews() {
 
     }
+    private void hideFilterMenu() {
+        Log.d(TAG, "hide filter now");
+        ObjectAnimator animator = ObjectAnimator.ofFloat(filterContainer, "translationX", 0);
+        animator.setDuration(500);
+        animator.start();
+    }
 
+    private void showFilterMenu() {
+        Log.d(TAG, "filter button clicked");
+        ObjectAnimator animator = ObjectAnimator.ofFloat(filterContainer, "translationX", -filterContainer.getWidth());
+        animator.setDuration(500);
+        animator.start();
+    }
+
+    private void onConfirm() {
+        hideFilterMenu();
+        String minPriceString = inputMinPrice.getText().toString();
+        String maxPriceString = inputMaxPrice.getText().toString();
+
+        if (!minPriceString.isEmpty())
+            minPrice = Integer.parseInt(inputMinPrice.getText().toString());
+
+        if (!maxPriceString.isEmpty())
+            maxPrice = Integer.parseInt(inputMaxPrice.getText().toString());
+
+//        adapter.filterByOptions(selectedSex, selectedAge, minPrice, maxPrice, selectedColor);
+    }
     @Override
     public void updateBooksRelatedViews() {
         notifyAdapter();
