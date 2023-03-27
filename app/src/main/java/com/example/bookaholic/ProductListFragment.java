@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookaholic.details.Book;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ProductListFragment extends Fragment implements UserDataChangedListener, BooksDataChangedListener{
@@ -41,13 +43,17 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     ProgressBar progressBar;
     private BookAdapter adapter;
     private ScrollView filterContainer;
+    private Button buttonTypeScience, buttonTypeLifeStyle;
+    private Button buttonAuthorBlack, buttonAuthorWhite, buttonAuthorGray, buttonAuthorYellow;
     private Button filterConfirmButton, filterResetButton;
     private EditText inputMinPrice, inputMaxPrice;
     public static final Integer RecordAudioRequestCode = 1;
     private SpeechRecognizer speechRecognizer;
     private ImageView micButton;
     private ActivityResultLauncher<String> requestPermissionLauncher;
-    private int minPrice, maxPrice;
+    ArrayList<String> selectedType = new ArrayList<>();
+    ArrayList<String> selectedAuthor = new ArrayList<>();
+    Integer minPrice = null, maxPrice = null;
 
     public ProductListFragment() {
 
@@ -71,43 +77,36 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         updateProgressBar();
 
         searchView = view.findViewById(R.id.searchview_home);
-//        searchView.setOnQueryTextListener(searchQueryTextListener);
-//
+        searchView.setOnQueryTextListener(searchQueryTextListener);
+
         buttonGoToCart = view.findViewById(R.id.imagebutton_home_mycart);
 //        updateCartButton();
-//        buttonGoToCart.setOnClickListener(v -> startMyCartActivity());
-//
+        buttonGoToCart.setOnClickListener(v -> startCartActivity());
+
         filterContainer = view.findViewById(R.id.filters_container);
 
         filterConfirmButton = view.findViewById(R.id.button_filter_confirm);
         filterResetButton = view.findViewById(R.id.button_filter_reset);
         filterConfirmButton.setOnClickListener(v -> onConfirm());
-//        filterResetButton.setOnClickListener(v -> resetFilters());
+        filterResetButton.setOnClickListener(v -> resetFilters());
 
-//        buttonSexMale = view.findViewById(R.id.button_select_filter_sex_male);
-//        buttonSexFemale = view.findViewById(R.id.button_select_filter_sex_female);
-//        buttonSexMale.setOnClickListener(filterSelectListener);
-//        buttonSexFemale.setOnClickListener(filterSelectListener);
-//
-//        buttonAgeLow = view.findViewById(R.id.button_select_filter_age_low);
-//        buttonAgeHigh = view.findViewById(R.id.button_select_filter_age_high);
-//        buttonAgeLow.setOnClickListener(filterSelectListener);
-//        buttonAgeHigh.setOnClickListener(filterSelectListener);
+        buttonTypeScience = view.findViewById(R.id.button_select_filter_type_science);
+        buttonTypeLifeStyle = view.findViewById(R.id.button_select_filter_type_lifestyle);
+        buttonTypeScience.setOnClickListener(filterSelectListener);
+        buttonTypeLifeStyle.setOnClickListener(filterSelectListener);
 
         inputMinPrice = view.findViewById(R.id.edittextMinimumPrice);
         inputMaxPrice = view.findViewById(R.id.edittextMaximumPrice);
-//
-//        buttonColorBlack = view.findViewById(R.id.button_select_filter_color_black);
-//        buttonColorWhite = view.findViewById(R.id.button_select_filter_color_white);
-//        buttonColorGray = view.findViewById(R.id.button_select_filter_color_gray);
-//        buttonColorYellow = view.findViewById(R.id.button_select_filter_color_yellow);
-//        buttonColorBrown = view.findViewById(R.id.button_select_filter_color_brown);
-//        buttonColorBrown.setOnClickListener(filterSelectListener);
-//        buttonColorYellow.setOnClickListener(filterSelectListener);
-//        buttonColorGray.setOnClickListener(filterSelectListener);
-//        buttonColorWhite.setOnClickListener(filterSelectListener);
-//        buttonColorBlack.setOnClickListener(filterSelectListener);
-//
+
+        buttonAuthorBlack = view.findViewById(R.id.button_select_filter_color_black);
+        buttonAuthorWhite = view.findViewById(R.id.button_select_filter_color_white);
+        buttonAuthorGray = view.findViewById(R.id.button_select_filter_color_gray);
+        buttonAuthorYellow = view.findViewById(R.id.button_select_filter_color_yellow);
+        buttonAuthorYellow.setOnClickListener(filterSelectListener);
+        buttonAuthorGray.setOnClickListener(filterSelectListener);
+        buttonAuthorWhite.setOnClickListener(filterSelectListener);
+        buttonAuthorBlack.setOnClickListener(filterSelectListener);
+
         buttonFilter = view.findViewById(R.id.imagebutton_filter);
         buttonFilter.setOnClickListener(v -> showFilterMenu());
 //
@@ -115,6 +114,94 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
 
         return view;
     }
+
+    View.OnClickListener filterSelectListener = v -> {
+        if (v.getId() == R.id.button_select_filter_type_science) {
+            if (selectedType.contains("science")) selectedType.remove("science");
+            else selectedType.add("science");
+            updateTypeFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_type_lifestyle) {
+            if (selectedType.contains("lifestyle")) selectedType.remove("lifestyle");
+            else selectedType.add("lifestyle");
+            updateTypeFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_color_black) {
+            if (selectedAuthor.contains("đen")) selectedAuthor.remove("đen");
+            else selectedAuthor.add("đen");
+            updateAuthorFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_color_white) {
+            if (selectedAuthor.contains("trắng")) selectedAuthor.remove("trắng");
+            else selectedAuthor.add("trắng");
+            updateAuthorFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_color_gray) {
+            if (selectedAuthor.contains("xám")) selectedAuthor.remove("xám");
+            else selectedAuthor.add("xám");
+            updateAuthorFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_color_yellow) {
+            if (selectedAuthor.contains("vàng")) selectedAuthor.remove("vàng");
+            else selectedAuthor.add("vàng");
+            updateAuthorFilterButtons();
+        }
+    };
+
+    private void resetFilters() {
+        selectedAuthor.clear();
+        selectedType.clear();
+        minPrice = null;
+        maxPrice = null;
+        updateAuthorFilterButtons();
+        updateTypeFilterButtons();
+        inputMinPrice.setText("");
+        inputMaxPrice.setText("");
+    }
+
+    private void updateAuthorFilterButtons() {
+        if (selectedAuthor.contains("đen")) {
+            buttonAuthorBlack.setBackgroundColor(Color.BLACK);
+            buttonAuthorBlack.setTextColor(Color.WHITE);
+        } else {
+            buttonAuthorBlack.setBackgroundColor(Color.WHITE);
+            buttonAuthorBlack.setTextColor(Color.GRAY);
+        }
+        if (selectedAuthor.contains("trắng")) {
+            buttonAuthorWhite.setBackgroundColor(Color.BLACK);
+            buttonAuthorWhite.setTextColor(Color.WHITE);
+        } else {
+            buttonAuthorWhite.setBackgroundColor(Color.WHITE);
+            buttonAuthorWhite.setTextColor(Color.GRAY);
+        }
+        if (selectedAuthor.contains("xám")) {
+            buttonAuthorGray.setBackgroundColor(Color.BLACK);
+            buttonAuthorGray.setTextColor(Color.WHITE);
+        } else {
+            buttonAuthorGray.setBackgroundColor(Color.WHITE);
+            buttonAuthorGray.setTextColor(Color.GRAY);
+        }
+        if (selectedAuthor.contains("vàng")) {
+            buttonAuthorYellow.setBackgroundColor(Color.BLACK);
+            buttonAuthorYellow.setTextColor(Color.WHITE);
+        } else {
+            buttonAuthorYellow.setBackgroundColor(Color.WHITE);
+            buttonAuthorYellow.setTextColor(Color.GRAY);
+        }
+    }
+
+    void updateTypeFilterButtons() {
+        if (selectedType.contains("science")) {
+            buttonTypeScience.setBackgroundColor(Color.BLACK);
+            buttonTypeScience.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeScience.setBackgroundColor(Color.WHITE);
+            buttonTypeScience.setTextColor(Color.GRAY);
+        }
+        if (selectedType.contains("lifestyle")) {
+            buttonTypeLifeStyle.setBackgroundColor(Color.BLACK);
+            buttonTypeLifeStyle.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeLifeStyle.setBackgroundColor(Color.WHITE);
+            buttonTypeLifeStyle.setTextColor(Color.GRAY);
+        }
+    }
+
 
     @SuppressLint("NotifyDataSetChanged")
     public void notifyAdapter() {
@@ -165,4 +252,22 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         notifyAdapter();
         updateProgressBar();
     }
+
+    private void startCartActivity() {
+        startActivity(new Intent(ProductListFragment.this.getActivity(), CartActivity.class));
+    }
+
+    private final SearchView.OnQueryTextListener searchQueryTextListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            adapter.filterByName(newText);
+            return false;
+        }
+    };
+
 }

@@ -4,10 +4,12 @@ import static android.content.ContentValues.TAG;
 
 import static com.example.bookaholic.FirebaseHelper.downloadFile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,6 +89,20 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return books.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterByName(String queryText) {
+        this.books.clear();
+        if (TextUtils.isEmpty(queryText))
+            this.setBooks(Book.allBooks);
+        else {
+            for (Book book : Book.allBooks) {
+                if (book.hasNameSimilarTo(queryText))
+                    this.books.add(book.deepCopy());
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

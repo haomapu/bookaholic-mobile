@@ -128,4 +128,9 @@ public class Book implements Serializable {
             return "N/A";
         }
     }
+
+    @Exclude
+    public boolean hasNameSimilarTo(String text) {
+        return this.title.toLowerCase().contains(text.toLowerCase());
+    }
 }
