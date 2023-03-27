@@ -8,6 +8,10 @@
     <string name="buy_btn">Buy</string>
     <string name="price">example</string>
     <string name="app_banner">App Banner</string>
+    <string name="welcome_to_bookaholic">Chào mừng bạn đến với Bookaholic!</string>
+    <string name="hi">Hi</string>
+    <string name="cart">Cart</string>
+    <string name="filter">Filter</string>
     <string name="app_logo">App Logo</string>
     <string name="example_description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="try_connect_again">Thử kết nối lại</string>

@@ -32,4 +32,20 @@
     <style name="cameraBtn">
         <item name="android:src">@drawable/camera_white</item>
     </style>
+
+    <style name="logo">
+        <item name="android:src">@drawable/login</item>
+    </style>
+
+    <style name="cartBtn">
+        <item name="android:src">@drawable/cart_button_no_dot_white</item>
+    </style>
+
+    <style name="search">
+        <item name="android:src">@drawable/search_icon_white</item>
+    </style>
+
+    <style name="filter">
+        <item name="android:src">@drawable/filter_icon_white</item>
+    </style>
 </resources>

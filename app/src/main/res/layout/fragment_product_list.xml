@@ -4,8 +4,97 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?attr/colorPrimary"
     tools:context=".ProductListFragment">
+
+    <ImageView
+        style="@style/logo"
+        android:id="@+id/imageview_home_app_logo"
+        android:layout_width="180dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/app_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textview_greeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/hi"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/imageview_home_app_logo"
+        app:layout_constraintTop_toBottomOf="@id/imageview_home_app_logo" />
+
+    <TextView
+        android:id="@+id/textview_home_small_intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/welcome_to_bookaholic"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@id/textview_greeting"
+        app:layout_constraintTop_toBottomOf="@id/textview_greeting" />
+
+    <ImageButton
+        style="@style/cartBtn"
+        android:id="@+id/imagebutton_home_mycart"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="30dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/cart"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textview_greeting" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchview_home"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/super_rounded_rectangle"
+        android:layout_marginTop="20dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="0dp"
+        android:paddingVertical="5dp"
+        app:iconifiedByDefault="false"
+        app:layout_constraintTop_toBottomOf="@id/textview_home_small_intro"
+        app:layout_constraintStart_toStartOf="@id/textview_home_small_intro"
+        app:layout_constraintEnd_toStartOf="@id/imagebutton_filter">
+
+    </androidx.appcompat.widget.SearchView>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/img_mic"
+        android:src="@drawable/ic_baseline_mic"
+        app:layout_constraintBottom_toBottomOf="@id/searchview_home"
+        app:layout_constraintEnd_toEndOf="@id/searchview_home"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="@id/searchview_home"
+        app:layout_constraintTop_toTopOf="@id/searchview_home" />
+
+
+
+    <ImageButton
+        style="@style/filter"
+        android:id="@+id/imagebutton_filter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/filter"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@id/searchview_home"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/searchview_home"
+        app:layout_constraintTop_toTopOf="@id/searchview_home" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_home"
