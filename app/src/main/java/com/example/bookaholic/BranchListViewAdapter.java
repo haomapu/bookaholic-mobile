@@ -1,5 +1,6 @@
 package com.example.bookaholic;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class BranchListViewAdapter extends BaseAdapter {
     public long getItemId(int i) {
         return 0;
     }
-
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View viewProduct;
@@ -60,8 +61,7 @@ public class BranchListViewAdapter extends BaseAdapter {
 
         if (res.get(0).equals("Open")) {
             state.setTextColor(Color.parseColor("#22B14C"));
-        }
-        else {
+        } else {
             state.setTextColor(Color.parseColor("#FF0000"));
         }
 

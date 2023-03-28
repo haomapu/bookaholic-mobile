@@ -1,5 +1,7 @@
 package com.example.bookaholic;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -46,7 +48,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class MapFragment extends Fragment {
     private static final String TAG = "MapFragment";
@@ -99,7 +103,22 @@ public class MapFragment extends Fragment {
         branchDatabaseref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Branch branch = dataSnapshot.getValue(Branch.class);
+                    listBranch.add(branch);
 
+                    if (GGMAP != null) {
+                        addMarkers(branch);
+                    }
+                }
+//                ArrayList<Branch> list = new ArrayList<>();
+//                Branch branch1 = new Branch("Bookaholic Nguyễn Văn Cừ", "0905123456", "9:00","21:00",10.762222591092831, 106.68272929761598, 4.5F);
+//                Branch branch2 = new Branch("Bookaholic Thủ Đức", "0906654321", "8:00","20:00",10.875761989681283, 106.79914843994409, 5.0F);
+//                list.add(branch1);
+//                list.add(branch2);
+//                for(int i = 0; i< list.size(); i++) {
+//                    branchDatabaseref.push().setValue(list.get(i));
+//                }
             }
 
             @Override

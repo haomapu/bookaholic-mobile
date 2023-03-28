@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     private final ValueEventListener booksDatabaseListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            Log.d(TAG, "All cats database changed.");
+            Log.d(TAG, "All books database changed.");
             Book.allBooks = new ArrayList<>();
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 Book.allBooks.add(dataSnapshot.getValue(Book.class));
