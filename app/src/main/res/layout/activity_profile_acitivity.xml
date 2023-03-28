@@ -22,7 +22,7 @@
         android:textSize="24sp"
         android:layout_below="@+id/profile_picture"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="5dp"/>
 
     <!-- User's email -->
     <TextView
@@ -33,17 +33,27 @@
         android:textSize="16sp"
         android:layout_below="@+id/user_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="5dp"/>
 
-    <!-- User's bio -->
-    <TextView
-        android:id="@+id/user_bio"
+
+    <!-- Edit profile button -->
+    <Button
+        android:id="@+id/edit_profile_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is my bio."
-        android:textSize="18sp"
+        android:text="Edit Profile"
         android:layout_below="@+id/user_email"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="5dp"/>
+
+    <!-- Change password button -->
+    <Button
+        android:id="@+id/change_password_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:layout_below="@+id/edit_profile_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
 
 </RelativeLayout>
