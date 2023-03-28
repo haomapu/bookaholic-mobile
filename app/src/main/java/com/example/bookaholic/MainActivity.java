@@ -125,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if (!Tools.isOnline(this))
+        if (!Tools.isOnline(this)) {
             startActivity(new Intent(this, NoInternetActivity.class));
+        }
 //        else {
 ////            firebaseUser = firebaseAuth.getCurrentUser();
 ////            if (firebaseUser == null) {
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(signInIntent);
 ////            } else {
 ////                initCurrentUserDatabaseReference(currentUserDatabaseListener);
-//                initBooksDatabaseReference(booksDatabaseListener);
+                initBooksDatabaseReference(booksDatabaseListener);
 ////            }
 //        }
     }

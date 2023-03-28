@@ -128,4 +128,14 @@ public class Book implements Serializable {
             return "N/A";
         }
     }
+
+    @Exclude
+    public boolean hasNameSimilarTo(String text) {
+        return this.title.toLowerCase().contains(text.toLowerCase());
+    }
+
+    @Exclude
+    public boolean hasPriceInRange(Integer min, Integer max) {
+        return (min == null || price >= min) && (max == null || price <= max);
+    }
 }
