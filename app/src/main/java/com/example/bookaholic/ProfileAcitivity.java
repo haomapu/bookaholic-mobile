@@ -19,6 +19,5 @@ public class ProfileAcitivity extends AppCompatActivity {
         profilePictureImageView = findViewById(R.id.profile_picture);
         userNameTextView = findViewById(R.id.user_name);
         userEmailTextView = findViewById(R.id.user_email);
-        userBioTextView = findViewById(R.id.user_bio);
     }
 }
