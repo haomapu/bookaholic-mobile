@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Detail extends Activity {
     private ImageView imageSelected;
     private TextView descriptionTxt;
     GridView gridView;
+    ListView commentListView;
     ImageDetail[] images = {
             new ImageDetail(R.drawable.img1),
             new ImageDetail(R.drawable.img2),
@@ -36,8 +38,9 @@ public class Detail extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-//        initRecommend();
+        initRecommend();
         initDescription();
+        initComment();
         ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
 
         imageListView = findViewById(R.id.imageListView);
@@ -77,15 +80,35 @@ public class Detail extends Activity {
             }
         });
     }
+    ArrayList<Comment> comments = new ArrayList<>();
 
-//    public void initRecommend(){
-//        itemList.add(book1);
-//        itemList.add(book2);
-//        gridView = findViewById(R.id.gridview);
-//        GridAdapter adapter = new GridAdapter(this, itemList);
-//        System.out.println(itemList.get(1).getTitle());
-//        gridView.setAdapter(adapter);
-//    }
+    public void initComment(){
+        ArrayList<Comment> reviews = new ArrayList<>();
+        reviews.add(new Comment("Great book, highly recommended", "John Smith", R.drawable.avatar1, 4));
+        reviews.add(new Comment( "Loved it!", "Jane Doe",R.drawable.avatar2 , 5));
+        reviews.add(new Comment("Not my cup of tea", "Mike Johnson",R.drawable.avatar3 , 2));
+        reviews.add(new Comment("Hihi", "Hao",R.drawable.avatar4 , 4));
+
+// Create the adapter and set it to the ListView
+        ReviewAdapter reviewAdapter = new ReviewAdapter(this, R.layout.review_item, reviews);
+        commentListView = findViewById(R.id.commentListView);
+        commentListView.setAdapter(reviewAdapter);
+    }
+
+    public void initRecommend(){
+        comments.add(new Comment("Good book", "Hao", R.drawable.img1, 5));
+        Book book1 = new Book("test", "test", "test", "test", "test",comments , 100, R.drawable.img1);
+        itemList.add(book1);
+        itemList.add(book1);
+        itemList.add(book1);
+        itemList.add(book1);
+        itemList.add(new Book("test2", "test", "test", "test", "test",comments , 100, R.drawable.img2));
+        itemList.add(new Book("test3", "test", "test", "test", "test",comments , 100, R.drawable.img3));
+        itemList.add(new Book("test4", "test", "test", "test", "test",comments , 100, R.drawable.img4));
+        gridView = findViewById(R.id.gridview);
+        GridAdapter adapter = new GridAdapter(this, itemList);
+        gridView.setAdapter(adapter);
+    }
 
     private void toggleTextView(TextView textView) {
         if (textView.getMaxLines() == 4) {

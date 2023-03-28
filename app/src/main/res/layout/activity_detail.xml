@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".details.Detail"
     >
 <LinearLayout
@@ -54,22 +55,15 @@
         android:textSize="16dp"
         android:layout_alignParentStart="true"/>
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buyBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buy Now"
-        android:textSize="16dp"
-        app:iconPadding="4dp"
-        android:layout_alignParentEnd="true"/>
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/addToCartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to Cart"
-        android:textSize="16dp"
-        app:iconPadding="4dp"
-        android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@id/buyBtn"/>
+        app:icon="@drawable/baseline_add_shopping_cart_24"
+        app:iconGravity="textStart"
+        android:gravity="center"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        android:layout_alignParentEnd="true"/>
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
@@ -96,13 +90,36 @@
         android:padding="10dp"
         android:maxLines="4"
         android:ellipsize="end" />
-    <com.google.android.material.circularreveal.CircularRevealGridLayout
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/reviewTitletxt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Review"
+        android:layout_marginHorizontal="10dp"
+        android:textStyle="bold"
+        android:padding="10dp"/>
+
+    <ListView
+        android:id="@+id/commentListView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:nestedScrollingEnabled="false" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/recommendTitleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Recommended Books"
+        android:layout_marginHorizontal="10dp"
+        android:textStyle="bold"
+        android:padding="10dp"/>
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2" />
+        android:layout_height="960dp"
+        android:nestedScrollingEnabled="false"
+        android:numColumns="2"
+        android:padding="10dp"/>
 </LinearLayout>
 </ScrollView>
