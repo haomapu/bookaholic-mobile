@@ -2,11 +2,14 @@ package com.example.bookaholic;
 
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -24,7 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +63,29 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
 
     public ProductListFragment() {
 
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            // TODO: Reload arguments from savedInstanceState
+        }
+        requestPermissionLauncher =
+                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                    if (isGranted) {
+                        Toast.makeText(this.requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this.requireContext(), "Permission Denied. Feature is unavailable! ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        if (ContextCompat.checkSelfPermission(this.requireContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            checkPermission();
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO);
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -109,8 +138,8 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
 
         buttonFilter = view.findViewById(R.id.imagebutton_filter);
         buttonFilter.setOnClickListener(v -> showFilterMenu());
-//
-//        micButton = view.findViewById(R.id.img_mic);
+
+        micButton = view.findViewById(R.id.img_mic);
 
         return view;
     }
@@ -269,5 +298,14 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
             return false;
         }
     };
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, RecordAudioRequestCode);
+        }
+    }
 }

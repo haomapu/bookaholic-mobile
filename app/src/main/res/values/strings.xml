@@ -36,6 +36,8 @@
     <string name="maximumPrice">Tối đa</string>
     <string name="reset">Đặt lại</string>
     <string name="confirm">Xác nhận</string>
+    <string name="list_branch">list_branch</string>
+    <string name="list_branch_heading">Danh sách cửa hàng</string>
 
 
 </resources>
