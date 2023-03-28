@@ -21,7 +21,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        Comment comment = new Comment("name", 5);
+        Comment comment = new Comment("Good book", "Hao", R.drawable.img1,5);
         ArrayList<Comment> mComment = new ArrayList<>();
         mComment.add(comment);
 
