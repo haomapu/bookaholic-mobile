@@ -21,7 +21,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public CartAdapter(List<Book> bookList) {
         mBookList = bookList;
-        Log.e("CartViewHolder", "CartViewHolder: hello therer");
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
@@ -58,7 +57,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         holder.bookNameTextView.setText(book.getTitle());
         holder.bookQuantityTextView.setText("1");
-        holder.bookPriceTextView.setText("10");
+        holder.bookPriceTextView.setText("VNĐ" + book.getPrice());
         holder.bookImageView.setImageResource(book.getImageResId());
     }
 
