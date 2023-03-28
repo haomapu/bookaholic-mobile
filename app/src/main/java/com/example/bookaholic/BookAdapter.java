@@ -102,7 +102,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         try {
             Book book = books.get(position);
             Log.d(TAG, book.toString());
-            holder.imageView.setImageResource(book.getImageResId());
+            holder.imageView.setImageResource(Integer.parseInt(book.getImages().get(0)));
             holder.nameView.setText(book.getTitle());
             holder.priceView.setText(book.getDisplayablePrice());
             holder.typesView.setText(book.getCategory());

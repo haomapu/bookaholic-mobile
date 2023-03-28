@@ -21,12 +21,12 @@ public class Book implements Serializable {
     private String title, author, category, description, downloadURL;
     private ArrayList<Comment> comments = new ArrayList<>();
     private int price;
-    int imageURL;
+    private ArrayList<String> images = new ArrayList<>();
 
     public Book(){
 
     }
-    public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, int imageURL) {
+    public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -34,7 +34,7 @@ public class Book implements Serializable {
         this.downloadURL = downloadURL;
         this.comments = comments;
         this.price = price;
-        this.imageURL = imageURL;
+        this.images = images;
     }
 
     public static ArrayList<Book> getAllBooks() {
@@ -77,13 +77,6 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-    public int getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(int imageURL) {
-        this.imageURL = imageURL;
-    }
 
     public String getDownloadURL() {
         return downloadURL;
@@ -109,14 +102,22 @@ public class Book implements Serializable {
         this.comments = comments;
     }
 
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
+    }
+
     @NonNull
     @Exclude
     public Book deepCopy() {
-        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.imageURL);
+        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.images);
     }
 
     public int getImageResId() {
-        return imageURL;
+        return Integer.parseInt(images.get(0));
     }
 
     @SuppressLint("DefaultLocale")

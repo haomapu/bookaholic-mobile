@@ -97,14 +97,14 @@ public class Detail extends Activity {
 
     public void initRecommend(){
         comments.add(new Comment("Good book", "Hao", R.drawable.img1, 5));
-        Book book1 = new Book("test", "test", "test", "test", "test",comments , 100, R.drawable.img1);
-        itemList.add(book1);
-        itemList.add(book1);
-        itemList.add(book1);
-        itemList.add(book1);
-        itemList.add(new Book("test2", "test", "test", "test", "test",comments , 100, R.drawable.img2));
-        itemList.add(new Book("test3", "test", "test", "test", "test",comments , 100, R.drawable.img3));
-        itemList.add(new Book("test4", "test", "test", "test", "test",comments , 100, R.drawable.img4));
+//        Book book1 = new Book("test", "test", "test", "test", "test",comments , 100, R.drawable.img1);
+//        itemList.add(book1);
+//        itemList.add(book1);
+//        itemList.add(book1);
+//        itemList.add(book1);
+//        itemList.add(new Book("test2", "test", "test", "test", "test",comments , 100, R.drawable.img2));
+//        itemList.add(new Book("test3", "test", "test", "test", "test",comments , 100, R.drawable.img3));
+//        itemList.add(new Book("test4", "test", "test", "test", "test",comments , 100, R.drawable.img4));
         gridView = findViewById(R.id.gridview);
         GridAdapter adapter = new GridAdapter(this, itemList);
         gridView.setAdapter(adapter);
