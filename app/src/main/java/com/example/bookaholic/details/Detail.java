@@ -1,35 +1,36 @@
 package com.example.bookaholic.details;
 
 import android.app.Activity;
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Detail extends Activity {
     private ViewGroup imageListView;
     private ImageView imageSelected;
     private TextView descriptionTxt;
+    private TextView titleTxt;
+
+    private TextView priceTxt;
+
+    private RatingBar ratingBar;
+
+    private Book currentBook;
     GridView gridView;
     ListView commentListView;
-    ImageDetail[] images = {
-            new ImageDetail(R.drawable.img1),
-            new ImageDetail(R.drawable.img2),
-            new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),
-            new ImageDetail(R.drawable.img4)};
     ArrayList<Book> itemList = new ArrayList<>();
 //    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
 //    Book book2 = new Book("Haha","Hao","Hao","Hao",R.drawable.img2,"Hao",100);
@@ -38,10 +39,12 @@ public class Detail extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        loadData();
+
         initRecommend();
-        initDescription();
+        initBasicInfo();
         initComment();
-        ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
+//        ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
 
         imageListView = findViewById(R.id.imageListView);
         imageSelected = findViewById(R.id.imageSelected);
@@ -53,26 +56,44 @@ public class Detail extends Activity {
 //                imageSelected.setImageResource(images[position].getImageID());
 //            }
 //        });
-        imageSelected.setImageResource(images[0].getImageID());
-        for (int i = 0; i < images.length; i++){
+        ArrayList<String> images = currentBook.getImages();
+
+        imageSelected.setImageResource(Integer.parseInt(images.get(0)));
+        for (int i = 0; i < images.size(); i++){
             final View singleFrame = getLayoutInflater().inflate(R.layout.image_detail,null);
             singleFrame.setId(i);
             ImageView single_image = (ImageView) singleFrame.findViewById(R.id.single_image);
-            single_image.setImageResource(images[i].getImageID());
+            single_image.setImageResource(Integer.parseInt(images.get(i)));
 
             imageListView.addView(singleFrame);
 
             singleFrame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    imageSelected.setImageResource(images[singleFrame.getId()].getImageID());
+                    imageSelected.setImageResource(Integer.parseInt(images.get(singleFrame.getId())));
                 }
             });
         }
     }
+    private void loadData() {
+        Intent data = getIntent();
+        Bundle bundle = data.getExtras();
+        currentBook = Book.findBookByTitle(bundle.getString("bookName"));
+        Log.e("TAG", currentBook.getAuthor());
+        //Set data to screen
 
-    public void initDescription(){
+    }
+
+    public void initBasicInfo(){
+        titleTxt = findViewById(R.id.titleTxt);
+        priceTxt = findViewById(R.id.priceTxt);
+        ratingBar = findViewById(R.id.ratingBar);
         descriptionTxt = findViewById(R.id.descriptionTxt);
+
+        titleTxt.setText(currentBook.getTitle());
+        priceTxt.setText(currentBook.getPrice().toString());
+        ratingBar.setRating(currentBook.getRateAvg());
+        descriptionTxt.setText(currentBook.getDescription());
         descriptionTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

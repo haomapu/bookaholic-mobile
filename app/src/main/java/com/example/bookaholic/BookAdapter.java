@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,7 +48,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     private void startBookDetailsActivity(Book book) {
         try {
             Intent intent = new Intent(context, Detail.class);
-            intent.putExtra("bookName", book.getTitle());
+            Bundle bundle = new Bundle();
+            bundle.putString("bookName", book.getTitle());
+            intent.putExtras(bundle);
             context.startActivity(intent);
         } catch (Exception e) {
             Log.d(TAG, e.toString());

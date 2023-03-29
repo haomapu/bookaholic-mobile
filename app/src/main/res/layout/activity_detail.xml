@@ -47,7 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:orientation="horizontal">
-    <com.google.android.material.textview.MaterialTextView android:id="@+id/priceTxt"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/priceTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -73,13 +74,6 @@
         android:rating="3.5"
         android:layout_below="@id/priceTxt"
         style="?android:attr/ratingBarStyleSmall" />
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/soldTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sold: 1k"
-        android:textSize="18dp"
-        android:layout_below="@id/ratingBar"/>
     </RelativeLayout>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/descriptionTxt"

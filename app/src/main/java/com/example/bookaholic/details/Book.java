@@ -77,7 +77,13 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-
+    public float getRateAvg(){
+        float sum = 0;
+        for (int i = 0; i < comments.size(); i++){
+            sum += comments.get(i).getRate();
+        }
+        return sum/comments.size();
+    }
     public String getDownloadURL() {
         return downloadURL;
     }
@@ -86,7 +92,7 @@ public class Book implements Serializable {
         this.downloadURL = downloadURL;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
@@ -138,5 +144,14 @@ public class Book implements Serializable {
     @Exclude
     public boolean hasPriceInRange(Integer min, Integer max) {
         return (min == null || price >= min) && (max == null || price <= max);
+    }
+
+    public static Book findBookByTitle(String title) {
+        for (int i = 0; i < allBooks.size(); i++){
+            if (allBooks.get(i).getTitle().contains(title)){
+                return allBooks.get(i);
+            }
+        }
+        return null;
     }
 }
