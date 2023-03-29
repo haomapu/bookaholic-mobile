@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 
@@ -27,10 +29,12 @@ public class Detail extends Activity {
     private TextView priceTxt;
 
     private RatingBar ratingBar;
-
+    private Button addToCartButton;
+    private NotificationBadge shopping_badge;
     private Book currentBook;
     GridView gridView;
     ListView commentListView;
+    int countCart = 0;
     ArrayList<Book> itemList = new ArrayList<>();
 //    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
 //    Book book2 = new Book("Haha","Hao","Hao","Hao",R.drawable.img2,"Hao",100);
@@ -40,7 +44,7 @@ public class Detail extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         loadData();
-
+        initAddToCartButton();
         initRecommend();
         initBasicInfo();
         initComment();
@@ -104,14 +108,8 @@ public class Detail extends Activity {
     ArrayList<Comment> comments = new ArrayList<>();
 
     public void initComment(){
-        ArrayList<Comment> reviews = new ArrayList<>();
-        reviews.add(new Comment("Great book, highly recommended", "John Smith", R.drawable.avatar1, 4));
-        reviews.add(new Comment( "Loved it!", "Jane Doe",R.drawable.avatar2 , 5));
-        reviews.add(new Comment("Not my cup of tea", "Mike Johnson",R.drawable.avatar3 , 2));
-        reviews.add(new Comment("Hihi", "Hao",R.drawable.avatar4 , 4));
-
 // Create the adapter and set it to the ListView
-        ReviewAdapter reviewAdapter = new ReviewAdapter(this, R.layout.review_item, reviews);
+        ReviewAdapter reviewAdapter = new ReviewAdapter(this, R.layout.review_item, currentBook.getComments());
         commentListView = findViewById(R.id.commentListView);
         commentListView.setAdapter(reviewAdapter);
     }
@@ -129,6 +127,19 @@ public class Detail extends Activity {
         gridView = findViewById(R.id.gridview);
         GridAdapter adapter = new GridAdapter(this, itemList);
         gridView.setAdapter(adapter);
+    }
+
+    public void initAddToCartButton(){
+        addToCartButton = findViewById(R.id.addToCartButton);
+        shopping_badge = findViewById(R.id.shopping_badge);
+
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                shopping_badge.setNumber(++countCart);
+            }
+        });
     }
 
     private void toggleTextView(TextView textView) {

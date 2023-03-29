@@ -83,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Detail.class);
-                intent.putExtra("myKey", "Test");
+                Intent intent = new Intent(MainActivity.this, ProfileAcitivity.class);
                 startActivity(intent);
             }
         });
