@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".details.Detail"
     >
 <LinearLayout
@@ -12,7 +13,34 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="?attr/colorOnPrimary">
-
+    <com.google.android.material.circularreveal.CircularRevealRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:background="?attr/colorPrimaryContainer">
+        <ImageView
+            android:id="@+id/returnBtn"
+            android:src="@drawable/baseline_keyboard_return_32"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/shoppingBtn"
+            android:src="@drawable/baseline_shopping_cart_32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"/>
+        <com.nex3z.notificationbadge.NotificationBadge
+            android:id="@+id/shopping_badge"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_toStartOf="@id/shoppingBtn"
+            android:layout_alignTop="@id/shoppingBtn"
+            android:layout_marginTop="-13dp"
+            android:layout_marginRight="-10dp"
+            app:nbMaxTextLength="2"/>
+    </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
     <ImageView
         android:id="@+id/imageSelected"
@@ -23,7 +51,7 @@
 
     <HorizontalScrollView android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#44aaaaaa" >
+        android:background="?attr/colorPrimaryContainer">
     <com.google.android.material.circularreveal.CircularRevealLinearLayout
         android:id="@+id/imageListView"
         android:layout_width="wrap_content"
@@ -46,30 +74,25 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:orientation="horizontal">
-    <com.google.android.material.textview.MaterialTextView android:id="@+id/priceTxt"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/priceTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:text="10000vnd"
         android:textSize="16dp"
+        android:textColor="?attr/colorPrimary"
         android:layout_alignParentStart="true"/>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buyBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buy Now"
-        android:textSize="16dp"
-        app:iconPadding="4dp"
-        android:layout_alignParentEnd="true"/>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addToCartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to Cart"
-        android:textSize="16dp"
-        app:iconPadding="4dp"
-        android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@id/buyBtn"/>
+        app:icon="@drawable/baseline_add_shopping_cart_24"
+        app:iconGravity="textStart"
+        android:gravity="center"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        android:layout_alignParentEnd="true"/>
     <RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
@@ -80,12 +103,11 @@
         android:layout_below="@id/priceTxt"
         style="?android:attr/ratingBarStyleSmall" />
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/soldTxt"
+        android:id="@+id/countStartTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sold: 1k"
-        android:textSize="18dp"
-        android:layout_below="@id/ratingBar"/>
+        android:layout_gravity="left"
+        android:layout_toEndOf="@id/ratingBar"/>
     </RelativeLayout>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/descriptionTxt"
@@ -96,13 +118,36 @@
         android:padding="10dp"
         android:maxLines="4"
         android:ellipsize="end" />
-    <com.google.android.material.circularreveal.CircularRevealGridLayout
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/reviewTitletxt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Review"
+        android:layout_marginHorizontal="10dp"
+        android:textStyle="bold"
+        android:padding="10dp"/>
+
+    <ListView
+        android:id="@+id/commentListView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:nestedScrollingEnabled="false" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/recommendTitleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Recommended Books"
+        android:layout_marginHorizontal="10dp"
+        android:textStyle="bold"
+        android:padding="10dp"/>
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2" />
+        android:layout_height="960dp"
+        android:nestedScrollingEnabled="false"
+        android:numColumns="2"
+        android:padding="10dp"/>
 </LinearLayout>
 </ScrollView>

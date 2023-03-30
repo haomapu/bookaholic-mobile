@@ -1,33 +1,40 @@
 package com.example.bookaholic.details;
 
 import android.app.Activity;
-import android.media.Image;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Detail extends Activity {
     private ViewGroup imageListView;
     private ImageView imageSelected;
     private TextView descriptionTxt;
+    private TextView titleTxt;
+
+    private TextView priceTxt;
+
+    private RatingBar ratingBar;
+    private Button addToCartButton;
+    private NotificationBadge shopping_badge;
+    private Book currentBook;
     GridView gridView;
-    ImageDetail[] images = {
-            new ImageDetail(R.drawable.img1),
-            new ImageDetail(R.drawable.img2),
-            new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),new ImageDetail(R.drawable.img3),
-            new ImageDetail(R.drawable.img4)};
+    ListView commentListView;
+    int countCart = 0;
     ArrayList<Book> itemList = new ArrayList<>();
 //    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
 //    Book book2 = new Book("Haha","Hao","Hao","Hao",R.drawable.img2,"Hao",100);
@@ -36,9 +43,12 @@ public class Detail extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-//        initRecommend();
-        initDescription();
-        ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
+        loadData();
+        initAddToCartButton();
+        initRecommend();
+        initBasicInfo();
+        initComment();
+//        ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
 
         imageListView = findViewById(R.id.imageListView);
         imageSelected = findViewById(R.id.imageSelected);
@@ -50,26 +60,44 @@ public class Detail extends Activity {
 //                imageSelected.setImageResource(images[position].getImageID());
 //            }
 //        });
-        imageSelected.setImageResource(images[0].getImageID());
-        for (int i = 0; i < images.length; i++){
+        ArrayList<String> images = currentBook.getImages();
+
+        imageSelected.setImageResource(Integer.parseInt(images.get(0)));
+        for (int i = 0; i < images.size(); i++){
             final View singleFrame = getLayoutInflater().inflate(R.layout.image_detail,null);
             singleFrame.setId(i);
             ImageView single_image = (ImageView) singleFrame.findViewById(R.id.single_image);
-            single_image.setImageResource(images[i].getImageID());
+            single_image.setImageResource(Integer.parseInt(images.get(i)));
 
             imageListView.addView(singleFrame);
 
             singleFrame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    imageSelected.setImageResource(images[singleFrame.getId()].getImageID());
+                    imageSelected.setImageResource(Integer.parseInt(images.get(singleFrame.getId())));
                 }
             });
         }
     }
+    private void loadData() {
+        Intent data = getIntent();
+        Bundle bundle = data.getExtras();
+        currentBook = Book.findBookByTitle(bundle.getString("bookName"));
+        Log.e("TAG", currentBook.getAuthor());
+        //Set data to screen
 
-    public void initDescription(){
+    }
+
+    public void initBasicInfo(){
+        titleTxt = findViewById(R.id.titleTxt);
+        priceTxt = findViewById(R.id.priceTxt);
+        ratingBar = findViewById(R.id.ratingBar);
         descriptionTxt = findViewById(R.id.descriptionTxt);
+
+        titleTxt.setText(currentBook.getTitle());
+        priceTxt.setText(currentBook.getPrice().toString());
+        ratingBar.setRating(currentBook.getRateAvg());
+        descriptionTxt.setText(currentBook.getDescription());
         descriptionTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,15 +105,42 @@ public class Detail extends Activity {
             }
         });
     }
+    ArrayList<Comment> comments = new ArrayList<>();
 
-//    public void initRecommend(){
+    public void initComment(){
+// Create the adapter and set it to the ListView
+        ReviewAdapter reviewAdapter = new ReviewAdapter(this, R.layout.review_item, currentBook.getComments());
+        commentListView = findViewById(R.id.commentListView);
+        commentListView.setAdapter(reviewAdapter);
+    }
+
+    public void initRecommend(){
+        comments.add(new Comment("Good book", "Hao", R.drawable.img1, 5));
+//        Book book1 = new Book("test", "test", "test", "test", "test",comments , 100, R.drawable.img1);
 //        itemList.add(book1);
-//        itemList.add(book2);
-//        gridView = findViewById(R.id.gridview);
-//        GridAdapter adapter = new GridAdapter(this, itemList);
-//        System.out.println(itemList.get(1).getTitle());
-//        gridView.setAdapter(adapter);
-//    }
+//        itemList.add(book1);
+//        itemList.add(book1);
+//        itemList.add(book1);
+//        itemList.add(new Book("test2", "test", "test", "test", "test",comments , 100, R.drawable.img2));
+//        itemList.add(new Book("test3", "test", "test", "test", "test",comments , 100, R.drawable.img3));
+//        itemList.add(new Book("test4", "test", "test", "test", "test",comments , 100, R.drawable.img4));
+        gridView = findViewById(R.id.gridview);
+        GridAdapter adapter = new GridAdapter(this, itemList);
+        gridView.setAdapter(adapter);
+    }
+
+    public void initAddToCartButton(){
+        addToCartButton = findViewById(R.id.addToCartButton);
+        shopping_badge = findViewById(R.id.shopping_badge);
+
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                shopping_badge.setNumber(++countCart);
+            }
+        });
+    }
 
     private void toggleTextView(TextView textView) {
         if (textView.getMaxLines() == 4) {

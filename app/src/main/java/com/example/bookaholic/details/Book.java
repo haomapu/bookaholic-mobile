@@ -9,7 +9,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
@@ -21,12 +23,12 @@ public class Book implements Serializable {
     private String title, author, category, description, downloadURL;
     private ArrayList<Comment> comments = new ArrayList<>();
     private int price;
-    int imageURL;
+    private ArrayList<String> images = new ArrayList<>();
 
     public Book(){
 
     }
-    public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, int imageURL) {
+    public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -34,7 +36,7 @@ public class Book implements Serializable {
         this.downloadURL = downloadURL;
         this.comments = comments;
         this.price = price;
-        this.imageURL = imageURL;
+        this.images = images;
     }
 
     public static ArrayList<Book> getAllBooks() {
@@ -77,14 +79,13 @@ public class Book implements Serializable {
         this.description = description;
     }
 
-    public int getImageURL() {
-        return imageURL;
+    public float getRateAvg(){
+        float sum = 0;
+        for (int i = 0; i < comments.size(); i++){
+            sum += comments.get(i).getRate();
+        }
+        return sum/comments.size();
     }
-
-    public void setImageURL(int imageURL) {
-        this.imageURL = imageURL;
-    }
-
     public String getDownloadURL() {
         return downloadURL;
     }
@@ -93,7 +94,7 @@ public class Book implements Serializable {
         this.downloadURL = downloadURL;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
@@ -109,23 +110,47 @@ public class Book implements Serializable {
         this.comments = comments;
     }
 
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
+    }
+
     @NonNull
     @Exclude
     public Book deepCopy() {
-        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.imageURL);
+        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.images);
     }
 
     public int getImageResId() {
-        return imageURL;
+        return Integer.parseInt(images.get(0));
     }
 
     @SuppressLint("DefaultLocale")
     public String getDisplayablePrice() {
-        try {
-            return String.format("%, d đ", price);
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-            return "N/A";
+        String str = NumberFormat.getNumberInstance(Locale.US).format(price);
+        str += " đ";
+        return str;
+    }
+
+    @Exclude
+    public boolean hasNameSimilarTo(String text) {
+        return this.title.toLowerCase().contains(text.toLowerCase());
+    }
+
+    @Exclude
+    public boolean hasPriceInRange(Integer min, Integer max) {
+        return (min == null || price >= min) && (max == null || price <= max);
+    }
+
+    public static Book findBookByTitle(String title) {
+        for (int i = 0; i < allBooks.size(); i++){
+            if (allBooks.get(i).getTitle().contains(title)){
+                return allBooks.get(i);
+            }
         }
+        return null;
     }
 }

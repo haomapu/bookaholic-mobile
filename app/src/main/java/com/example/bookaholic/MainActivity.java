@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     public static User currentSyncedUser;
 
     private ImageButton buttonHome;
-    private ImageButton buttonMap;
     private ImageButton buttonFavorite;
     private ImageButton buttonProfile;
     private Fragment fragmentMap, fragmentProfile;
@@ -62,16 +61,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        fragmentMap = new MapFragment();
         fragmentHome = new ProductListFragment();
         buttonHome = findViewById(R.id.bottomNavBarButtonHome);
-        buttonMap = findViewById(R.id.bottomNavBarButtonMap);
-        ImageButton buttonCamera = findViewById(R.id.bottomNavBarButtonCamera);
         buttonFavorite = findViewById(R.id.bottomNavBarButtonFavorite);
         buttonProfile = findViewById(R.id.bottomNavBarButtonProfile);
 
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
-        buttonMap.setOnClickListener(onBottomNavBarButtonClicked);
         buttonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
         buttonProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Detail.class);
-                intent.putExtra("myKey", "Test");
+                Intent intent = new Intent(MainActivity.this, ProfileAcitivity.class);
                 startActivity(intent);
             }
         });
@@ -124,19 +119,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if (!Tools.isOnline(this))
+        if (!Tools.isOnline(this)) {
             startActivity(new Intent(this, NoInternetActivity.class));
-        else {
+        }
+        else{
 ////            firebaseUser = firebaseAuth.getCurrentUser();
 ////            if (firebaseUser == null) {
                 Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
                 startActivity(signInIntent);
 ////            } else {
 //                initCurrentUserDatabaseReference(currentUserDatabaseListener);
-////                initBooksDatabaseReference(booksDatabaseListener);
-////            }
+                initBooksDatabaseReference(booksDatabaseListener);
+            }
         }
-    }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {
         @Override
@@ -159,11 +154,11 @@ public class MainActivity extends AppCompatActivity {
     private final ValueEventListener booksDatabaseListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            Log.d(TAG, "All cats database changed.");
+            Log.d(TAG, "All books database changed.");
             Book.allBooks = new ArrayList<>();
-//            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                Book.allBooks.add(dataSnapshot.getValue(Book.class));
-//            }
+            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                Book.allBooks.add(dataSnapshot.getValue(Book.class));
+            }
             booksDataChangedListener.updateBooksRelatedViews();
         }
 

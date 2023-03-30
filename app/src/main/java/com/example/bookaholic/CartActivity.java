@@ -1,6 +1,7 @@
 package com.example.bookaholic;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import java.util.List;
 public class CartActivity extends AppCompatActivity {
     private RecyclerView mCartRecyclerView;
     private CartAdapter mCartAdapter;
+    private TextView mTotalPriceTextView;
     private List<Book> mBookList;
 
     @Override
@@ -21,17 +23,27 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        Comment comment = new Comment("name", 5);
+        Comment comment = new Comment("Good book", "Hao", R.drawable.img1,5);
         ArrayList<Comment> mComment = new ArrayList<>();
         mComment.add(comment);
 
         // Initialize the book list with some sample books
-        mBookList = new ArrayList<>();
-        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+        mBookList = Book.allBooks;
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 2, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
+
 
 
         // Get a reference to the RecyclerView
         mCartRecyclerView = findViewById(R.id.cartRecyclerView);
+        mTotalPriceTextView = findViewById(R.id.totalPriceTextView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mCartRecyclerView.setLayoutManager(layoutManager);
@@ -41,5 +53,13 @@ public class CartActivity extends AppCompatActivity {
 
         // Set the CartAdapter instance to the RecyclerView
         mCartRecyclerView.setAdapter(mCartAdapter);
+
+        // Calculate the total price
+        int totalPrice = 0;
+        for (Book book : mBookList) {
+            totalPrice += book.getPrice();
+        }
+        mTotalPriceTextView.setText("Total: " + totalPrice + " VNĐ");
+
     }
 }

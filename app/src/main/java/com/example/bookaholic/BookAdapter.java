@@ -4,10 +4,13 @@ import static android.content.ContentValues.TAG;
 
 import static com.example.bookaholic.FirebaseHelper.downloadFile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +45,53 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         }
     }
 
+    private void startBookDetailsActivity(Book book) {
+        try {
+            Intent intent = new Intent(context, Detail.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("bookName", book.getTitle());
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return books.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterByName(String queryText) {
+        this.books.clear();
+        if (TextUtils.isEmpty(queryText))
+            this.setBooks(Book.allBooks);
+        else {
+            for (Book book : Book.allBooks) {
+                if (book.hasNameSimilarTo(queryText))
+                    this.books.add(book.deepCopy());
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageView;
+        private TextView nameView, priceView, typesView, authorView;
+        private ConstraintLayout layout;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageview_book_home_itemview);
+            nameView = itemView.findViewById(R.id.textview_bookname_home_itemview);
+            priceView = itemView.findViewById(R.id.textview_bookprice_home_itemview);
+            typesView = itemView.findViewById(R.id.textview_booktype_home_itemview);
+            authorView = itemView.findViewById(R.id.textview_bookauthor_home_itemview);
+            layout = itemView.findViewById(R.id.layout_book_home_itemview);
+        }
+    }
+
     @NonNull
     @Override
     public BookAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,7 +105,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         try {
             Book book = books.get(position);
             Log.d(TAG, book.toString());
-            holder.imageView.setImageResource(book.getImageURL());
+            holder.imageView.setImageResource(Integer.parseInt(book.getImages().get(0)));
             holder.nameView.setText(book.getTitle());
             holder.priceView.setText(book.getDisplayablePrice());
             holder.typesView.setText(book.getCategory());
@@ -74,34 +124,35 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         }
     }
 
-    private void startBookDetailsActivity(Book book) {
-        try {
-            Intent intent = new Intent(context, Detail.class);
-            intent.putExtra("bookName", book.getTitle());
-            context.startActivity(intent);
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterByOptions(ArrayList<String> selectedType, Integer minPrice, Integer maxPrice, ArrayList<String> selectedAuthor) {
+        this.books.clear();
+        for (Book book : Book.allBooks) {
+            boolean matchAuthor = false;
+            boolean matchType = false;
+            String[] authors = book.getAuthor().replaceAll(" ", "").split(",");
+            String[] types = book.getCategory().replaceAll(" ", "").split(",");
+            for (String author : authors) {
+                if (selectedAuthor.contains(author)) {
+                    matchAuthor = true;
+                    break;
+                }
+            }
+
+            for (String type : types) {
+                if (selectedType.contains(type)) {
+                    matchType = true;
+                    break;
+                }
+            }
+
+            if ((selectedType.isEmpty() || matchType)
+                    && book.hasPriceInRange(minPrice, maxPrice)
+                    && (selectedAuthor.isEmpty() || matchAuthor)) {
+                this.books.add(book.deepCopy());
+            }
         }
+        notifyDataSetChanged();
     }
 
-    @Override
-    public int getItemCount() {
-        return books.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private TextView nameView, priceView, typesView, authorView;
-        private ConstraintLayout layout;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageview_book_home_itemview);
-            nameView = itemView.findViewById(R.id.textview_bookname_home_itemview);
-            priceView = itemView.findViewById(R.id.textview_bookprice_home_itemview);
-            typesView = itemView.findViewById(R.id.textview_booktype_home_itemview);
-            authorView = itemView.findViewById(R.id.textview_bookauthor_home_itemview);
-            layout = itemView.findViewById(R.id.layout_book_home_itemview);
-        }
-    }
 }
