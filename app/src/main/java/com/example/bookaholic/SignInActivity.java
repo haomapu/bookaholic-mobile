@@ -22,12 +22,12 @@ public class SignInActivity extends AppCompatActivity{
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_add_book);
 
-        btnLogin = findViewById(R.id.btnLogin);
-        emailLogin = findViewById(R.id.editEmailLogin);
-        passLogin = findViewById(R.id.editPasswordLogin);
-        btnSignUp = findViewById(R.id.btnSignUp);
+//        btnLogin = findViewById(R.id.btnLogin);
+//        emailLogin = findViewById(R.id.editEmailLogin);
+//        passLogin = findViewById(R.id.editPasswordLogin);
+//        btnSignUp = findViewById(R.id.btnSignUp);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

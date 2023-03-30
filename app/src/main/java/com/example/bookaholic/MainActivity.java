@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -123,17 +122,16 @@ public class MainActivity extends AppCompatActivity {
         if (!Tools.isOnline(this)) {
             startActivity(new Intent(this, NoInternetActivity.class));
         }
-//        else {
+        else{
 ////            firebaseUser = firebaseAuth.getCurrentUser();
-////            if (firebaseUser == null) {`
-//                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
-//                startActivity(signInIntent);
+////            if (firebaseUser == null) {
+                Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
+                startActivity(signInIntent);
 ////            } else {
-////                initCurrentUserDatabaseReference(currentUserDatabaseListener);
+//                initCurrentUserDatabaseReference(currentUserDatabaseListener);
                 initBooksDatabaseReference(booksDatabaseListener);
-////            }
-//        }
-    }
+            }
+        }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {
         @Override
