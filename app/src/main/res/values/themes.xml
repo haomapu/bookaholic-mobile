@@ -46,7 +46,7 @@
     </style>
 
     <style name="cartBtn">
-        <item name="android:src">@drawable/cart_button_no_dot_white</item>
+        <item name="android:src">@drawable/baseline_shopping_cart_32</item>
     </style>
 
     <style name="search">

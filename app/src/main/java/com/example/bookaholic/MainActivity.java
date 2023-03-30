@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     public static User currentSyncedUser;
 
     private ImageButton buttonHome;
-    private ImageButton buttonMap;
     private ImageButton buttonFavorite;
     private ImageButton buttonProfile;
     private Fragment fragmentMap, fragmentProfile;
@@ -66,13 +65,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentMap = new MapFragment();
         fragmentHome = new ProductListFragment();
         buttonHome = findViewById(R.id.bottomNavBarButtonHome);
-        buttonMap = findViewById(R.id.bottomNavBarButtonMap);
-        ImageButton buttonCamera = findViewById(R.id.bottomNavBarButtonCamera);
         buttonFavorite = findViewById(R.id.bottomNavBarButtonFavorite);
         buttonProfile = findViewById(R.id.bottomNavBarButtonProfile);
 
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
-        buttonMap.setOnClickListener(onBottomNavBarButtonClicked);
         buttonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,10 +106,6 @@ public class MainActivity extends AppCompatActivity {
                 userDataChangedListener = fragmentHome;
                 booksDataChangedListener = fragmentHome;
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
-            } else if (viewId == R.id.bottomNavBarButtonMap) {
-                Log.d(TAG, "Map button clicked!");
-                buttonMap.setImageResource(R.drawable.map_selected);
-                switchFragment(R.id.fragmentcontainerMainActivity, fragmentMap);
             } else {
                 Log.d(TAG, "Don't know which button clicked!");
             }
@@ -122,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void resetSelectedBottomNavbarButton() {
         buttonHome.setImageResource(R.drawable.home_unselected);
-        buttonMap.setImageResource(R.drawable.map_unselected);
     }
 
     @Override

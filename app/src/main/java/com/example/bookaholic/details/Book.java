@@ -9,7 +9,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
@@ -128,12 +130,9 @@ public class Book implements Serializable {
 
     @SuppressLint("DefaultLocale")
     public String getDisplayablePrice() {
-        try {
-            return String.format("%, d đ", price);
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-            return "N/A";
-        }
+        String str = NumberFormat.getNumberInstance(Locale.US).format(price);
+        str += " đ";
+        return str;
     }
 
     @Exclude

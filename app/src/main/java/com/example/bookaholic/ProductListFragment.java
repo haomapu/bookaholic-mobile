@@ -136,7 +136,7 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         buttonAuthorWhite.setOnClickListener(filterSelectListener);
         buttonAuthorBlack.setOnClickListener(filterSelectListener);
 
-        buttonFilter = view.findViewById(R.id.imagebutton_filter);
+        buttonFilter = view.findViewById(R.id.button_filter);
         buttonFilter.setOnClickListener(v -> showFilterMenu());
 
         micButton = view.findViewById(R.id.img_mic);

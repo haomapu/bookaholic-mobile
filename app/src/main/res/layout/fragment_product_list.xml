@@ -6,67 +6,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProductListFragment">
 
-    <ImageView
-        style="@style/logo"
-        android:id="@+id/imageview_home_app_logo"
-        android:layout_width="50dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/app_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textview_greeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchview_home"
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:background="@drawable/super_rounded_rectangle"
         android:layout_marginTop="20dp"
-        android:text="@string/hi"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/imageview_home_app_logo"
-        app:layout_constraintTop_toBottomOf="@id/imageview_home_app_logo" />
+        android:layout_marginStart="20dp"
+        android:paddingVertical="5dp"
+        app:iconifiedByDefault="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/textview_home_small_intro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/welcome_to_bookaholic"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/textview_greeting"
-        app:layout_constraintTop_toBottomOf="@id/textview_greeting" />
+    </androidx.appcompat.widget.SearchView>
 
     <ImageButton
         style="@style/cartBtn"
         android:id="@+id/imagebutton_home_mycart"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="30dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/cart"
         android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textview_greeting" />
+        app:layout_constraintStart_toEndOf="@id/button_filter"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchview_home"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:background="@drawable/super_rounded_rectangle"
-            android:layout_marginTop="20dp"
-            android:paddingEnd="15dp"
-            android:paddingStart="0dp"
-            android:paddingVertical="5dp"
-            app:iconifiedByDefault="false"
-            app:layout_constraintTop_toBottomOf="@id/textview_home_small_intro"
-            app:layout_constraintStart_toStartOf="@id/textview_home_small_intro"
-            app:layout_constraintEnd_toStartOf="@id/imagebutton_filter">
-
-        </androidx.appcompat.widget.SearchView>
 
     <ImageView
         android:layout_width="25dp"
@@ -79,22 +45,18 @@
         app:layout_constraintStart_toStartOf="@id/searchview_home"
         app:layout_constraintTop_toTopOf="@id/searchview_home" />
 
-
-
     <ImageButton
         style="@style/filter"
-        android:id="@+id/imagebutton_filter"
+        android:id="@+id/button_filter"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="30dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/filter"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@id/searchview_home"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/searchview_home"
-        app:layout_constraintTop_toTopOf="@id/searchview_home" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_home"
@@ -132,13 +94,14 @@
 
             <TextView
                 android:id="@+id/title_filter_menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_margin="20dp"
+                android:gravity="center"
                 android:text="@string/filter_title"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="?attr/colorOnSurface"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -150,7 +113,7 @@
                 android:text="@string/typeFilterTitle"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="?attr/colorOnSurface"
                 app:layout_constraintStart_toStartOf="@id/title_filter_menu"
                 app:layout_constraintTop_toBottomOf="@id/title_filter_menu" />
 
@@ -186,7 +149,7 @@
                 android:text="@string/authorFilterTitle"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="?attr/colorOnSurface"
                 app:layout_constraintStart_toStartOf="@id/button_select_filter_type_science"
                 app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_science" />
 
@@ -248,7 +211,7 @@
                 android:text="@string/priceFilterTitle"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="?attr/colorOnPrimary"
+                android:textColor="?attr/colorOnSurface"
                 app:layout_constraintStart_toStartOf="@id/title_filter_menu"
                 app:layout_constraintTop_toBottomOf="@id/button_select_filter_color_yellow" />
 

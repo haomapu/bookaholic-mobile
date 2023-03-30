@@ -37,31 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/bottomNavBarButtonMap"/>
-
-        <ImageButton
-            android:id="@+id/bottomNavBarButtonMap"
-            android:src="@drawable/map_unselected"
-            android:background="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:layout_width="30dp"
-            android:layout_height="39dp"
-            app:layout_constraintStart_toEndOf="@id/bottomNavBarButtonHome"
-            app:layout_constraintEnd_toStartOf="@id/bottomNavBarButtonCamera"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <ImageButton
-            style="@style/cameraBtn"
-            android:id="@+id/bottomNavBarButtonCamera"
-            android:background="@android:color/transparent"
-            android:scaleType="fitXY"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintEnd_toStartOf="@id/bottomNavBarButtonFavorite"
-            app:layout_constraintStart_toEndOf="@id/bottomNavBarButtonMap"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/bottomNavBarButtonFavorite"/>
 
         <ImageButton
             android:id="@+id/bottomNavBarButtonFavorite"
@@ -71,7 +47,7 @@
             android:layout_width="30dp"
             android:layout_height="39dp"
             app:layout_constraintEnd_toStartOf="@id/bottomNavBarButtonProfile"
-            app:layout_constraintStart_toEndOf="@id/bottomNavBarButtonCamera"
+            app:layout_constraintStart_toEndOf="@id/bottomNavBarButtonHome"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

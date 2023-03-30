@@ -24,9 +24,9 @@
     <TextView
         android:id="@+id/textview_bookname_home_itemview"
         android:text="Here to show book name"
-        android:textSize="16sp"
+        android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -37,8 +37,8 @@
     <TextView
         android:id="@+id/textview_bookprice_home_itemview"
         android:text="Here to show book price"
-        android:textSize="14sp"
-        android:textColor="?attr/colorOnPrimary"
+        android:textSize="20sp"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textview_bookname_home_itemview"
@@ -48,18 +48,18 @@
     <TextView
         android:id="@+id/textview_booktypetitle_home_itemview"
         android:text="@string/book_type"
-        android:textSize="12sp"
-        android:textColor="?attr/colorOnPrimary"
+        android:textSize="20sp"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textview_bookprice_home_itemview"
-        app:layout_constraintStart_toStartOf="@id/textview_bookprice_home_itemview"
-        app:layout_constraintBottom_toBottomOf="@id/imageview_book_home_itemview"/>
+        app:layout_constraintStart_toStartOf="@id/textview_bookname_home_itemview"
+        app:layout_constraintBottom_toTopOf="@id/textview_bookauthortitle_home_itemview"/>
 
     <TextView
         android:id="@+id/textview_booktype_home_itemview"
-        android:textSize="12sp"
-        android:textColor="?attr/colorOnSecondary"
+        android:textSize="20sp"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
@@ -70,18 +70,18 @@
     <TextView
         android:id="@+id/textview_bookauthortitle_home_itemview"
         android:text="@string/book_author"
-        android:textSize="12sp"
-        android:textColor="?attr/colorOnPrimary"
+        android:textSize="20sp"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textview_booktypetitle_home_itemview"
-        app:layout_constraintStart_toStartOf="@id/textview_bookprice_home_itemview"
+        app:layout_constraintStart_toStartOf="@id/textview_bookname_home_itemview"
         app:layout_constraintBottom_toBottomOf="@id/imageview_book_home_itemview"/>
 
     <TextView
         android:id="@+id/textview_bookauthor_home_itemview"
-        android:textSize="12sp"
-        android:textColor="?attr/colorOnSecondary"
+        android:textSize="20sp"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
