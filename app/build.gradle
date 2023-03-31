@@ -39,6 +39,7 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
     implementation 'com.nex3z:notification-badge:1.0.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'org.tensorflow:tensorflow-lite-gpu:2.9.0'
 

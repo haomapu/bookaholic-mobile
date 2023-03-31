@@ -11,47 +11,86 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class ReviewAdapter extends ArrayAdapter<Comment> {
-    private Context mContext;
-    private int mResource;
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
-    public ReviewAdapter(Context context, int resource, ArrayList<Comment> reviews) {
-        super(context, resource, reviews);
-        mContext = context;
-        mResource = resource;
+    private ArrayList<Comment> mDataList;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView avatarItem;
+        public TextView nameItem;
+        public TextView contentItem;
+        public RatingBar ratingBar;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            avatarItem = itemView.findViewById(R.id.avatarItem);
+            nameItem = itemView.findViewById(R.id.nameItem);
+            contentItem = itemView.findViewById(R.id.contentItem);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
+        }
     }
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        // Get the review for this position
-        Comment review = getItem(position);
+    public ReviewAdapter(ArrayList<Comment> dataList) {
+        mDataList = dataList;
+    }
 
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(mResource, parent, false);
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.review_item, parent, false);
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Comment comment = mDataList.get(position);
+        holder.avatarItem.setImageResource(comment.getAvatar());
+        holder.nameItem.setText(comment.getName());
+        holder.contentItem.setText(comment.getContent());
+        holder.ratingBar.setRating(comment.getRating());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDataList.size();
+    }
+
+    public static class MyData {
+        private int mAvatar;
+        private String mName;
+        private String mContent;
+        private float mRating;
+
+        public MyData(int avatar, String name, String content, float rating) {
+            mAvatar = avatar;
+            mName = name;
+            mContent = content;
+            mRating = rating;
         }
 
-        // Get references to the views in the list item layout
-        ImageView avatar = convertView.findViewById(R.id.avatarItem);
-        TextView name = convertView.findViewById(R.id.nameItem);
-        TextView content;
-        content = convertView.findViewById(R.id.contentItem);
-        RatingBar ratingBar = convertView.findViewById(R.id.ratingBar);
+        public int getAvatar() {
+            return mAvatar;
+        }
 
-        // Set the values for the views using the review data
-        avatar.setImageResource(review.getAvatar());
-        name.setText(review.getName());
-        content.setText(review.getContent());
-        ratingBar.setRating(review.getRating());
+        public String getName() {
+            return mName;
+        }
 
-        // Return the completed view to render on screen
-        return convertView;
+        public String getContent() {
+            return mContent;
+        }
+
+        public float getRating() {
+            return mRating;
+        }
     }
 }
+
