@@ -2,18 +2,19 @@ package com.example.bookaholic;
 
 import com.example.bookaholic.details.Book;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Order {
-    private List<Book> orderBooks;
+    private ArrayList<OrderBook> orderBooks;
     private User user;
     private String address;
     private double totalPrice;
     private String orderStatus;
     private Date createdAt;
 
-    public Order(List<Book> orderBooks, User user, String address, double totalPrice, String orderStatus, Date createdAt) {
+    public Order(ArrayList<OrderBook> orderBooks, User user, String address, double totalPrice, String orderStatus, Date createdAt) {
         this.orderBooks = orderBooks;
         this.user = user;
         this.address = address;
@@ -22,11 +23,11 @@ public class Order {
         this.createdAt = createdAt;
     }
 
-    public List<Book> getOrderBooks() {
+    public ArrayList<OrderBook> getOrderBooks() {
         return orderBooks;
     }
 
-    public void setOrderBooks(List<Book> orderBooks) {
+    public void setOrderBooks(ArrayList<OrderBook> orderBooks) {
         this.orderBooks = orderBooks;
     }
 
