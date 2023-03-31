@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookaholic.details.Book;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class ProductListFragment extends Fragment implements UserDataChangedListener, BooksDataChangedListener{
@@ -60,6 +61,9 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     ArrayList<String> selectedType = new ArrayList<>();
     ArrayList<String> selectedAuthor = new ArrayList<>();
     Integer minPrice = null, maxPrice = null;
+
+    private RecyclerView bestSellerRecyclerView;
+    private BestSellerAdapter bestSellerAdapter;
 
     public ProductListFragment() {
 
@@ -88,7 +92,7 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "MissingInflatedId"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -101,6 +105,15 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         recyclerView = view.findViewById(R.id.recyclerview_home);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+//        bestSellerAdapter = new BestSellerAdapter(view.getContext(), Book.allBooks);
+//        bestSellerRecyclerView = view.findViewById(R.id.bestSellerRecyclerView);
+//        bestSellerRecyclerView.setHasFixedSize(true);
+//        bestSellerRecyclerView.setAdapter(bestSellerAdapter);
+//        bestSellerRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext() , LinearLayoutManager.HORIZONTAL , false));
+
+
+
 
         progressBar = view.findViewById(R.id.progressbar_home_fragment);
         updateProgressBar();
