@@ -11,48 +11,50 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.bookaholic.R;
 
 import java.util.ArrayList;
 
-public class GridAdapter extends BaseAdapter {
+public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Book> mItems;
-    TextView textView;
-    ImageView imageView;
+
     public GridAdapter(Context context, ArrayList<Book> items) {
         mContext = context;
         mItems = items;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.grid_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Book item = mItems.get(position);
+        holder.imageView.setImageResource(item.getImageResId());
+        holder.textView.setText(item.getTitle());
+    }
+
+    @Override
+    public int getItemCount() {
         return mItems.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return mItems.get(position);
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        TextView textView;
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-        View view = inflater.inflate(R.layout.grid_item, null);
-
-        Book item = mItems.get(position);
-        imageView = view.findViewById(R.id.imageView);
-        imageView.setImageResource(item.getImageResId());
-
-        textView = view.findViewById(R.id.textView);
-        textView.setText(item.getTitle());
-
-        return view;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
+            textView = itemView.findViewById(R.id.textView);
+        }
     }
 }

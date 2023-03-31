@@ -28,6 +28,7 @@ public class Detail extends AppCompatActivity {
     private ViewGroup imageListView;
     private ImageView imageSelected;
     private TextView descriptionTxt;
+    private ImageView returnBtn;
     private TextView titleTxt;
 
     private TextView priceTxt;
@@ -36,7 +37,7 @@ public class Detail extends AppCompatActivity {
     private Button addToCartButton;
     private NotificationBadge shopping_badge;
     private Book currentBook;
-    GridView gridView;
+    RecyclerView gridView;
     RecyclerView commentListView;
     int countCart = 0;
     ArrayList<Book> itemList = new ArrayList<>();
@@ -54,7 +55,13 @@ public class Detail extends AppCompatActivity {
         initShowButton();
         initComment();
 //        ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
-
+        returnBtn = findViewById(R.id.returnBtn);
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         imageListView = findViewById(R.id.imageListView);
         imageSelected = findViewById(R.id.imageSelected);
 //        imageListView.setAdapter(imageAdapter);
@@ -124,7 +131,7 @@ public class Detail extends AppCompatActivity {
 
     public void initRecommend(){
         gridView = findViewById(R.id.gridview);
-        GridAdapter adapter = new GridAdapter(this, itemList);
+        GridAdapter adapter = new GridAdapter(this, Book.allBooks);
         gridView.setAdapter(adapter);
     }
 
