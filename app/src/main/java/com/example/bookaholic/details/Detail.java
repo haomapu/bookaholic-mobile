@@ -14,13 +14,17 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 
-public class Detail extends Activity {
+public class Detail extends AppCompatActivity {
     private ViewGroup imageListView;
     private ImageView imageSelected;
     private TextView descriptionTxt;
@@ -33,7 +37,7 @@ public class Detail extends Activity {
     private NotificationBadge shopping_badge;
     private Book currentBook;
     GridView gridView;
-    ListView commentListView;
+    RecyclerView commentListView;
     int countCart = 0;
     ArrayList<Book> itemList = new ArrayList<>();
 //    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
@@ -47,6 +51,7 @@ public class Detail extends Activity {
         initAddToCartButton();
         initRecommend();
         initBasicInfo();
+        initShowButton();
         initComment();
 //        ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
 
@@ -95,7 +100,7 @@ public class Detail extends Activity {
         descriptionTxt = findViewById(R.id.descriptionTxt);
 
         titleTxt.setText(currentBook.getTitle());
-        priceTxt.setText(currentBook.getPrice().toString());
+        priceTxt.setText(currentBook.getPriceFormat());
         ratingBar.setRating(currentBook.getRateAvg());
         descriptionTxt.setText(currentBook.getDescription());
         descriptionTxt.setOnClickListener(new View.OnClickListener() {
@@ -108,22 +113,16 @@ public class Detail extends Activity {
     ArrayList<Comment> comments = new ArrayList<>();
 
     public void initComment(){
-// Create the adapter and set it to the ListView
-        ReviewAdapter reviewAdapter = new ReviewAdapter(this, R.layout.review_item, currentBook.getComments());
+        for (int i = 0; i < currentBook.getComments().size() && i < 2; i++){
+            comments.add(currentBook.getComments().get(i));
+        }
+        ReviewAdapter adapter = new ReviewAdapter(comments);
+
         commentListView = findViewById(R.id.commentListView);
-        commentListView.setAdapter(reviewAdapter);
+        commentListView.setAdapter(adapter);
     }
 
     public void initRecommend(){
-        comments.add(new Comment("Good book", "Hao", R.drawable.img1, 5));
-//        Book book1 = new Book("test", "test", "test", "test", "test",comments , 100, R.drawable.img1);
-//        itemList.add(book1);
-//        itemList.add(book1);
-//        itemList.add(book1);
-//        itemList.add(book1);
-//        itemList.add(new Book("test2", "test", "test", "test", "test",comments , 100, R.drawable.img2));
-//        itemList.add(new Book("test3", "test", "test", "test", "test",comments , 100, R.drawable.img3));
-//        itemList.add(new Book("test4", "test", "test", "test", "test",comments , 100, R.drawable.img4));
         gridView = findViewById(R.id.gridview);
         GridAdapter adapter = new GridAdapter(this, itemList);
         gridView.setAdapter(adapter);
@@ -150,5 +149,18 @@ public class Detail extends Activity {
             textView.setMaxLines(4);
             textView.setEllipsize(TextUtils.TruncateAt.END);
         }
+    }
+
+    private void initShowButton(){
+        Button showBottomSheetButton = findViewById(R.id.show_bottom_sheet_button);
+        showBottomSheetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments());
+                bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
+            }
+
+        });
+
     }
 }

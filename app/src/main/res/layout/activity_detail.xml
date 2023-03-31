@@ -128,11 +128,29 @@
         android:textStyle="bold"
         android:padding="10dp"/>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentListView"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
+        app:layoutManager="LinearLayoutManager"
         android:nestedScrollingEnabled="false" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/show_bottom_sheet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Bottom Sheet" />
+
+    </LinearLayout>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/recommendTitleTxt"
         android:layout_width="match_parent"
@@ -145,7 +163,7 @@
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="960dp"
+        android:layout_height="wrap_content"
         android:nestedScrollingEnabled="false"
         android:numColumns="2"
         android:padding="10dp"/>

@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -96,6 +97,12 @@ public class Book implements Serializable {
 
     public Integer getPrice() {
         return price;
+    }
+
+    public String getPriceFormat() {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedNumber = formatter.format(price);
+        return price + " VND";
     }
 
     public void setPrice(int price) {
