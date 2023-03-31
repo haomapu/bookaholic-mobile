@@ -50,5 +50,10 @@
         android:layout_alignParentEnd="true"
         style="?android:attr/ratingBarStyleSmall" />
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-20dp"
+        android:src="@drawable/divider_item"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

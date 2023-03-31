@@ -29,15 +29,6 @@ public class CartActivity extends AppCompatActivity {
 
         // Initialize the book list with some sample books
         mBookList = Book.allBooks;
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 2, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
-//        mBookList.add(new Book("Book 1", "Hai", "Category", "Description", "DownloadUrl", mComment, 1, R.drawable.img1  ));
 
 
 
