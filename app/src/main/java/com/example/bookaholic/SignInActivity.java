@@ -22,12 +22,12 @@ public class SignInActivity extends AppCompatActivity{
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_book);
+        setContentView(R.layout.activity_login);
 
-//        btnLogin = findViewById(R.id.btnLogin);
-//        emailLogin = findViewById(R.id.editEmailLogin);
-//        passLogin = findViewById(R.id.editPasswordLogin);
-//        btnSignUp = findViewById(R.id.btnSignUp);
+        btnLogin = findViewById(R.id.btnLogin);
+        emailLogin = findViewById(R.id.editEmailLogin);
+        passLogin = findViewById(R.id.editPasswordLogin);
+        btnSignUp = findViewById(R.id.btnSignUp);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +42,7 @@ public class SignInActivity extends AppCompatActivity{
                     showToast(SignInActivity.this, R.string.empty_text);
 //                valid với firebase ở đây
                 else if (email.equals("giahai") && password.equals("123")) {
-                    Intent intent = new Intent(SignInActivity.this, Detail.class);
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
                 else
