@@ -2,20 +2,30 @@ package com.example.bookaholic;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import static com.example.bookaholic.MainActivity.firebaseAuth;
+import static com.example.bookaholic.MainActivity.firebaseUser;
 import static com.example.bookaholic.Tools.showToast;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bookaholic.details.Detail;
 import com.example.bookaholic.SignUpActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
 
 public class SignInActivity extends AppCompatActivity{
+    private ProgressBar progressBarSignIn;
+    private static final String TAG = "SignInActivity";
     private Button btnLogin;
     private TextView btnSignUp;
     private TextInputEditText emailLogin, passLogin;
@@ -38,17 +48,19 @@ public class SignInActivity extends AppCompatActivity{
 
                 boolean validInputs = !email.equals("") && !password.equals("");
 
-                if (!validInputs)
+                if (!validInputs) {
                     showToast(SignInActivity.this, R.string.empty_text);
-//                valid với firebase ở đây
-                else if (email.equals("giahai") && password.equals("123")) {
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    startActivity(intent);
+                } else {
+//                    progressBarSignIn.setVisibility(ProgressBar.VISIBLE);
+                    if (firebaseAuth != null)
+                        firebaseAuth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(onSignInComplete);
+                    else
+                        Log.d(TAG, "handleSignInSubmit: firebaseAuth is null");
                 }
-                else
-                    showToast(SignInActivity.this, R.string.fail_login);
             }
         });
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,5 +68,29 @@ public class SignInActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+    }
+
+    private final OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+//            progressBarSignIn.setVisibility(ProgressBar.GONE);
+            if (task.isSuccessful()) {
+                firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    if (!firebaseUser.isEmailVerified())
+                        showToast(SignInActivity.this, R.string.you_havent_verify_email);
+                    else {
+                        showToast(SignInActivity.this, R.string.sign_in_sucess);
+                        startMainActivity();
+                    }
+                }
+            } else showToast(SignInActivity.this, R.string.sign_in_failed);
+        }
+    };
+
+    private void startMainActivity() {
+        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
         fragmentMap = new MapFragment();
         fragmentHome = new ProductListFragment();
         buttonHome = findViewById(R.id.bottomNavBarButtonHome);
@@ -121,17 +124,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (!Tools.isOnline(this)) {
             startActivity(new Intent(this, NoInternetActivity.class));
-        }
-        else{
-////            firebaseUser = firebaseAuth.getCurrentUser();
-////            if (firebaseUser == null) {
-//                Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
-//                startActivity(signInIntent);
-////            } else {
-//                initCurrentUserDatabaseReference(currentUserDatabaseListener);
+        } else {
+            firebaseUser = firebaseAuth.getCurrentUser();
+            if (firebaseUser == null) {
+                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
+                startActivity(signInIntent);
+            } else {
+                initCurrentUserDatabaseReference(currentUserDatabaseListener);
                 initBooksDatabaseReference(booksDatabaseListener);
             }
         }
+    }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {
         @Override
