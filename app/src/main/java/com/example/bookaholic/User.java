@@ -1,5 +1,12 @@
 package com.example.bookaholic;
 
+import static com.example.bookaholic.MainActivity.firebaseAuth;
+import static com.example.bookaholic.MainActivity.firebaseUser;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,10 +15,12 @@ public class User {
     private String fullName, phoneNumber, address, email;
     private ArrayList<Integer> favoriteBookIds = new ArrayList<>();
     private Map<String, Integer> quantityByBookId = new HashMap<>();
-    public User(String fullName, String phoneNumber, String address, String email) {
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
+
+    public User() {
+    }
+    public User(String fullName, String phoneNumber, String email) {
+        this.fullName = "";
+        this.phoneNumber = "";
         this.email = email;
     }
 
@@ -70,5 +79,15 @@ public class User {
 
     public void setQuantityByBookId(Map<String, Integer> quantityByBookId) {
         this.quantityByBookId = quantityByBookId;
+    }
+
+
+    @Exclude
+    public Task<Void> saveToDatabase() {
+        firebaseUser = firebaseAuth.getCurrentUser();
+        return FirebaseDatabase.getInstance()
+                .getReference("Users")
+                .child(firebaseUser.getUid())
+                .setValue(this);
     }
 }

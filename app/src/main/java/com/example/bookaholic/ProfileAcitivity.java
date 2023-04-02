@@ -2,15 +2,22 @@ package com.example.bookaholic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.bookaholic.SignInActivity;
+import com.example.bookaholic.AddBook;
 
 public class ProfileAcitivity extends AppCompatActivity {
     private ImageView profilePictureImageView;
     private TextView userNameTextView;
     private TextView userEmailTextView;
     private TextView userBioTextView;
+    private Button addBook, logOut;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +27,23 @@ public class ProfileAcitivity extends AppCompatActivity {
         userNameTextView = findViewById(R.id.user_name);
         userEmailTextView = findViewById(R.id.user_email);
 //        userBioTextView = findViewById(R.id.user_bio);
+
+        addBook = findViewById(R.id.add_book_button);
+        logOut = findViewById(R.id.logout_button);
+        addBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAcitivity.this, AddBook.class);
+                startActivity(intent);
+            }
+        });
+
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileAcitivity.this, SignInActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

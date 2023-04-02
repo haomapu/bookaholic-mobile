@@ -15,6 +15,15 @@
     <string name="app_logo">App Logo</string>
     <string name="example_description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="try_connect_again">Thử kết nối lại</string>
+    <string name="you_havent_verify_email">Bạn chưa xác thực tài khoản, hãy kiểm tra email để xác thực tài khoản nhé</string>
+    <string name="sign_in_sucess">Đăng nhập thành công!</string>
+    <string name="sign_in_failed">Đăng nhập không thành công! Vui lòng đảm bảo kết nối internet và kiểm tra lại email, mật khẩu</string>
+    <string name="error_occurred_pls_try_again_later">Đã có lỗi xảy ra, xin thông cảm và thử lại sau.</string>
+    <string name="invalid_email">Địa chỉ Email không hợp lệ!</string>
+    <string name="failed_to_register">Đăng kí tài khoản không thành công!\nCó thể email này đã được sử dụng</string>
+    <string name="invalid_password">Mật khẩu không hợp lệ! Mật khẩu phải chứa ít nhất 6 kí tự và không chứa khoảng trắng</string>
+    <string name="register_successful">Đăng kí tài khoản thành công! Vui lòng kiểm tra email để xác thực tài khoản trước khi đăng nhập!</string>
+    <string name="send_verification_email_failed">Gửi email xác thực không thành công! Vui lòng thử lại sau</string>
     <string name="please_check_your_internet">Vui lòng kiểm tra lại kết nối internet!</string>
     <string name="oops_no_internet">Kết nối thất bại!</string>
     <string name="still_no_internet"><![CDATA[Vẫn chưa có kết nối internet]]></string>
