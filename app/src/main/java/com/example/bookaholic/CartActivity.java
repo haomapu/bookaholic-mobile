@@ -30,8 +30,6 @@ public class CartActivity extends AppCompatActivity {
         // Initialize the book list with some sample books
         mBookList = Book.allBooks;
 
-
-
         // Get a reference to the RecyclerView
         mCartRecyclerView = findViewById(R.id.cartRecyclerView);
         mTotalPriceTextView = findViewById(R.id.totalPriceTextView);
@@ -40,7 +38,7 @@ public class CartActivity extends AppCompatActivity {
         mCartRecyclerView.setLayoutManager(layoutManager);
 
         // Create an instance of the CartAdapter class and pass the book list to its constructor
-        mCartAdapter = new CartAdapter(mBookList);
+        mCartAdapter = new CartAdapter(mBookList, this);
 
         // Set the CartAdapter instance to the RecyclerView
         mCartRecyclerView.setAdapter(mCartAdapter);

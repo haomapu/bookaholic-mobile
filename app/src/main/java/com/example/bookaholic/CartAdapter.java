@@ -1,25 +1,33 @@
 package com.example.bookaholic;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bookaholic.details.Book;
+import com.example.bookaholic.details.Detail;
 
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private List<Book> mBookList;
+    private Context context;
 
-    public CartAdapter(List<Book> bookList) {
+    public CartAdapter(List<Book> bookList, Context context) {
+        this.context = context;
         mBookList = bookList;
     }
 
@@ -28,6 +36,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         public TextView bookNameTextView;
         public TextView bookQuantityTextView;
         public TextView bookPriceTextView;
+        private LinearLayout layout;
 
         public CartViewHolder(View itemView) {
             super(itemView);
@@ -36,6 +45,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             bookNameTextView = itemView.findViewById(R.id.bookNameTextView);
             bookQuantityTextView = itemView.findViewById(R.id.bookQuantityTextView);
             bookPriceTextView = itemView.findViewById(R.id.bookPriceTextView);
+            layout = itemView.findViewById(R.id.cartItemLayout);
         }
     }
     @Override
@@ -57,10 +67,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         holder.bookNameTextView.setText(book.getTitle());
         holder.bookQuantityTextView.setText("1");
-        holder.bookPriceTextView.setText("VNĐ" + book.getPrice());
+        holder.bookPriceTextView.setText(book.getDisplayablePrice());
         holder.bookImageView.setImageResource(book.getImageResId());
+        holder.layout.setOnClickListener(v -> startBookDetailsActivity(book));
     }
-
+    private void startBookDetailsActivity(Book book) {
+        try {
+            Intent intent = new Intent(context, Detail.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("bookName", book.getTitle());
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+        }
+    }
     @Override
     public int getItemCount() {
         return mBookList.size();
