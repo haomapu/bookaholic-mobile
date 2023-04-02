@@ -69,6 +69,7 @@ public class AddBook extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(AddBook.this, ProfileAcitivity.class));
                 finish();
             }
         });

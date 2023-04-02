@@ -16,8 +16,6 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bookaholic.details.Detail;
-import com.example.bookaholic.SignUpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,8 +25,9 @@ public class SignInActivity extends AppCompatActivity{
     private ProgressBar progressBarSignIn;
     private static final String TAG = "SignInActivity";
     private Button btnLogin;
-    private TextView btnSignUp;
+    private TextView btnSignUp, forgetPass;
     private TextInputEditText emailLogin, passLogin;
+    private String email, password;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,11 +37,11 @@ public class SignInActivity extends AppCompatActivity{
         emailLogin = findViewById(R.id.editEmailLogin);
         passLogin = findViewById(R.id.editPasswordLogin);
         btnSignUp = findViewById(R.id.btnSignUp);
+        forgetPass = findViewById(R.id.forgotLogin);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email, password;
                 email = Objects.requireNonNull(emailLogin.getText()).toString();
                 password = Objects.requireNonNull(passLogin.getText()).toString();
 
@@ -65,6 +64,14 @@ public class SignInActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        forgetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignInActivity.this, ForgotPassword.class);
                 startActivity(intent);
             }
         });
