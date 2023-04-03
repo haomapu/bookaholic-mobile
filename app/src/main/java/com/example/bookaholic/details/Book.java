@@ -102,7 +102,7 @@ public class Book implements Serializable {
     public String getPriceFormat() {
         DecimalFormat formatter = new DecimalFormat("#,###");
         String formattedNumber = formatter.format(price);
-        return price + " VND";
+        return formattedNumber + " VND";
     }
 
     public void setPrice(int price) {

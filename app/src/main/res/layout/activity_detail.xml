@@ -48,6 +48,10 @@
     android:orientation="vertical"
     android:background="?attr/colorOnPrimary">
 
+    <ImageView
+        android:id="@+id/my_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/imageSelected"
@@ -68,28 +72,29 @@
         android:padding="5dip"/>
     </HorizontalScrollView>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/titleTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="27dip"
-        android:text="Harry Potter"
-        android:layout_marginHorizontal="10dp"
-        android:textStyle="bold"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:orientation="horizontal">
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/titleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="27dip"
+        android:text="Harry Potter"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"/>
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/priceTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:text="10000vnd"
-        android:textSize="16dp"
+        android:textSize="27dp"
         android:textColor="?attr/colorPrimary"
-        android:layout_alignParentStart="true"/>
+        android:layout_below="@id/titleTxt"
+        />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -106,7 +111,48 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:layout_toEndOf="@id/ratingBar"/>
+    <ImageView
+        android:id="@+id/image_view_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_favorite_32"
+        android:layout_below="@id/titleTxt"
+        android:layout_alignParentEnd="true"
+        app:tint="@color/black" />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="?attr/colorOnSurfaceInverse"/>
+    <FrameLayout
+        android:id="@+id/fragmentBookDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/showBookDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:text="Show More" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="?attr/colorOnSurfaceInverse"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/descriptionTitleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="Description"
+        android:layout_marginHorizontal="10dp"
+        android:textStyle="bold" />
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/descriptionTxt"
         android:layout_height="wrap_content"
@@ -115,7 +161,14 @@
         android:textAlignment="textStart"
         android:padding="10dp"
         android:maxLines="4"
-        android:ellipsize="end" />
+        android:ellipsize="end"
+        android:layout_below="@+id/descriptionTitleTxt"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="?attr/colorOnSurfaceInverse"/>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/reviewTitletxt"
         android:layout_width="match_parent"
@@ -131,20 +184,20 @@
         android:layout_height="wrap_content"
         app:layoutManager="LinearLayoutManager"
         android:nestedScrollingEnabled="false" />
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/show_bottom_sheet_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:text="Show More" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/show_bottom_sheet_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:text="Show More" />
-
-    </LinearLayout>
-
+        android:layout_height="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="?attr/colorOnSurfaceInverse"/>
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/recommendTitleTxt"
         android:layout_width="match_parent"
@@ -161,12 +214,19 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         android:padding="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginVertical="10dp"
+        android:background="?attr/colorOnSurfaceInverse"/>
 </LinearLayout>
 </ScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:minHeight="60dp"
+        android:padding="0dp"
         android:layout_weight="1"
         android:background="?attr/colorPrimaryContainer">
         <Button
@@ -176,7 +236,8 @@
             android:layout_weight="1"
             app:icon="@drawable/baseline_add_shopping_cart_24"
             app:iconGravity="textStart"
-            style="@style/Widget.AppCompat.Button"
+            android:tint="?attr/colorOnSurfaceInverse"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:gravity="center"
             android:paddingHorizontal="20dp"
             app:iconPadding="0dp"
@@ -190,9 +251,12 @@
             app:icon="@drawable/baseline_add_shopping_cart_24"
             android:paddingHorizontal="20dp"
             app:iconGravity="textStart"
-            style="@style/Widget.AppCompat.Button"
+
+            style="@style/CustomBorderlessButton"
             android:gravity="center"
             app:iconPadding="0dp"
             app:iconSize="24dp" />
+
     </LinearLayout>
+
 </LinearLayout>

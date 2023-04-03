@@ -11,7 +11,7 @@
     android:layout_gravity="bottom"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    app:cardCornerRadius="48dp">
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+<TextView
+    android:id="@+id/tableTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Book Details"
+    android:textSize="20sp"
+    android:textStyle="bold"
+    android:paddingBottom="16dp"/>
+
+<TableLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:padding="16dp">
+
+
+        <TableRow>
+            <TextView
+                android:id="@+id/author"
+                android:text="Author"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/authorContent"
+                android:text="John Doe"
+                android:layout_column="2"
+                android:padding="5dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/category"
+                android:text="Category"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/categoryContent"
+                android:text="Science"
+                android:layout_column="2"
+                android:padding="5dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/date"
+                android:text="Date of Print"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/dateContent"
+                android:text="2022-03-23"
+                android:layout_column="2"
+                android:padding="5dp"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/size"
+                android:text="Size"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/sizeContent"
+                android:text="15x20 cm"
+                android:layout_column="2"
+                android:padding="5dp"/>
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+                android:id="@+id/numberPage"
+                android:text="Number of Pages"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/numberPageContent"
+                android:text="100"
+                android:layout_column="2"
+                android:padding="5dp"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/coverType"
+                android:text="Cover Type"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:padding="5dp"/>
+            <TextView
+                android:id="@+id/coverTypeContent"
+                android:text="Hardcover"
+                android:layout_column="2"
+                android:padding="5dp"/>
+        </TableRow>
+
+
+</TableLayout>
+</LinearLayout>

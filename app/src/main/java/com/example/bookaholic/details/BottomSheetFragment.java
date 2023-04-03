@@ -29,46 +29,65 @@ import java.util.ArrayList;
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = "BottomSheetFragment";
+    private String mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent;
 
     private CardView mCardView;
     FragmentTransaction fragmentManager;
-    RecyclerView commentListView;
+    Integer type;
     ArrayList<Comment> comments;
-    public BottomSheetFragment(ArrayList<Comment> comments) {
+    public BottomSheetFragment(ArrayList<Comment> comments, Integer type) {
         this.comments = comments;
-        // Required empty public constructor
+        this.type = type;
     }
+ public BottomSheetFragment(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,String numberPageContent, Integer type) {
+     this.mAuthorContent = authorContent;
+     this.mCategoryContent = categoryContent;
+     this.mDateContent = dateContent;
+     this.mCoverTypeContent = coverTypeContent;
+     this.mSizeContent = sizeContent;
+     this.mNumberPageContent = numberPageContent;
+     this.type = type;
+
+ }
 
 
-    public static BottomSheetFragment newInstance(ArrayList<Comment> comments) {
-        return new BottomSheetFragment(comments);
+    public static BottomSheetFragment newInstance(ArrayList<Comment> comments, Integer type) {
+        return new BottomSheetFragment(comments, type);
     }
-
+    public static BottomSheetFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,String numberPageContent, Integer type) {
+        return new BottomSheetFragment(authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent, type);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
-//        initComment(view);
         mCardView = view.findViewById(R.id.cardView);
         mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Do nothing to prevent dismissing the fragment when clicking on the card
             }
         });
         fragmentManager = getChildFragmentManager().beginTransaction();
-        ReviewFragment reviewFragment = ReviewFragment.newInstance(comments);
+        if (type == 1) {
+            ReviewFragment reviewFragment = ReviewFragment.newInstance(comments);
 
-        fragmentManager.replace(R.id.fragmentContainer, reviewFragment);
-        fragmentManager.commit();
+            fragmentManager.replace(R.id.fragmentContainer, reviewFragment);
+            fragmentManager.commit();
+        }
+        else if (type == 2) {
+            DetailFragment detailFragment = DetailFragment.newInstance(mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent);
+
+            fragmentManager.replace(R.id.fragmentContainer, detailFragment);
+            fragmentManager.commit();
+        }
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Set the height of the dialog to wrap content
         Dialog dialog = getDialog();
         if (dialog != null) {
             dialog.getWindow().setGravity(Gravity.BOTTOM);
