@@ -1,23 +1,26 @@
 package com.example.bookaholic.details;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
 import com.nex3z.notificationbadge.NotificationBadge;
@@ -37,6 +40,8 @@ public class Detail extends AppCompatActivity {
     private Button addToCartButton;
     private NotificationBadge shopping_badge;
     private Book currentBook;
+    FragmentTransaction fragmentTransaction;
+
     RecyclerView gridView;
     RecyclerView commentListView;
     int countCart = 0;
@@ -54,7 +59,8 @@ public class Detail extends AppCompatActivity {
         initBasicInfo();
         initShowButton();
         initComment();
-//        ImageAdapter imageAdapter = new ImageAdapter(this, R.layout.image_detail, images);
+        initFavorite();
+        initBookDetail();
         returnBtn = findViewById(R.id.returnBtn);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +70,7 @@ public class Detail extends AppCompatActivity {
         });
         imageListView = findViewById(R.id.imageListView);
         imageSelected = findViewById(R.id.imageSelected);
-//        imageListView.setAdapter(imageAdapter);
-//
-//        imageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                imageSelected.setImageResource(images[position].getImageID());
-//            }
-//        });
+
         ArrayList<String> images = currentBook.getImages();
 
         imageSelected.setImageResource(Integer.parseInt(images.get(0)));
@@ -99,7 +98,20 @@ public class Detail extends AppCompatActivity {
         //Set data to screen
 
     }
-
+    public void initFavorite(){
+        ImageView imageViewHeart = findViewById(R.id.image_view_heart);
+        imageViewHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (true){
+                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.black), PorterDuff.Mode.SRC_IN);
+                }
+                else {
+                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
+                }
+            }
+        });
+    }
     public void initBasicInfo(){
         titleTxt = findViewById(R.id.titleTxt);
         priceTxt = findViewById(R.id.priceTxt);
@@ -107,7 +119,7 @@ public class Detail extends AppCompatActivity {
         descriptionTxt = findViewById(R.id.descriptionTxt);
 
         titleTxt.setText(currentBook.getTitle());
-        priceTxt.setText(currentBook.getPriceFormat());
+        priceTxt.setText(currentBook.getDisplayablePrice());
         ratingBar.setRating(currentBook.getRateAvg());
         descriptionTxt.setText(currentBook.getDescription());
         descriptionTxt.setOnClickListener(new View.OnClickListener() {
@@ -157,13 +169,29 @@ public class Detail extends AppCompatActivity {
             textView.setEllipsize(TextUtils.TruncateAt.END);
         }
     }
+    private void initBookDetail(){
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        DetailFragment detailFragment = DetailFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages");
+
+        fragmentTransaction.replace(R.id.fragmentBookDetail, detailFragment);
+        fragmentTransaction.commit();
+    }
 
     private void initShowButton(){
         Button showBottomSheetButton = findViewById(R.id.show_bottom_sheet_button);
+        Button showBookDetail = findViewById(R.id.showBookDetail);
         showBottomSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments());
+                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments(), 1);
+                bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
+            }
+
+        });
+        showBookDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages", 2);
                 bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
             }
 
