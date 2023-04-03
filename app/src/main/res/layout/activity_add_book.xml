@@ -63,19 +63,33 @@
                 android:textColor="@android:color/black"
                 android:background="@drawable/edit_text_border"/>
 
-            <Spinner
-                android:id="@+id/categoryBook"
+            <LinearLayout
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="50dp"
-                android:layout_marginStart="50dp"
-                android:gravity="start|center_vertical"
-                android:hint="Category"
-                android:textColor="@android:color/black"
-                android:background="@drawable/edit_text_border"
-                android:spinnerMode="dropdown"/>
+                android:layout_marginStart="50dp">
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:paddingStart="5dp"
+                    android:text="Category: "
+                    android:gravity="start|center_vertical"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/edit_text_border"
+                    android:textSize="17dp"/>
 
+                <Spinner
+                    android:id="@+id/categoryBook"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:paddingStart="100dp"
+                    android:gravity="start|center_vertical"
+                    android:hint="Category"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/edit_text_border"
+                    android:spinnerMode="dropdown"/>
+            </LinearLayout>
             <EditText
                 android:id="@+id/priceBook"
                 android:layout_width="350dp"
@@ -115,6 +129,7 @@
                 android:paddingStart="5dp"
                 android:gravity="start|center_vertical"
                 android:text="Date: "
+                android:textSize="17dp"
                 android:textColor="@android:color/black"
                 android:background="@drawable/edit_text_border"/>
 

@@ -125,13 +125,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, NoInternetActivity.class));
         } else {
             firebaseUser = firebaseAuth.getCurrentUser();
-            if (firebaseUser == null) {
-                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
+//            if (firebaseUser == null) {
+//                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
+//                startActivity(signInIntent);
+//            } else {
+//                initCurrentUserDatabaseReference(currentUserDatabaseListener);
+//                initBooksDatabaseReference(booksDatabaseListener);
+//            }
+            Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
                 startActivity(signInIntent);
-            } else {
-                initCurrentUserDatabaseReference(currentUserDatabaseListener);
-                initBooksDatabaseReference(booksDatabaseListener);
-            }
         }
     }
 

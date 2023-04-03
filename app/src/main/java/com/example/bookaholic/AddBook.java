@@ -1,5 +1,7 @@
 package com.example.bookaholic;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -8,7 +10,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -43,7 +47,9 @@ public class AddBook extends AppCompatActivity {
 
     private final int pickImage = 100;
     private ImageButton imageBtn;
-    private String image, name;
+    private String image, name, author,
+            category, desciption, price, publicationDate,
+            publisher, size, numberOfPages, typeOfCover;
 
     private TextView tvDate;
 
@@ -53,15 +59,25 @@ public class AddBook extends AppCompatActivity {
         binding = ActivityAddBookBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        database = FirebaseDatabase.getInstance().getReference("Image");
+        database = FirebaseDatabase.getInstance().getReference("Books");
 
-
+        // category
         Spinner spinner = binding.categoryBook;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.categories_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category = parent.getItemAtPosition(position).toString();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                category = parent.getItemAtPosition(0).toString();
+            }
+        });
         tvDate = binding.publicationDateBook;
         imageBtn = binding.bGallery;
 
@@ -90,8 +106,8 @@ public class AddBook extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
                         // Thiết lập ngày được chọn vào TextView
-                        String dateString = String.format(Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, monthOfYear+1, year);
-                        tvDate.setText(dateString);
+                        publicationDate = String.format(Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, monthOfYear+1, year);
+                        tvDate.setText(publicationDate);
                     }
                 }, year, month, day);
 
@@ -104,6 +120,24 @@ public class AddBook extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 name = binding.nameBook.getText().toString();
+                author = binding.nameAuthor.getText().toString();
+                desciption = binding.descriptionBook.getText().toString();
+                price = binding.priceBook.getText().toString();
+                publisher = binding.publisherBook.getText().toString();
+                size = binding.sizeBook.getText().toString();
+                numberOfPages = binding.numberOfPagesBook.getText().toString();
+                typeOfCover = binding.typeOfCoverBook.getText().toString();
+                Log.e(TAG,name);
+                Log.e(TAG,author);
+                Log.e(TAG,category);
+                Log.e(TAG,desciption);
+                Log.e(TAG,price);
+                Log.e(TAG,publicationDate);
+                Log.e(TAG,publisher);
+                Log.e(TAG,size);
+                Log.e(TAG,numberOfPages);
+                Log.e(TAG,typeOfCover);
+
                 uploadData();
             }
         });
@@ -170,21 +204,23 @@ public class AddBook extends AppCompatActivity {
     }
 
     private void uploadData() {
-        Book book = new Book(name);
+        Book book = new Book(image, name, author, category, desciption, price
+                , publicationDate, publisher, size, numberOfPages, typeOfCover);
 
         database.child(name.toString()).setValue(book)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getApplicationContext(), "Successful Saved", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddBook.this, AddBook.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddBook.this, AddBook.class));
                     }
                 });
     }
-
 }
