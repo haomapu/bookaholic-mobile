@@ -51,6 +51,8 @@ public class SignUpActivity extends AppCompatActivity {
     private void handleSignUpAccount() {
         email = Objects.requireNonNull(emailRegister.getText()).toString();
         password = Objects.requireNonNull(passRegister.getText()).toString();
+        String[] parts = email.split("@");
+        fullName = parts[0];
 //        fullName = Objects.requireNonNull(nameInput.getText()).toString();
 //        phoneNumber = Objects.requireNonNull(phoneNumberInput.getText()).toString();
 
