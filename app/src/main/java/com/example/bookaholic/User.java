@@ -19,7 +19,7 @@ public class User {
     public User() {
     }
     public User(String fullName, String phoneNumber, String email) {
-        this.fullName = "";
+        this.fullName = fullName;
         this.phoneNumber = "";
         this.email = email;
     }

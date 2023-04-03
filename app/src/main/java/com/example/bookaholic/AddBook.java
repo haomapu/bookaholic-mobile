@@ -1,5 +1,7 @@
 package com.example.bookaholic;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +32,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -39,6 +45,8 @@ public class AddBook extends AppCompatActivity {
     private ImageButton imageBtn;
     private String image, name;
 
+    private TextView tvDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +55,14 @@ public class AddBook extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance().getReference("Image");
 
+
+        Spinner spinner = binding.categoryBook;
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.categories_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        tvDate = binding.publicationDateBook;
         imageBtn = binding.bGallery;
 
         binding.bGallery.setOnClickListener(new View.OnClickListener() {
@@ -57,10 +73,37 @@ public class AddBook extends AppCompatActivity {
             }
         });
 
+        // Show DatePicker when TextView is clicked
+        tvDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lấy ngày hiện tại
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                // Tạo DatePickerDialog và thiết lập sự kiện chọn ngày
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddBook.this,
+                        AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        // Thiết lập ngày được chọn vào TextView
+                        String dateString = String.format(Locale.getDefault(), "%02d/%02d/%04d", dayOfMonth, monthOfYear+1, year);
+                        tvDate.setText(dateString);
+                    }
+                }, year, month, day);
+
+                // Hiển thị DatePickerDialog
+                datePickerDialog.show();
+            }
+        });
+
         binding.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name = binding.nameBook.getEditText().getText().toString();
+                name = binding.nameBook.getText().toString();
                 uploadData();
             }
         });
@@ -69,6 +112,7 @@ public class AddBook extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(AddBook.this, ProfileAcitivity.class));
                 finish();
             }
         });
@@ -142,4 +186,5 @@ public class AddBook extends AppCompatActivity {
                     }
                 });
     }
+
 }
