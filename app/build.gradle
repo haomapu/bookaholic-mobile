@@ -9,6 +9,7 @@ android {
     compileSdk 33
 
     defaultConfig {
+        vectorDrawables.useSupportLibrary = "true"
         applicationId "com.example.bookaholic"
         minSdk 28
         targetSdk 33

@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentMap = new MapFragment();
         fragmentHome = new ProductListFragment();
+        fragmentProfile  = new ProfileFragment();
         buttonHome = findViewById(R.id.bottomNavBarButtonHome);
         buttonFavorite = findViewById(R.id.bottomNavBarButtonFavorite);
         buttonProfile = findViewById(R.id.bottomNavBarButtonProfile);
@@ -78,13 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        buttonProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ProfileAcitivity.class);
-                startActivity(intent);
-            }
-        });
+        buttonProfile.setOnClickListener(onBottomNavBarButtonClicked);
 
         setUpDefaultFragment();
     }
@@ -108,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
                 userDataChangedListener = fragmentHome;
                 booksDataChangedListener = fragmentHome;
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
+            } else if (viewId == R.id.bottomNavBarButtonProfile) {
+                Log.d(TAG, "Profile button clicked!");
+                buttonProfile.setImageResource(R.drawable.profile_selected);
+                switchFragment(R.id.fragmentcontainerMainActivity, fragmentProfile);
             } else {
                 Log.d(TAG, "Don't know which button clicked!");
             }
@@ -141,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             Log.d(TAG, "Detected a data change of current user on the database.");
             currentSyncedUser = snapshot.getValue(User.class);
+            Log.d("test",currentSyncedUser.getEmail());
             userDataChangedListener.updateUserRelatedViews();
             if (listenerForBookDetailsActivity != null)
                 listenerForBookDetailsActivity.updateUserRelatedViews();
