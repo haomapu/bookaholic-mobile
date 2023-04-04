@@ -87,4 +87,20 @@ public class Order {
 
     public Integer getOrderSize() { return orderBooks.size(); }
 
+    public boolean checkOrderBook(OrderBook orderBook) {
+        for (OrderBook book : orderBooks){
+            if (orderBook.getBook().getTitle() == book.getBook().getTitle())
+                return true;
+        }
+        return false;
+    }
+
+    public void addExistedOrderBook(OrderBook orderBook) {
+        for (OrderBook book : orderBooks) {
+            if (book.book.getTitle() == orderBook.book.getTitle()){
+                book.quantity += orderBook.quantity;
+                return;
+            }
+        }
+    }
 }

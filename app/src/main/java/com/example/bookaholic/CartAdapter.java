@@ -67,9 +67,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 //        holder.bookQuantityTextView.setText("Quantity: " + book.getQuantity());
 //        holder.bookPriceTextView.setText("$" + book.getPrice());
 
-        holder.bookNameTextView.setText(orderBook.book.getTitle());
-        holder.bookQuantityTextView.setText("1");
-        holder.bookPriceTextView.setText(orderBook.book.getDisplayablePrice());
+        holder.bookNameTextView.setText(orderBook.getBook().getTitle());
+        holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
+        holder.bookPriceTextView.setText(orderBook.getBook().getDisplayablePrice());
         Glide.with(context)
                 .load(orderBook.book.getImages().get(0))
                 .into(holder.bookImageView);

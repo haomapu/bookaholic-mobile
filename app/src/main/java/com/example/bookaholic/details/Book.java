@@ -99,12 +99,6 @@ public class Book implements Serializable {
         return price;
     }
 
-    public String getPriceFormat() {
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        String formattedNumber = formatter.format(price);
-        return formattedNumber + " VND";
-    }
-
     public void setPrice(int price) {
         this.price = price;
     }

@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookaholic.details.Book;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
     private RecyclerView mCartRecyclerView;
@@ -44,11 +46,11 @@ public class CartActivity extends AppCompatActivity {
         mCartRecyclerView.setAdapter(mCartAdapter);
 
         // Calculate the total price
-        int totalPrice = 0;
+        float totalPrice = 0;
         for (OrderBook orderBook : mBookList) {
-            totalPrice += orderBook.book.getPrice();
+            totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
         }
-        mTotalPriceTextView.setText("Total: " + totalPrice + " VNĐ");
+        mTotalPriceTextView.setText("Total: " + NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " VNĐ");
 
     }
 }

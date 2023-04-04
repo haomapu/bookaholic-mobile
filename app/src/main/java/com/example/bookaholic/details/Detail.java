@@ -99,6 +99,7 @@ public class Detail extends AppCompatActivity {
                 }
             });
         }
+        shopping_badge.setNumber(Order.currentOrder.getOrderSize());
     }
     private void loadData() {
         Intent data = getIntent();
@@ -166,8 +167,16 @@ public class Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 OrderBook orderBook = new OrderBook(currentBook, 1);
-                Order.currentOrder.addOrderBook(orderBook);
-                shopping_badge.setNumber(Order.currentOrder.getOrderSize());
+                if (Order.currentOrder.checkOrderBook(orderBook)){
+                    Order.currentOrder.addExistedOrderBook(orderBook);
+                    System.out.println(currentBook.getTitle() + "1");
+                }
+                else {
+                    Order.currentOrder.addOrderBook(orderBook);
+                    System.out.println(currentBook.getTitle() + "2");
+                    shopping_badge.setNumber(Order.currentOrder.getOrderSize());
+                }
+
             }
         });
     }
