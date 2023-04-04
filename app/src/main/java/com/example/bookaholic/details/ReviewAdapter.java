@@ -52,7 +52,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Comment comment = mDataList.get(position);
-        holder.avatarItem.setImageResource(comment.getAvatar());
+//        holder.avatarItem.setImageResource(comment.getAvatar());
         holder.nameItem.setText(comment.getName());
         holder.contentItem.setText(comment.getContent());
         holder.ratingBar.setRating(comment.getRating());

@@ -81,6 +81,16 @@ public class User {
         this.quantityByBookId = quantityByBookId;
     }
 
+    @Exclude
+    public boolean unlike(Integer id) {
+        return this.favoriteBookIds.remove(id);
+    }
+
+    @Exclude
+    public void like(Integer catId) {
+        if (!this.favoriteBookIds.contains(catId))
+            this.favoriteBookIds.add(catId);
+    }
 
     @Exclude
     public Task<Void> saveToDatabase() {

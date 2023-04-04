@@ -1,5 +1,10 @@
 package com.example.bookaholic.details;
 
+import static android.content.ContentValues.TAG;
+import static com.example.bookaholic.FirebaseHelper.syncCurrentUserFavoriteBooks;
+import static com.example.bookaholic.MainActivity.currentSyncedUser;
+import static com.example.bookaholic.Tools.showToast;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.ColorFilter;
@@ -29,6 +34,7 @@ import com.example.bookaholic.Order;
 import com.example.bookaholic.OrderBook;
 import com.example.bookaholic.R;
 import com.example.bookaholic.SignInActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nex3z.notificationbadge.NotificationBadge;
@@ -111,17 +117,41 @@ public class Detail extends AppCompatActivity {
     }
     public void initFavorite(){
         Button imageViewHeart = findViewById(R.id.image_view_heart);
-//        imageViewHeart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
+        imageViewHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    Integer bookID = Book.idOfBookWithName(currentBook.getTitle());
+                    int toastMessage;
+
+                    if (currentSyncedUser.likeBookWithId(bookID)) {
+                        toastMessage = R.string.removed_from_favorites;
+                        currentSyncedUser.unlike(bookID);
+                    } else {
+                        toastMessage = R.string.added_to_favorites;
+                        currentSyncedUser.like(bookID);
+                    }
+
+                    OnCompleteListener<Void> onCompleteListener = task -> {
+                        if (task.isSuccessful())
+                            showToast(Detail.this, toastMessage);
+                    };
+
+                    syncCurrentUserFavoriteBooks(onCompleteListener);
+
+//                    updateAddToFavoriteButton();
+
+                } catch (Exception e) {
+                    Log.d(TAG, e.toString());
+                }
 //                if (true){
 //                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.black), PorterDuff.Mode.SRC_IN);
 //                }
 //                else {
 //                    imageViewHeart.setColor(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
 //                }
-//            }
-//        });
+            }
+        });
     }
     public void initBasicInfo(){
         titleTxt = findViewById(R.id.titleTxt);
