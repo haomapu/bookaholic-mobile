@@ -3,6 +3,7 @@ package com.example.bookaholic;
 import static android.content.ContentValues.TAG;
 
 import static com.example.bookaholic.FirebaseHelper.downloadFile;
+import static com.example.bookaholic.MainActivity.currentSyncedUser;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -158,4 +159,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterByFavorite() {
+        this.books.clear();
+        for (Book book : Book.allBooks) {
+            if ((currentSyncedUser != null) && currentSyncedUser.likeBookWithId(Book.idOfBookWithName(book.getTitle())))
+                this.books.add(book.deepCopy());
+        }
+        notifyDataSetChanged();
+    }
 }

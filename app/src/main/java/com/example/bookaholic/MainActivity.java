@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton buttonProfile;
     private Fragment fragmentMap, fragmentProfile;
     private ProductListFragment fragmentHome;
+    private WishlistFragment fragmentWishlist;
 
     private UserDataChangedListener userDataChangedListener;
     private BooksDataChangedListener booksDataChangedListener;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
+        fragmentWishlist = new WishlistFragment();
         fragmentMap = new MapFragment();
         fragmentHome = new ProductListFragment();
         fragmentProfile  = new ProfileFragment();
@@ -72,13 +73,7 @@ public class MainActivity extends AppCompatActivity {
         buttonProfile = findViewById(R.id.bottomNavBarButtonProfile);
 
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
-        buttonFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
+        buttonFavorite.setOnClickListener(onBottomNavBarButtonClicked);
         buttonProfile.setOnClickListener(onBottomNavBarButtonClicked);
         InitShoppingCartListener();
         setUpDefaultFragment();
@@ -103,6 +98,12 @@ public class MainActivity extends AppCompatActivity {
                 userDataChangedListener = fragmentHome;
                 booksDataChangedListener = fragmentHome;
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
+            } else if (viewId == R.id.bottomNavBarButtonFavorite) {
+                Log.d(TAG, "Favorite button clicked!");
+                buttonFavorite.setImageResource(R.drawable.favorite_selected);
+                userDataChangedListener = fragmentWishlist;
+                booksDataChangedListener = fragmentWishlist;
+                switchFragment(R.id.fragmentcontainerMainActivity, fragmentWishlist);
             } else if (viewId == R.id.bottomNavBarButtonProfile) {
                 Log.d(TAG, "Profile button clicked!");
                 buttonProfile.setImageResource(R.drawable.profile_selected);
@@ -115,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void resetSelectedBottomNavbarButton() {
         buttonHome.setImageResource(R.drawable.home_unselected);
+        buttonFavorite.setImageResource(R.drawable.favorite_unselected);
+        buttonProfile.setImageResource(R.drawable.profile_unselected);
     }
 
     @Override
@@ -132,8 +135,6 @@ public class MainActivity extends AppCompatActivity {
                 initCurrentUserDatabaseReference(currentUserDatabaseListener);
                 initBooksDatabaseReference(booksDatabaseListener);
             }
-//            Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
-//                startActivity(signInIntent);
         }
     }
 

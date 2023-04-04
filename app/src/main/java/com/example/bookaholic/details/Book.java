@@ -154,4 +154,13 @@ public class Book implements Serializable {
         }
         return null;
     }
+
+
+    @Exclude
+    public static Integer idOfBookWithName(String bookName) {
+        for (int i = 0; i < allBooks.size(); i++)
+            if (allBooks.get(i).title.equals(bookName))
+                return i;
+        return -1;
+    }
 }
