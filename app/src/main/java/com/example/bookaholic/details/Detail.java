@@ -166,8 +166,8 @@ public class Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 OrderBook orderBook = new OrderBook(currentBook, 1);
-                Order.orderBooks.add(orderBook);
-                shopping_badge.setNumber(Order.orderBooks.size());
+                Order.currentOrder.addOrderBook(orderBook);
+                shopping_badge.setNumber(Order.currentOrder.getOrderSize());
             }
         });
     }

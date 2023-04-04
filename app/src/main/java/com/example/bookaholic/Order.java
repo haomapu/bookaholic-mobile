@@ -9,7 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
-    public static ArrayList<OrderBook> orderBooks;
+    public static Order currentOrder = new Order();
+    private ArrayList<OrderBook> orderBooks;
     private User user;
     private String address;
     private double totalPrice;
@@ -81,4 +82,9 @@ public class Order {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+    public void addOrderBook(OrderBook currentBook) { this.orderBooks.add(currentBook); }
+
+    public Integer getOrderSize() { return orderBooks.size(); }
+
 }

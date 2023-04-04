@@ -1,8 +1,8 @@
 package com.example.bookaholic;
 import com.example.bookaholic.details.Book;
 public class OrderBook {
-    private Book book;
-    private int quantity;
+    public Book book;
+    public int quantity;
 
     public OrderBook(Book book, int quantity) {
         this.book = book;

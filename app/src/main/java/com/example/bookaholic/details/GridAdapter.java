@@ -3,6 +3,8 @@ package com.example.bookaholic.details;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<Book> mItems;
 
+
     public GridAdapter(Context context, ArrayList<Book> items) {
         mContext = context;
         mItems = items;
@@ -43,6 +46,17 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
                 .load(item.getImages().get(0))
                 .into(holder.imageView);
         holder.textView.setText(item.getTitle());
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, Detail.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("bookName", item.getTitle());
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -53,7 +67,6 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textView;
-
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
