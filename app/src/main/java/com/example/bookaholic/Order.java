@@ -2,17 +2,28 @@ package com.example.bookaholic;
 
 import com.example.bookaholic.details.Book;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Order {
-    private ArrayList<OrderBook> orderBooks;
+    public static ArrayList<OrderBook> orderBooks;
     private User user;
     private String address;
     private double totalPrice;
     private String orderStatus;
     private Date createdAt;
+
+    public Order() {
+        this.orderBooks = new ArrayList<>();
+        this.user = MainActivity.currentSyncedUser;
+        this.address = "";
+        this.totalPrice = 0;
+        this.orderStatus = "Incomplete";
+        this.createdAt = new Date();
+    }
 
     public Order(ArrayList<OrderBook> orderBooks, User user, String address, double totalPrice, String orderStatus, Date createdAt) {
         this.orderBooks = orderBooks;

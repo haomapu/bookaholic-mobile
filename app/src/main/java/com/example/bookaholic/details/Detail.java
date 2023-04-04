@@ -22,7 +22,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bookaholic.CartActivity;
 import com.example.bookaholic.Comment;
+import com.example.bookaholic.Order;
+import com.example.bookaholic.OrderBook;
 import com.example.bookaholic.R;
 import com.example.bookaholic.SignInActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +61,7 @@ public class Detail extends AppCompatActivity {
         initFavorite();
         initBookDetail();
         initCurrentUser();
+        initShoppingCart();
         returnBtn = findViewById(R.id.returnBtn);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,18 +100,18 @@ public class Detail extends AppCompatActivity {
 
     }
     public void initFavorite(){
-        ImageView imageViewHeart = findViewById(R.id.image_view_heart);
-        imageViewHeart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (true){
-                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.black), PorterDuff.Mode.SRC_IN);
-                }
-                else {
-                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
-                }
-            }
-        });
+        Button imageViewHeart = findViewById(R.id.image_view_heart);
+//        imageViewHeart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (true){
+//                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.black), PorterDuff.Mode.SRC_IN);
+//                }
+//                else {
+//                    imageViewHeart.setColor(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
+//                }
+//            }
+//        });
     }
     public void initBasicInfo(){
         titleTxt = findViewById(R.id.titleTxt);
@@ -152,7 +156,9 @@ public class Detail extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                shopping_badge.setNumber(++countCart);
+                OrderBook orderBook = new OrderBook(currentBook, 1);
+                Order.orderBooks.add(orderBook);
+                shopping_badge.setNumber(Order.orderBooks.size());
             }
         });
     }
@@ -200,5 +206,15 @@ public class Detail extends AppCompatActivity {
             startActivity(new Intent(Detail.this, SignInActivity.class));
         }
 //        Log.d("Test", currentUser.getDisplayName());
+    }
+
+    public void initShoppingCart(){
+        ImageView shoppingBtn = findViewById(R.id.shoppingBtn);
+        shoppingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Detail.this, CartActivity.class));
+            }
+        });
     }
 }

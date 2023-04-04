@@ -87,6 +87,7 @@ public class SignInActivity extends AppCompatActivity{
                     if (!firebaseUser.isEmailVerified())
                         showToast(SignInActivity.this, R.string.you_havent_verify_email);
                     else {
+
                         showToast(SignInActivity.this, R.string.sign_in_sucess);
                         startMainActivity();
                     }

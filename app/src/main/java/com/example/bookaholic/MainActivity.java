@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         buttonProfile.setOnClickListener(onBottomNavBarButtonClicked);
-
+        InitShoppingCartListener();
         setUpDefaultFragment();
     }
 
@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, NoInternetActivity.class));
         } else {
             firebaseUser = firebaseAuth.getCurrentUser();
-//            if (firebaseUser == null) {
-//                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
-//                startActivity(signInIntent);
-//            } else {
-//                initCurrentUserDatabaseReference(currentUserDatabaseListener);
+            if (firebaseUser == null) {
+                Intent signInIntent = new Intent(MainActivity.this, SignInActivity.class);
+                startActivity(signInIntent);
+            } else {
+                initCurrentUserDatabaseReference(currentUserDatabaseListener);
                 initBooksDatabaseReference(booksDatabaseListener);
-//            }
+            }
 //            Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
 //                startActivity(signInIntent);
         }
@@ -178,5 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(fragmentContainerResourceId, fragmentObject)
                 .commit();
     }
-
+    private void InitShoppingCartListener() {
+        Order order = new Order();
+    }
 }
