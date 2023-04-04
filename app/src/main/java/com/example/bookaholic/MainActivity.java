@@ -130,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(signInIntent);
 //            } else {
 //                initCurrentUserDatabaseReference(currentUserDatabaseListener);
-//                initBooksDatabaseReference(booksDatabaseListener);
+                initBooksDatabaseReference(booksDatabaseListener);
 //            }
-            Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
-                startActivity(signInIntent);
+//            Intent signInIntent = new Intent(MainActivity.this, AddBook.class);
+//                startActivity(signInIntent);
         }
     }
 

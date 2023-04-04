@@ -1,12 +1,15 @@
 package com.example.bookaholic.details;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -21,10 +24,11 @@ public class DetailFragment extends Fragment {
     private String mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent;
 
     TextView authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent;
+    Integer type;
     public DetailFragment() {
 
     }
-    public static DetailFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,String numberPageContent) {
+    public static DetailFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,String numberPageContent, Integer type) {
         DetailFragment fragment = new DetailFragment();
         fragment.mAuthorContent = authorContent;
         fragment.mCategoryContent = categoryContent;
@@ -32,14 +36,24 @@ public class DetailFragment extends Fragment {
         fragment.mCoverTypeContent = coverTypeContent;
         fragment.mSizeContent = sizeContent;
         fragment.mNumberPageContent = numberPageContent;
+        fragment.type = type;
         return fragment;
     }
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.book_detail_fragment, null);
-
         initDetail(view);
+        TableLayout tableLayout = view.findViewById(R.id.tableLayout);
+        if ( type == 1){
+            for (int i = 4; i < tableLayout.getChildCount(); i++) {
+                TableRow row = (TableRow) tableLayout.getChildAt(i);
+                row.setVisibility(View.GONE);
+            }
+        } else {
+            tableLayout.setForeground(null);
+        }
+
 
         return view;
     }

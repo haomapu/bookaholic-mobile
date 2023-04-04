@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,31 +24,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
+import com.example.bookaholic.SignInActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 
 public class Detail extends AppCompatActivity {
     private ViewGroup imageListView;
-    private ImageView imageSelected;
-    private TextView descriptionTxt;
-    private ImageView returnBtn;
-    private TextView titleTxt;
-
-    private TextView priceTxt;
-
+    private ImageView imageSelected, returnBtn;
+    private TextView descriptionTxt, titleTxt, priceTxt;
     private RatingBar ratingBar;
     private Button addToCartButton;
     private NotificationBadge shopping_badge;
     private Book currentBook;
     FragmentTransaction fragmentTransaction;
+    DetailFragment detailFragment;
 
-    RecyclerView gridView;
-    RecyclerView commentListView;
+    RecyclerView gridView, commentListView;
     int countCart = 0;
-    ArrayList<Book> itemList = new ArrayList<>();
-//    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
-//    Book book2 = new Book("Haha","Hao","Hao","Hao",R.drawable.img2,"Hao",100);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +57,7 @@ public class Detail extends AppCompatActivity {
         initComment();
         initFavorite();
         initBookDetail();
+        initCurrentUser();
         returnBtn = findViewById(R.id.returnBtn);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,8 +168,7 @@ public class Detail extends AppCompatActivity {
     }
     private void initBookDetail(){
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        DetailFragment detailFragment = DetailFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages");
-
+        detailFragment = DetailFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages", 1);
         fragmentTransaction.replace(R.id.fragmentBookDetail, detailFragment);
         fragmentTransaction.commit();
     }
@@ -186,7 +182,6 @@ public class Detail extends AppCompatActivity {
                 BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments(), 1);
                 bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
             }
-
         });
         showBookDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,5 +192,13 @@ public class Detail extends AppCompatActivity {
 
         });
 
+    }
+    public void initCurrentUser(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            startActivity(new Intent(Detail.this, SignInActivity.class));
+        }
+//        Log.d("Test", currentUser.getDisplayName());
     }
 }
