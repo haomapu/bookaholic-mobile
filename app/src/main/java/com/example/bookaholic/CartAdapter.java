@@ -16,17 +16,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bookaholic.details.Book;
 import com.example.bookaholic.details.Detail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-    private List<Book> mBookList;
+    private ArrayList<OrderBook> mBookList;
     private Context context;
 
-    public CartAdapter(List<Book> bookList, Context context) {
+    public CartAdapter(ArrayList<OrderBook> bookList, Context context) {
         this.context = context;
         mBookList = bookList;
     }
@@ -58,18 +60,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(CartViewHolder holder, int position) {
-        Book book = mBookList.get(position);
+        OrderBook orderBook = mBookList.get(position);
 
 //        holder.bookImageView.setImageResource(book.getImageResourceId());
 //        holder.bookNameTextView.setText(book.getName());
 //        holder.bookQuantityTextView.setText("Quantity: " + book.getQuantity());
 //        holder.bookPriceTextView.setText("$" + book.getPrice());
 
-        holder.bookNameTextView.setText(book.getTitle());
+        holder.bookNameTextView.setText(orderBook.book.getTitle());
         holder.bookQuantityTextView.setText("1");
-        holder.bookPriceTextView.setText(book.getDisplayablePrice());
-        holder.bookImageView.setImageResource(book.getImageResId());
-        holder.layout.setOnClickListener(v -> startBookDetailsActivity(book));
+        holder.bookPriceTextView.setText(orderBook.book.getDisplayablePrice());
+        Glide.with(context)
+                .load(orderBook.book.getImages().get(0))
+                .into(holder.bookImageView);
+        holder.layout.setOnClickListener(v -> startBookDetailsActivity(orderBook.book));
     }
     private void startBookDetailsActivity(Book book) {
         try {

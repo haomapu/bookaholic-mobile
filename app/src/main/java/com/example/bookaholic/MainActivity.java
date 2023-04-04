@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
         buttonFavorite.setOnClickListener(onBottomNavBarButtonClicked);
         buttonProfile.setOnClickListener(onBottomNavBarButtonClicked);
-
+        InitShoppingCartListener();
         setUpDefaultFragment();
     }
 
@@ -179,5 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 .replace(fragmentContainerResourceId, fragmentObject)
                 .commit();
     }
-
+    private void InitShoppingCartListener() {
+        Order order = new Order();
+    }
 }

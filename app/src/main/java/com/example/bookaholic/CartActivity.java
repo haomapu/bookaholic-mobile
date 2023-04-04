@@ -16,7 +16,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView mCartRecyclerView;
     private CartAdapter mCartAdapter;
     private TextView mTotalPriceTextView;
-    private List<Book> mBookList;
+    private ArrayList<OrderBook> mBookList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class CartActivity extends AppCompatActivity {
         mComment.add(comment);
 
         // Initialize the book list with some sample books
-        mBookList = Book.allBooks;
+        mBookList = Order.currentOrder.getOrderBooks();
 
         // Get a reference to the RecyclerView
         mCartRecyclerView = findViewById(R.id.cartRecyclerView);
@@ -45,8 +45,8 @@ public class CartActivity extends AppCompatActivity {
 
         // Calculate the total price
         int totalPrice = 0;
-        for (Book book : mBookList) {
-            totalPrice += book.getPrice();
+        for (OrderBook orderBook : mBookList) {
+            totalPrice += orderBook.book.getPrice();
         }
         mTotalPriceTextView.setText("Total: " + totalPrice + " VNĐ");
 

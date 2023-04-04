@@ -1,5 +1,6 @@
 package com.example.bookaholic.details;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,33 +23,32 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bookaholic.CartActivity;
 import com.example.bookaholic.Comment;
+import com.example.bookaholic.Order;
+import com.example.bookaholic.OrderBook;
 import com.example.bookaholic.R;
+import com.example.bookaholic.SignInActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 
 public class Detail extends AppCompatActivity {
     private ViewGroup imageListView;
-    private ImageView imageSelected;
-    private TextView descriptionTxt;
-    private ImageView returnBtn;
-    private TextView titleTxt;
-
-    private TextView priceTxt;
-
+    private ImageView imageSelected, returnBtn;
+    private TextView descriptionTxt, titleTxt, priceTxt;
     private RatingBar ratingBar;
     private Button addToCartButton;
+    Context context;
     private NotificationBadge shopping_badge;
     private Book currentBook;
     FragmentTransaction fragmentTransaction;
+    DetailFragment detailFragment;
 
-    RecyclerView gridView;
-    RecyclerView commentListView;
+    RecyclerView gridView, commentListView;
     int countCart = 0;
-    ArrayList<Book> itemList = new ArrayList<>();
-//    Book book1 = new Book("Hao","Hao","Hao","Hao",R.drawable.img1,"Hao",100);
-//    Book book2 = new Book("Haha","Hao","Hao","Hao",R.drawable.img2,"Hao",100);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,12 @@ public class Detail extends AppCompatActivity {
         initComment();
         initFavorite();
         initBookDetail();
+        initCurrentUser();
+        initShoppingCart();
+        context = this;
         returnBtn = findViewById(R.id.returnBtn);
+        int test = getResources().getIdentifier("avatar1", "drawable", getPackageName());
+        System.out.println(test);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,20 +78,24 @@ public class Detail extends AppCompatActivity {
         imageSelected = findViewById(R.id.imageSelected);
 
         ArrayList<String> images = currentBook.getImages();
-
-        imageSelected.setImageResource(Integer.parseInt(images.get(0)));
+        Glide.with(context)
+                .load(images.get(0))
+                .into(imageSelected);
         for (int i = 0; i < images.size(); i++){
             final View singleFrame = getLayoutInflater().inflate(R.layout.image_detail,null);
             singleFrame.setId(i);
             ImageView single_image = (ImageView) singleFrame.findViewById(R.id.single_image);
-            single_image.setImageResource(Integer.parseInt(images.get(i)));
-
+            Glide.with(context)
+                    .load(images.get(i))
+                    .into(single_image);
             imageListView.addView(singleFrame);
 
             singleFrame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    imageSelected.setImageResource(Integer.parseInt(images.get(singleFrame.getId())));
+                    Glide.with(context)
+                            .load(images.get(singleFrame.getId()))
+                            .into(imageSelected);
                 }
             });
         }
@@ -99,18 +109,18 @@ public class Detail extends AppCompatActivity {
 
     }
     public void initFavorite(){
-        ImageView imageViewHeart = findViewById(R.id.image_view_heart);
-        imageViewHeart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (true){
-                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.black), PorterDuff.Mode.SRC_IN);
-                }
-                else {
-                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
-                }
-            }
-        });
+        Button imageViewHeart = findViewById(R.id.image_view_heart);
+//        imageViewHeart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (true){
+//                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.black), PorterDuff.Mode.SRC_IN);
+//                }
+//                else {
+//                    imageViewHeart.setColor(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
+//                }
+//            }
+//        });
     }
     public void initBasicInfo(){
         titleTxt = findViewById(R.id.titleTxt);
@@ -155,7 +165,9 @@ public class Detail extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                shopping_badge.setNumber(++countCart);
+                OrderBook orderBook = new OrderBook(currentBook, 1);
+                Order.currentOrder.addOrderBook(orderBook);
+                shopping_badge.setNumber(Order.currentOrder.getOrderSize());
             }
         });
     }
@@ -171,8 +183,7 @@ public class Detail extends AppCompatActivity {
     }
     private void initBookDetail(){
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        DetailFragment detailFragment = DetailFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages");
-
+        detailFragment = DetailFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages", 1);
         fragmentTransaction.replace(R.id.fragmentBookDetail, detailFragment);
         fragmentTransaction.commit();
     }
@@ -186,7 +197,6 @@ public class Detail extends AppCompatActivity {
                 BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments(), 1);
                 bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
             }
-
         });
         showBookDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,5 +207,23 @@ public class Detail extends AppCompatActivity {
 
         });
 
+    }
+    public void initCurrentUser(){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            startActivity(new Intent(Detail.this, SignInActivity.class));
+        }
+//        Log.d("Test", currentUser.getDisplayName());
+    }
+
+    public void initShoppingCart(){
+        ImageView shoppingBtn = findViewById(R.id.shoppingBtn);
+        shoppingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Detail.this, CartActivity.class));
+            }
+        });
     }
 }

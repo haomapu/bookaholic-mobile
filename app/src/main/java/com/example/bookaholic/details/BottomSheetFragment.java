@@ -76,8 +76,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             fragmentManager.commit();
         }
         else if (type == 2) {
-            DetailFragment detailFragment = DetailFragment.newInstance(mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent);
-
+            DetailFragment detailFragment = DetailFragment.newInstance(mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent, 2);
             fragmentManager.replace(R.id.fragmentContainer, detailFragment);
             fragmentManager.commit();
         }

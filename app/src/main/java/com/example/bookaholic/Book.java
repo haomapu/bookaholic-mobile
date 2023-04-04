@@ -28,6 +28,7 @@ public class Book implements Serializable {
         this.typeOfCover = typeOfCover;
     }
 
+
     public String getImageUrl() {
         return imageUrl;
     }
