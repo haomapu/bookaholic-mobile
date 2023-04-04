@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bookaholic.details.Book;
 import com.example.bookaholic.details.Detail;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -105,7 +106,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         try {
             Book book = books.get(position);
             Log.d(TAG, book.toString());
-            holder.imageView.setImageResource(Integer.parseInt(book.getImages().get(0)));
+            Glide.with(context)
+                    .load(book.getImages().get(0))
+                    .into(holder.imageView);
             holder.nameView.setText(book.getTitle());
             holder.priceView.setText(book.getDisplayablePrice());
             holder.typesView.setText(book.getCategory());

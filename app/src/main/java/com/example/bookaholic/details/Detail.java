@@ -1,5 +1,6 @@
 package com.example.bookaholic.details;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
@@ -40,6 +41,7 @@ public class Detail extends AppCompatActivity {
     private TextView descriptionTxt, titleTxt, priceTxt;
     private RatingBar ratingBar;
     private Button addToCartButton;
+    Context context;
     private NotificationBadge shopping_badge;
     private Book currentBook;
     FragmentTransaction fragmentTransaction;
@@ -62,7 +64,10 @@ public class Detail extends AppCompatActivity {
         initBookDetail();
         initCurrentUser();
         initShoppingCart();
+        context = this;
         returnBtn = findViewById(R.id.returnBtn);
+        int test = getResources().getIdentifier("avatar1", "drawable", getPackageName());
+        System.out.println(test);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,20 +78,24 @@ public class Detail extends AppCompatActivity {
         imageSelected = findViewById(R.id.imageSelected);
 
         ArrayList<String> images = currentBook.getImages();
-
-        imageSelected.setImageResource(Integer.parseInt(images.get(0)));
+        Glide.with(context)
+                .load(images.get(0))
+                .into(imageSelected);
         for (int i = 0; i < images.size(); i++){
             final View singleFrame = getLayoutInflater().inflate(R.layout.image_detail,null);
             singleFrame.setId(i);
             ImageView single_image = (ImageView) singleFrame.findViewById(R.id.single_image);
-            single_image.setImageResource(Integer.parseInt(images.get(i)));
-
+            Glide.with(context)
+                    .load(images.get(i))
+                    .into(single_image);
             imageListView.addView(singleFrame);
 
             singleFrame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    imageSelected.setImageResource(Integer.parseInt(images.get(singleFrame.getId())));
+                    Glide.with(context)
+                            .load(images.get(singleFrame.getId()))
+                            .into(imageSelected);
                 }
             });
         }

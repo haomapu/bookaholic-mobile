@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bookaholic.R;
 
 import java.util.ArrayList;
@@ -38,7 +39,9 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book item = mItems.get(position);
-        holder.imageView.setImageResource(item.getImageResId());
+        Glide.with(mContext)
+                .load(item.getImages().get(0))
+                .into(holder.imageView);
         holder.textView.setText(item.getTitle());
     }
 
