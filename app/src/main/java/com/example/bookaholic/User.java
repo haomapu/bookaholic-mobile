@@ -90,4 +90,9 @@ public class User {
                 .child(firebaseUser.getUid())
                 .setValue(this);
     }
+
+    @Exclude
+    public boolean likeBookWithId(Integer id) {
+        return this.favoriteBookIds.contains(id);
+    }
 }

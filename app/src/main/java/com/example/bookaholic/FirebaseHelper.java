@@ -1,11 +1,13 @@
 package com.example.bookaholic;
 
 import static android.content.ContentValues.TAG;
+import static com.example.bookaholic.MainActivity.currentSyncedUser;
 import static com.example.bookaholic.MainActivity.firebaseUser;
 
 import android.util.Log;
 
 import com.example.bookaholic.details.Book;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,6 +49,17 @@ public class FirebaseHelper {
             ref.getBytes(Long.MAX_VALUE).addOnSuccessListener(onSuccessListener);
         } catch (Exception e) {
             Log.d(TAG, e.toString());
+        }
+    }
+
+    public static void syncCurrentUserFavoriteBooks(OnCompleteListener<Void> onCompleteListener) {
+        try {
+            currentUserRef.child("favoriteBookIds")
+                    .setValue(currentSyncedUser.getFavoriteBookIds())
+                    .addOnCompleteListener(onCompleteListener);
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+            e.printStackTrace();
         }
     }
 }
