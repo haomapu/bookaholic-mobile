@@ -44,9 +44,10 @@ import java.util.ArrayList;
 public class Detail extends AppCompatActivity {
     private ViewGroup imageListView;
     private ImageView imageSelected, returnBtn;
-    private TextView descriptionTxt, titleTxt, priceTxt;
+    private TextView descriptionTxt, titleTxt, priceTxt, quantityTxt;
     private RatingBar ratingBar;
-    private Button addToCartButton;
+    private ImageView addToCartButton;
+    private Button addBtn, removeBtn;
     Context context;
     private NotificationBadge shopping_badge;
     private Book currentBook;
@@ -54,7 +55,7 @@ public class Detail extends AppCompatActivity {
     DetailFragment detailFragment;
 
     RecyclerView gridView, commentListView;
-    int countCart = 0;
+    int countQuantity = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class Detail extends AppCompatActivity {
         initBookDetail();
         initCurrentUser();
         initShoppingCart();
+        initAmountBtn();
         context = this;
         returnBtn = findViewById(R.id.returnBtn);
         int test = getResources().getIdentifier("avatar1", "drawable", getPackageName());
@@ -116,20 +118,29 @@ public class Detail extends AppCompatActivity {
 
     }
     public void initFavorite(){
-        Button imageViewHeart = findViewById(R.id.image_view_heart);
+        ImageView imageViewHeart = findViewById(R.id.image_view_heart);
+        Integer bookID = Book.idOfBookWithName(currentBook.getTitle());
+        if (currentSyncedUser.likeBookWithId(bookID))
+            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
+        else
+            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
+
         imageViewHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    Integer bookID = Book.idOfBookWithName(currentBook.getTitle());
+
                     int toastMessage;
 
                     if (currentSyncedUser.likeBookWithId(bookID)) {
                         toastMessage = R.string.removed_from_favorites;
                         currentSyncedUser.unlike(bookID);
+                        imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
+
                     } else {
                         toastMessage = R.string.added_to_favorites;
                         currentSyncedUser.like(bookID);
+                        imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.red), PorterDuff.Mode.SRC_IN);
                     }
 
                     OnCompleteListener<Void> onCompleteListener = task -> {
@@ -196,17 +207,25 @@ public class Detail extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                OrderBook orderBook = new OrderBook(currentBook, 1);
-                if (Order.currentOrder.checkOrderBook(orderBook)){
+                OrderBook orderBook = new OrderBook(currentBook, countQuantity);
+                int toastMessage;
+                try {
+                    if (Order.currentOrder.checkOrderBook(orderBook)){
+                    toastMessage = R.string.added_to_cart;
                     Order.currentOrder.addExistedOrderBook(orderBook);
-                    System.out.println(currentBook.getTitle() + "1");
-                }
+                    showToast(Detail.this, toastMessage);
+                    }
                 else {
                     Order.currentOrder.addOrderBook(orderBook);
-                    System.out.println(currentBook.getTitle() + "2");
+                    toastMessage = R.string.added_to_cart;
                     shopping_badge.setNumber(Order.currentOrder.getOrderSize());
-                }
+                    showToast(Detail.this, toastMessage);
 
+                    }
+
+                } catch (Exception e) {
+                    Log.e("AddToCart", e.toString());
+                }
             }
         });
     }
@@ -262,6 +281,32 @@ public class Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Detail.this, CartActivity.class));
+            }
+        });
+    }
+
+    public void initAmountBtn(){
+        addBtn = findViewById(R.id.addBtn);
+        removeBtn = findViewById(R.id.removeBtn);
+        quantityTxt = findViewById(R.id.quantityTxt);
+        quantityTxt.setText(String.valueOf(countQuantity));
+        removeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (countQuantity <= 1){
+                    return;
+                } else {
+                    countQuantity--;
+                    quantityTxt.setText(String.valueOf(countQuantity));
+                }
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                countQuantity++;
+                quantityTxt.setText(String.valueOf(countQuantity));
             }
         });
     }
