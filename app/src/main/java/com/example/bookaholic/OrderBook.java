@@ -20,7 +20,12 @@ public class OrderBook {
     public int getQuantity() {
         return quantity;
     }
-
+    public int decreaseQuantity(){
+        return --quantity;
+    }
+    public int increaseQuantity(){
+        return ++quantity;
+    }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }

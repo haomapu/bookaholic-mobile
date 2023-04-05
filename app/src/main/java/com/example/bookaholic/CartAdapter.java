@@ -3,6 +3,7 @@ package com.example.bookaholic;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,7 +40,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         public TextView bookNameTextView;
         public TextView bookQuantityTextView;
         public TextView bookPriceTextView;
-        private LinearLayout layout;
+        public Button increaseQuantityButton, decreaseQuantityButton;
+        private ConstraintLayout layout;
 
         public CartViewHolder(View itemView) {
             super(itemView);
@@ -47,6 +50,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             bookNameTextView = itemView.findViewById(R.id.bookNameTextView);
             bookQuantityTextView = itemView.findViewById(R.id.bookQuantityTextView);
             bookPriceTextView = itemView.findViewById(R.id.bookPriceTextView);
+            increaseQuantityButton = itemView.findViewById(R.id.bookQuantityIncreaseButton);
+            decreaseQuantityButton = itemView.findViewById(R.id.bookQuantityDecreaseButton);
             layout = itemView.findViewById(R.id.cartItemLayout);
         }
     }
@@ -62,11 +67,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(CartViewHolder holder, int position) {
         OrderBook orderBook = mBookList.get(position);
 
-//        holder.bookImageView.setImageResource(book.getImageResourceId());
-//        holder.bookNameTextView.setText(book.getName());
-//        holder.bookQuantityTextView.setText("Quantity: " + book.getQuantity());
-//        holder.bookPriceTextView.setText("$" + book.getPrice());
-
         holder.bookNameTextView.setText(orderBook.getBook().getTitle());
         holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
         holder.bookPriceTextView.setText(orderBook.getBook().getDisplayablePrice());
@@ -74,6 +74,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .load(orderBook.book.getImages().get(0))
                 .into(holder.bookImageView);
         holder.layout.setOnClickListener(v -> startBookDetailsActivity(orderBook.book));
+        holder.increaseQuantityButton.setOnClickListener(v -> {
+            orderBook.increaseQuantity();
+            holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
+
+        });
+        holder.decreaseQuantityButton.setOnClickListener(v -> {
+            orderBook.decreaseQuantity();
+            holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
+        });
     }
     private void startBookDetailsActivity(Book book) {
         try {
