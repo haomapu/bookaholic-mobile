@@ -36,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -48,9 +49,13 @@ public class AddBook extends AppCompatActivity {
     private final int pickImage = 100;
     private ImageButton imageBtn;
     private String image, name, author,
-            category, desciption, price, publicationDate,
-            publisher, size, numberOfPages, typeOfCover;
+            category, desciption, publicationDate,
+            publisher, size, typeOfCover ;
 
+    private int quantity, price, numberOfPages;
+
+//    private ArrayList<Comment> comments = new ArrayList<>();
+    private ArrayList<String> images = new ArrayList<>();
     private TextView tvDate;
 
     @Override
@@ -119,25 +124,19 @@ public class AddBook extends AppCompatActivity {
         binding.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String temp1, temp2, temp3;
                 name = binding.nameBook.getText().toString();
                 author = binding.nameAuthor.getText().toString();
                 desciption = binding.descriptionBook.getText().toString();
-                price = binding.priceBook.getText().toString();
+                temp1 = binding.quantityBook.getText().toString();
+                quantity = Integer.parseInt(temp1);
+                temp2= binding.priceBook.getText().toString();
+                price = Integer.parseInt(temp2);
                 publisher = binding.publisherBook.getText().toString();
                 size = binding.sizeBook.getText().toString();
-                numberOfPages = binding.numberOfPagesBook.getText().toString();
+                temp3 = binding.numberOfPagesBook.getText().toString();
+                numberOfPages = Integer.parseInt(temp3);
                 typeOfCover = binding.typeOfCoverBook.getText().toString();
-                Log.e(TAG,name);
-                Log.e(TAG,author);
-                Log.e(TAG,category);
-                Log.e(TAG,desciption);
-                Log.e(TAG,price);
-                Log.e(TAG,publicationDate);
-                Log.e(TAG,publisher);
-                Log.e(TAG,size);
-                Log.e(TAG,numberOfPages);
-                Log.e(TAG,typeOfCover);
-
                 uploadData();
             }
         });
@@ -192,6 +191,7 @@ public class AddBook extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         image = uri.toString();
+                        images.add(image);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -204,8 +204,8 @@ public class AddBook extends AppCompatActivity {
     }
 
     private void uploadData() {
-        Book book = new Book(image, name, author, category, desciption, price
-                , publicationDate, publisher, size, numberOfPages, typeOfCover);
+        Book book = new Book(image, name, author, category, desciption, quantity, price
+                , publicationDate, publisher, size, numberOfPages, typeOfCover, images);
 
         database.child(name.toString()).setValue(book)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
