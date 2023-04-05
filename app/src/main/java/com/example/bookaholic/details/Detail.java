@@ -120,10 +120,10 @@ public class Detail extends AppCompatActivity {
     public void initFavorite(){
         ImageView imageViewHeart = findViewById(R.id.image_view_heart);
         Integer bookID = Book.idOfBookWithName(currentBook.getTitle());
-        if (currentSyncedUser.likeBookWithId(bookID))
+//        if (currentSyncedUser.likeBookWithId(bookID))
             imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
-        else
-            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
+//        else
+//            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
 
         imageViewHeart.setOnClickListener(new View.OnClickListener() {
             @Override

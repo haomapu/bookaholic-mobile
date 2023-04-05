@@ -1,6 +1,7 @@
 package com.example.bookaholic;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import java.util.Locale;
 public class CartActivity extends AppCompatActivity {
     private RecyclerView mCartRecyclerView;
     private CartAdapter mCartAdapter;
-    private TextView mTotalPriceTextView;
+    private TextView mTotalPriceTextView, mShippingFeeTextView, mCartTotalPriceTextView;
     private ArrayList<OrderBook> mBookList;
 
     @Override
@@ -29,12 +30,17 @@ public class CartActivity extends AppCompatActivity {
         ArrayList<Comment> mComment = new ArrayList<>();
         mComment.add(comment);
 
+        ImageButton buttonBack = findViewById(R.id.button_cart_back);
+        buttonBack.setOnClickListener(v -> CartActivity.this.finish());
+
         // Initialize the book list with some sample books
         mBookList = Order.currentOrder.getOrderBooks();
 
         // Get a reference to the RecyclerView
         mCartRecyclerView = findViewById(R.id.cartRecyclerView);
         mTotalPriceTextView = findViewById(R.id.totalPriceTextView);
+        mShippingFeeTextView = findViewById(R.id.shippingFeeTextView);
+        mCartTotalPriceTextView = findViewById(R.id.cartTotalPriceTextView);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mCartRecyclerView.setLayoutManager(layoutManager);
@@ -50,7 +56,54 @@ public class CartActivity extends AppCompatActivity {
         for (OrderBook orderBook : mBookList) {
             totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
         }
-        mTotalPriceTextView.setText("Total: " + NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " VNĐ");
+        float shippingFee = 0;
+        if (mBookList.size() == 0) {
+            totalPrice = 30000;
+        }
+        float cartTotalPrice = totalPrice + shippingFee;
 
+        mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
+        mTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " đ");
+        mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(cartTotalPrice) + " đ");
+
+        mCartAdapter.setOnQuantityChangeListener(new CartAdapter.OnQuantityChangedListener() {
+            @Override
+            public void onQuantityChanged() {
+                // Calculate the total price
+                float totalPrice = 0;
+                for (OrderBook orderBook : mBookList) {
+                    totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
+                }
+                float shippingFee = 0;
+                if (mBookList.size() == 0) {
+                    totalPrice = 30000;
+                }
+                float cartTotalPrice = totalPrice + shippingFee;
+
+                mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
+                mTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " đ");
+                mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(cartTotalPrice) + " đ");
+            }
+        });
+
+        mCartAdapter.setOnDeleteListener(new CartAdapter.onDeleteListener() {
+            public void onDelete() {
+                // Calculate the total price
+                float totalPrice = 0;
+                for (OrderBook orderBook : mBookList) {
+                    totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
+                }
+                float shippingFee = 0;
+                if (mBookList.size() == 0) {
+                    totalPrice = 30000;
+                }
+                float cartTotalPrice = totalPrice + shippingFee;
+
+                mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
+                mTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " đ");
+                mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(cartTotalPrice) + " đ");
+            }
+        });
     }
+
 }

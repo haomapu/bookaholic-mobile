@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             Log.d(TAG, "Detected a data change of current user on the database.");
             currentSyncedUser = snapshot.getValue(User.class);
-            Log.d("test",currentSyncedUser.getEmail());
+//            Log.d("test",currentSyncedUser.getEmail());
             userDataChangedListener.updateUserRelatedViews();
             if (listenerForBookDetailsActivity != null)
                 listenerForBookDetailsActivity.updateUserRelatedViews();
