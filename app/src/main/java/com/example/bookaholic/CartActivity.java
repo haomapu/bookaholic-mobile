@@ -62,5 +62,23 @@ public class CartActivity extends AppCompatActivity {
         mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
         mTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " đ");
         mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(cartTotalPrice) + " đ");
+
+        mCartAdapter.setOnQuantityChangeListener(new CartAdapter.OnQuantityChangedListener() {
+            @Override
+            public void onQuantityChanged() {
+                // Calculate the total price
+                float totalPrice = 0;
+                for (OrderBook orderBook : mBookList) {
+                    totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
+                }
+                float shippingFee = 30000;
+                float cartTotalPrice = totalPrice + shippingFee;
+
+                mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
+                mTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " đ");
+                mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(cartTotalPrice) + " đ");
+            }
+        });
     }
+
 }

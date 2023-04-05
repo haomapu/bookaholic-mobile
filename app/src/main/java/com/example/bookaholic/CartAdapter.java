@@ -29,6 +29,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     private ArrayList<OrderBook> mBookList;
     private Context context;
+    private OnQuantityChangedListener onQuantityChangedListener;
+
 
     public CartAdapter(ArrayList<OrderBook> bookList, Context context) {
         this.context = context;
@@ -77,11 +79,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.increaseQuantityButton.setOnClickListener(v -> {
             orderBook.increaseQuantity();
             holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
+            notifyDataSetChanged();
+
+            if (onQuantityChangedListener != null)
+                onQuantityChangedListener.onQuantityChanged();
 
         });
         holder.decreaseQuantityButton.setOnClickListener(v -> {
             orderBook.decreaseQuantity();
             holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
+            notifyDataSetChanged();
+
+            if (onQuantityChangedListener != null)
+                onQuantityChangedListener.onQuantityChanged();
+
         });
     }
     private void startBookDetailsActivity(Book book) {
@@ -98,5 +109,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public int getItemCount() {
         return mBookList.size();
+    }
+
+    public interface OnQuantityChangedListener {
+        void onQuantityChanged();
+    }
+    public void setOnQuantityChangeListener(OnQuantityChangedListener listener) {
+        onQuantityChangedListener = listener;
     }
 }
