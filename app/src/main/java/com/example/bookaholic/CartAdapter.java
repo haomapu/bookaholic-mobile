@@ -30,6 +30,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private ArrayList<OrderBook> mBookList;
     private Context context;
     private OnQuantityChangedListener onQuantityChangedListener;
+    private onDeleteListener onDeleteListener;
 
 
     public CartAdapter(ArrayList<OrderBook> bookList, Context context) {
@@ -37,12 +38,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         mBookList = bookList;
     }
 
+    public interface onDeleteListener {
+        void onDelete();
+    }
+    public interface OnQuantityChangedListener {
+        void onQuantityChanged();
+    }
+
+
+
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         public ImageView bookImageView;
         public TextView bookNameTextView;
         public TextView bookQuantityTextView;
         public TextView bookPriceTextView;
-        public Button increaseQuantityButton, decreaseQuantityButton;
+        public Button increaseQuantityButton, decreaseQuantityButton, deleteButton;
         private ConstraintLayout layout;
 
         public CartViewHolder(View itemView) {
@@ -54,6 +64,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             bookPriceTextView = itemView.findViewById(R.id.bookPriceTextView);
             increaseQuantityButton = itemView.findViewById(R.id.bookQuantityIncreaseButton);
             decreaseQuantityButton = itemView.findViewById(R.id.bookQuantityDecreaseButton);
+            deleteButton = itemView.findViewById(R.id.bookDeleteButton);
             layout = itemView.findViewById(R.id.cartItemLayout);
         }
     }
@@ -76,7 +87,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .load(orderBook.book.getImages().get(0))
                 .into(holder.bookImageView);
         holder.layout.setOnClickListener(v -> startBookDetailsActivity(orderBook.book));
+
         holder.increaseQuantityButton.setOnClickListener(v -> {
+            if (orderBook.getQuantity() == 1)
+                return;
             orderBook.increaseQuantity();
             holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
             notifyDataSetChanged();
@@ -86,13 +100,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
         });
         holder.decreaseQuantityButton.setOnClickListener(v -> {
+            if (orderBook.getQuantity() == 1)
+                return;
             orderBook.decreaseQuantity();
             holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
             notifyDataSetChanged();
 
             if (onQuantityChangedListener != null)
                 onQuantityChangedListener.onQuantityChanged();
+        });
 
+        holder.deleteButton.setOnClickListener(v -> {
+            mBookList.remove(position);
+            notifyDataSetChanged();
+            if (onDeleteListener != null)
+                onDeleteListener.onDelete();
         });
     }
     private void startBookDetailsActivity(Book book) {
@@ -111,10 +133,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return mBookList.size();
     }
 
-    public interface OnQuantityChangedListener {
-        void onQuantityChanged();
+    public void setOnDeleteListener(onDeleteListener listener) {
+        onDeleteListener = listener;
     }
     public void setOnQuantityChangeListener(OnQuantityChangedListener listener) {
         onQuantityChangedListener = listener;
     }
+
+
 }

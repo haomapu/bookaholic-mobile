@@ -56,7 +56,10 @@ public class CartActivity extends AppCompatActivity {
         for (OrderBook orderBook : mBookList) {
             totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
         }
-        float shippingFee = 30000;
+        float shippingFee = 0;
+        if (mBookList.size() == 0) {
+            totalPrice = 30000;
+        }
         float cartTotalPrice = totalPrice + shippingFee;
 
         mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
@@ -71,7 +74,29 @@ public class CartActivity extends AppCompatActivity {
                 for (OrderBook orderBook : mBookList) {
                     totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
                 }
-                float shippingFee = 30000;
+                float shippingFee = 0;
+                if (mBookList.size() == 0) {
+                    totalPrice = 30000;
+                }
+                float cartTotalPrice = totalPrice + shippingFee;
+
+                mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
+                mTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " đ");
+                mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(cartTotalPrice) + " đ");
+            }
+        });
+
+        mCartAdapter.setOnDeleteListener(new CartAdapter.onDeleteListener() {
+            public void onDelete() {
+                // Calculate the total price
+                float totalPrice = 0;
+                for (OrderBook orderBook : mBookList) {
+                    totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
+                }
+                float shippingFee = 0;
+                if (mBookList.size() == 0) {
+                    totalPrice = 30000;
+                }
                 float cartTotalPrice = totalPrice + shippingFee;
 
                 mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
