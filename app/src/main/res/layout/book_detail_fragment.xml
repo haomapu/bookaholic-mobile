@@ -9,6 +9,7 @@
     android:id="@+id/tableTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    
     android:text="Book Details"
     android:textSize="27sp"
     android:textStyle="bold"

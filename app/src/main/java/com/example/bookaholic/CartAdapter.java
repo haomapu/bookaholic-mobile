@@ -89,7 +89,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.layout.setOnClickListener(v -> startBookDetailsActivity(orderBook.book));
 
         holder.increaseQuantityButton.setOnClickListener(v -> {
-            if (orderBook.getQuantity() >= 10) {
+            if (orderBook.getQuantity() == orderBook.getBook().getQuantity().intValue()) {
                 holder.errorMessageTextView.setText("Quantity limit exceeded");
                 holder.errorMessageTextView.setVisibility(View.VISIBLE);
                 new Handler().postDelayed(new Runnable() {
