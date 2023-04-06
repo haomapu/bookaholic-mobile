@@ -2,6 +2,8 @@ package com.example.bookaholic;
 
 import static android.content.ContentValues.TAG;
 
+import static com.example.bookaholic.Tools.showToast;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -51,6 +53,7 @@ public class AddBook extends AppCompatActivity {
     private String image, name, author,
             category, desciption, publicationDate,
             publisher, size, typeOfCover ;
+    String temp1, temp2, temp3;
 
     private int quantity, price, numberOfPages;
 
@@ -124,20 +127,78 @@ public class AddBook extends AppCompatActivity {
         binding.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String temp1, temp2, temp3;
-                name = binding.nameBook.getText().toString();
-                author = binding.nameAuthor.getText().toString();
-                desciption = binding.descriptionBook.getText().toString();
-                temp1 = binding.quantityBook.getText().toString();
-                quantity = Integer.parseInt(temp1);
-                temp2= binding.priceBook.getText().toString();
-                price = Integer.parseInt(temp2);
-                publisher = binding.publisherBook.getText().toString();
-                size = binding.sizeBook.getText().toString();
-                temp3 = binding.numberOfPagesBook.getText().toString();
-                numberOfPages = Integer.parseInt(temp3);
-                typeOfCover = binding.typeOfCoverBook.getText().toString();
-                uploadData();
+                boolean check = true;
+                // title
+                if (binding.nameBook.getText().toString().trim().isEmpty()) {
+                    binding.nameBook.setError("Please enter a value");
+                    check = false;
+                }
+                else
+                    name = binding.nameBook.getText().toString();
+                //author
+                if (binding.nameAuthor.getText().toString().trim().isEmpty()) {
+                    binding.nameAuthor.setError("Please enter a value");
+                    check = false;
+                }
+                else
+                    author = binding.nameAuthor.getText().toString();
+                //desciption
+                if (binding.descriptionBook.getText().toString().trim().isEmpty()){
+                    binding.descriptionBook.setError("Please enter a value");
+                    check = false;
+                }
+                else
+                    desciption = binding.descriptionBook.getText().toString();
+                //quantity
+                if (binding.quantityBook.getText().toString().trim().isEmpty()){
+                    binding.quantityBook.setError("Please enter a value");
+                    check = false;
+                }
+                else {
+                    temp1 = binding.quantityBook.getText().toString();
+                    quantity = Integer.parseInt(temp1);
+                }
+                // price
+                if (binding.priceBook.getText().toString().trim().isEmpty()) {
+                    binding.priceBook.setError("Please enter a value");
+                    check = false;
+                }
+                else {
+                    temp2 = binding.priceBook.getText().toString();
+                    price = Integer.parseInt(temp2);
+                }
+                // publisher
+                if (binding.publisherBook.getText().toString().trim().isEmpty()){
+                    binding.publisherBook.setError("Please enter a value");
+                    check = false;
+                }
+                else
+                    publisher = binding.publisherBook.getText().toString();
+                //size
+                if (binding.sizeBook.getText().toString().trim().isEmpty()){
+                    binding.sizeBook.setError("Please enter a value");
+                    check = false;
+                }
+                else
+                    size = binding.sizeBook.getText().toString();
+                //numberOfPages
+                if (binding.numberOfPagesBook.getText().toString().trim().isEmpty()) {
+                    binding.numberOfPagesBook.setError("Please enter a value");
+                    check = false;
+                }
+                else {
+                    temp3 = binding.numberOfPagesBook.getText().toString();
+                    numberOfPages = Integer.parseInt(temp3);
+                }
+                //Type
+                if (binding.typeOfCoverBook.getText().toString().trim().isEmpty()){
+                    binding.typeOfCoverBook.setError("Please enter a value");
+                    check = false;
+                }
+                else
+                    typeOfCover = binding.typeOfCoverBook.getText().toString();
+                if(check == true)
+                    uploadData();
             }
         });
 
@@ -204,10 +265,14 @@ public class AddBook extends AppCompatActivity {
     }
 
     private void uploadData() {
+        if (imageUri == null){
+            showToast(AddBook.this, R.string.image_empty);
+           return;
+        }
         Book book = new Book(image, name, author, category, desciption, quantity, price
                 , publicationDate, publisher, size, numberOfPages, typeOfCover, images);
-
-        database.child(name.toString()).setValue(book)
+        String key = database.child("Books").push().getKey();
+        database.child(key).setValue(book)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

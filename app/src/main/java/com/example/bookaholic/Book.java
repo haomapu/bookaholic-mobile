@@ -42,7 +42,9 @@ public class Book implements Serializable {
         this.size = size;
         this.numberOfPages = numberOfPages;
         this.typeOfCover = typeOfCover;
+        Comment cmt = new Comment();
         this.comments = new ArrayList<Comment>();
+        comments.add(cmt);
         this.images = images;
         this.buyer = 0;
         LocalDate currentDate = LocalDate.now();
