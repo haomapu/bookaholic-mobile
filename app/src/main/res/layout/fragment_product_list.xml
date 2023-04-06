@@ -184,7 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
-                android:text="@string/shortStories"
+                android:text="@string/shortstories"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance"
