@@ -57,8 +57,8 @@ public class CartActivity extends AppCompatActivity {
             totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
         }
         float shippingFee = 0;
-        if (mBookList.size() == 0) {
-            totalPrice = 30000;
+        if (mBookList.size() != 0) {
+            shippingFee = 30000;
         }
         float cartTotalPrice = totalPrice + shippingFee;
 
@@ -75,8 +75,8 @@ public class CartActivity extends AppCompatActivity {
                     totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
                 }
                 float shippingFee = 0;
-                if (mBookList.size() == 0) {
-                    totalPrice = 30000;
+                if (mBookList.size() != 0) {
+                    shippingFee = 30000;
                 }
                 float cartTotalPrice = totalPrice + shippingFee;
 
@@ -94,8 +94,8 @@ public class CartActivity extends AppCompatActivity {
                     totalPrice += orderBook.getBook().getPrice() * orderBook.getQuantity();
                 }
                 float shippingFee = 0;
-                if (mBookList.size() == 0) {
-                    totalPrice = 30000;
+                if (mBookList.size() != 0) {
+                    shippingFee = 30000;
                 }
                 float cartTotalPrice = totalPrice + shippingFee;
 

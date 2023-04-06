@@ -93,7 +93,6 @@ public class Book implements Serializable {
     public Integer getQuantity() {
         return quantity;
     }
-
     public void setQuantity(int quantity) {
         this.quantity= quantity;
     }
