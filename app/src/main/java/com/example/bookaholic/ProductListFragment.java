@@ -50,8 +50,9 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     ProgressBar progressBar;
     private BookAdapter adapter;
     private ScrollView filterContainer;
-    private Button buttonTypeScience, buttonTypeLifeStyle;
-    private Button buttonAuthorBlack, buttonAuthorWhite, buttonAuthorGray, buttonAuthorYellow;
+    private Button buttonTypeScience, buttonTypeRomantic, buttonTypeMystery,
+            buttonTypeHorror, buttonTypeSelfHelp, buttonTypeShortStories,
+            buttonTypeCook, buttonTypeEssay, buttonTypeHistory;
     private Button filterConfirmButton, filterResetButton;
     private EditText inputMinPrice, inputMaxPrice;
     public static final Integer RecordAudioRequestCode = 1;
@@ -98,21 +99,14 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_list, container, false);
 
-//        usernameView = view.findViewById(R.id.textview_greeting);
-//        updateUsernameView();
-
         adapter = new BookAdapter(view.getContext(), Book.allBooks);
         recyclerView = view.findViewById(R.id.recyclerview_home);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+//
 //        bestSellerAdapter = new BestSellerAdapter(view.getContext(), Book.allBooks);
 //        bestSellerRecyclerView = view.findViewById(R.id.bestSellerRecyclerView);
-//        bestSellerRecyclerView.setHasFixedSize(true);
 //        bestSellerRecyclerView.setAdapter(bestSellerAdapter);
-//        bestSellerRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext() , LinearLayoutManager.HORIZONTAL , false));
-
-
 
 
         progressBar = view.findViewById(R.id.progressbar_home_fragment);
@@ -133,21 +127,26 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         filterResetButton.setOnClickListener(v -> resetFilters());
 
         buttonTypeScience = view.findViewById(R.id.button_select_filter_type_science);
-        buttonTypeLifeStyle = view.findViewById(R.id.button_select_filter_type_lifestyle);
+        buttonTypeHorror = view.findViewById(R.id.button_select_filter_type_horror);
+        buttonTypeCook = view.findViewById(R.id.button_select_filter_type_cookbooks);
+        buttonTypeEssay = view.findViewById(R.id.button_select_filter_type_essay);
+        buttonTypeHistory = view.findViewById(R.id.button_select_filter_type_history);
+        buttonTypeShortStories = view.findViewById(R.id.button_select_filter_type_shortstories);
+        buttonTypeMystery = view.findViewById(R.id.button_select_filter_type_mystery);
+        buttonTypeRomantic = view.findViewById(R.id.button_select_filter_type_romance);
+
         buttonTypeScience.setOnClickListener(filterSelectListener);
-        buttonTypeLifeStyle.setOnClickListener(filterSelectListener);
+        buttonTypeHorror.setOnClickListener(filterSelectListener);
+        buttonTypeCook.setOnClickListener(filterSelectListener);
+        buttonTypeEssay.setOnClickListener(filterSelectListener);
+        buttonTypeHistory.setOnClickListener(filterSelectListener);
+        buttonTypeShortStories.setOnClickListener(filterSelectListener);
+        buttonTypeMystery.setOnClickListener(filterSelectListener);
+        buttonTypeRomantic.setOnClickListener(filterSelectListener);
 
         inputMinPrice = view.findViewById(R.id.edittextMinimumPrice);
         inputMaxPrice = view.findViewById(R.id.edittextMaximumPrice);
 
-        buttonAuthorBlack = view.findViewById(R.id.button_select_filter_color_black);
-        buttonAuthorWhite = view.findViewById(R.id.button_select_filter_color_white);
-        buttonAuthorGray = view.findViewById(R.id.button_select_filter_color_gray);
-        buttonAuthorYellow = view.findViewById(R.id.button_select_filter_color_yellow);
-        buttonAuthorYellow.setOnClickListener(filterSelectListener);
-        buttonAuthorGray.setOnClickListener(filterSelectListener);
-        buttonAuthorWhite.setOnClickListener(filterSelectListener);
-        buttonAuthorBlack.setOnClickListener(filterSelectListener);
 
         buttonFilter = view.findViewById(R.id.button_filter);
         buttonFilter.setOnClickListener(v -> showFilterMenu());
@@ -162,85 +161,102 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
             if (selectedType.contains("science")) selectedType.remove("science");
             else selectedType.add("science");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_lifestyle) {
-            if (selectedType.contains("lifestyle")) selectedType.remove("lifestyle");
-            else selectedType.add("lifestyle");
+        } else if (v.getId() == R.id.button_select_filter_type_romance) {
+            if (selectedType.contains("romance")) selectedType.remove("romance");
+            else selectedType.add("romance");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_color_black) {
-            if (selectedAuthor.contains("đen")) selectedAuthor.remove("đen");
-            else selectedAuthor.add("đen");
-            updateAuthorFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_color_white) {
-            if (selectedAuthor.contains("trắng")) selectedAuthor.remove("trắng");
-            else selectedAuthor.add("trắng");
-            updateAuthorFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_color_gray) {
-            if (selectedAuthor.contains("xám")) selectedAuthor.remove("xám");
-            else selectedAuthor.add("xám");
-            updateAuthorFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_color_yellow) {
-            if (selectedAuthor.contains("vàng")) selectedAuthor.remove("vàng");
-            else selectedAuthor.add("vàng");
-            updateAuthorFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_type_mystery) {
+            if (selectedType.contains("mystery")) selectedType.remove("mystery");
+            else selectedType.add("mystery");
+            updateTypeFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_type_horror) {
+            if (selectedType.contains("horror")) selectedType.remove("horror");
+            else selectedType.add("horror");
+            updateTypeFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_type_shortstories) {
+            if (selectedType.contains("shortstories")) selectedType.remove("shortstories");
+            else selectedType.add("shortstories");
+            updateTypeFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_type_history) {
+            if (selectedType.contains("history")) selectedType.remove("history");
+            else selectedType.add("history");
+            updateTypeFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_type_essay) {
+            if (selectedType.contains("essay")) selectedType.remove("essay");
+            else selectedType.add("essay");
+            updateTypeFilterButtons();
+        } else if (v.getId() == R.id.button_select_filter_type_cookbooks) {
+            if (selectedType.contains("cookbooks")) selectedType.remove("cookbooks");
+            else selectedType.add("cookbooks");
+            updateTypeFilterButtons();
         }
     };
 
     private void resetFilters() {
-        selectedAuthor.clear();
         selectedType.clear();
         minPrice = null;
         maxPrice = null;
-        updateAuthorFilterButtons();
         updateTypeFilterButtons();
         inputMinPrice.setText("");
         inputMaxPrice.setText("");
     }
 
-    private void updateAuthorFilterButtons() {
-        if (selectedAuthor.contains("đen")) {
-            buttonAuthorBlack.setBackgroundColor(Color.BLACK);
-            buttonAuthorBlack.setTextColor(Color.WHITE);
-        } else {
-            buttonAuthorBlack.setBackgroundColor(Color.WHITE);
-            buttonAuthorBlack.setTextColor(Color.GRAY);
-        }
-        if (selectedAuthor.contains("trắng")) {
-            buttonAuthorWhite.setBackgroundColor(Color.BLACK);
-            buttonAuthorWhite.setTextColor(Color.WHITE);
-        } else {
-            buttonAuthorWhite.setBackgroundColor(Color.WHITE);
-            buttonAuthorWhite.setTextColor(Color.GRAY);
-        }
-        if (selectedAuthor.contains("xám")) {
-            buttonAuthorGray.setBackgroundColor(Color.BLACK);
-            buttonAuthorGray.setTextColor(Color.WHITE);
-        } else {
-            buttonAuthorGray.setBackgroundColor(Color.WHITE);
-            buttonAuthorGray.setTextColor(Color.GRAY);
-        }
-        if (selectedAuthor.contains("vàng")) {
-            buttonAuthorYellow.setBackgroundColor(Color.BLACK);
-            buttonAuthorYellow.setTextColor(Color.WHITE);
-        } else {
-            buttonAuthorYellow.setBackgroundColor(Color.WHITE);
-            buttonAuthorYellow.setTextColor(Color.GRAY);
-        }
-    }
-
     void updateTypeFilterButtons() {
+        if (selectedType.contains("romance")) {
+            buttonTypeRomantic.setBackgroundColor(Color.BLACK);
+            buttonTypeRomantic.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeRomantic.setBackgroundColor(Color.WHITE);
+            buttonTypeRomantic.setTextColor(Color.BLACK);
+        }
+        if (selectedType.contains("mystery")) {
+            buttonTypeMystery.setBackgroundColor(Color.BLACK);
+            buttonTypeMystery.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeMystery.setBackgroundColor(Color.WHITE);
+            buttonTypeMystery.setTextColor(Color.BLACK);
+        }
         if (selectedType.contains("science")) {
             buttonTypeScience.setBackgroundColor(Color.BLACK);
             buttonTypeScience.setTextColor(Color.WHITE);
         } else {
             buttonTypeScience.setBackgroundColor(Color.WHITE);
-            buttonTypeScience.setTextColor(Color.GRAY);
+            buttonTypeScience.setTextColor(Color.BLACK);
         }
-        if (selectedType.contains("lifestyle")) {
-            buttonTypeLifeStyle.setBackgroundColor(Color.BLACK);
-            buttonTypeLifeStyle.setTextColor(Color.WHITE);
+        if (selectedType.contains("horror")) {
+            buttonTypeHorror.setBackgroundColor(Color.BLACK);
+            buttonTypeHorror.setTextColor(Color.WHITE);
         } else {
-            buttonTypeLifeStyle.setBackgroundColor(Color.WHITE);
-            buttonTypeLifeStyle.setTextColor(Color.GRAY);
+            buttonTypeHorror.setBackgroundColor(Color.WHITE);
+            buttonTypeHorror.setTextColor(Color.BLACK);
+        }
+        if (selectedType.contains("shortstories")) {
+            buttonTypeShortStories.setBackgroundColor(Color.BLACK);
+            buttonTypeShortStories.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeShortStories.setBackgroundColor(Color.WHITE);
+            buttonTypeShortStories.setTextColor(Color.BLACK);
+        }
+        if (selectedType.contains("history")) {
+            buttonTypeHistory.setBackgroundColor(Color.BLACK);
+            buttonTypeHistory.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeHistory.setBackgroundColor(Color.WHITE);
+            buttonTypeHistory.setTextColor(Color.BLACK);
+        }
+        if (selectedType.contains("essay")) {
+            buttonTypeEssay.setBackgroundColor(Color.BLACK);
+            buttonTypeEssay.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeEssay.setBackgroundColor(Color.WHITE);
+            buttonTypeEssay.setTextColor(Color.BLACK);
+        }
+        if (selectedType.contains("cookbooks")) {
+            buttonTypeCook.setBackgroundColor(Color.BLACK);
+            buttonTypeCook.setTextColor(Color.WHITE);
+        } else {
+            buttonTypeCook.setBackgroundColor(Color.WHITE);
+            buttonTypeCook.setTextColor(Color.BLACK);
         }
     }
 
@@ -287,7 +303,7 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         if (!maxPriceString.isEmpty())
             maxPrice = Integer.parseInt(inputMaxPrice.getText().toString());
 
-        adapter.filterByOptions(selectedType, minPrice, maxPrice, selectedAuthor);
+        adapter.filterByOptions(selectedType, minPrice, maxPrice);
     }
     @Override
     public void updateBooksRelatedViews() {

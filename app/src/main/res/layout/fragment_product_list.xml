@@ -62,6 +62,7 @@
 <!--        android:id="@+id/bestSellerRecyclerView"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
 <!--        android:layout_marginStart="8dp"-->
 <!--        android:layout_marginTop="32dp"-->
 <!--        android:layout_marginEnd="8dp"-->
@@ -142,78 +143,87 @@
                 app:layout_constraintTop_toBottomOf="@id/title_type_filter" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_lifestyle"
+                android:id="@+id/button_select_filter_type_romance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:backgroundTint="@color/white"
-                android:text="@string/lifestyle"
+                android:text="@string/romance"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/button_select_filter_type_science"
                 app:layout_constraintTop_toTopOf="@id/button_select_filter_type_science" />
 
-            <TextView
-                android:id="@+id/title_author_filter"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_select_filter_type_mystery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/authorFilterTitle"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="?attr/colorOnSurface"
-                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_science"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/white"
+                android:text="@string/mystery"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title_type_filter"
                 app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_science" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_color_black"
+                android:id="@+id/button_select_filter_type_horror"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
-                android:text="@string/black"
+                android:text="@string/horror"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/title_author_filter"
-                app:layout_constraintTop_toBottomOf="@id/title_author_filter" />
+                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_romance" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_color_white"
+                android:id="@+id/button_select_filter_type_shortstories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
-                android:text="@string/white"
+                android:text="@string/shortStories"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/button_select_filter_color_black"
-                app:layout_constraintTop_toBottomOf="@id/title_author_filter" />
+                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_horror" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_select_filter_type_cookbooks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="@color/white"
+                android:text="@string/cookbooks"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/title_type_filter"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_mystery" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_color_gray"
+                android:id="@+id/button_select_filter_type_essay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
-                android:text="@string/gray"
+                android:text="@string/essay"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/button_select_filter_color_white"
-                app:layout_constraintTop_toBottomOf="@id/title_author_filter" />
+                app:layout_constraintStart_toStartOf="@id/title_type_filter"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_cookbooks" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_color_yellow"
+                android:id="@+id/button_select_filter_type_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
-                android:text="@string/yellow"
+                android:text="@string/history"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/title_author_filter"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_color_black" />
+                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_shortstories" />
 
             <TextView
                 android:id="@+id/title_price_filter"
@@ -225,7 +235,7 @@
                 android:textStyle="bold"
                 android:textColor="?attr/colorOnSurface"
                 app:layout_constraintStart_toStartOf="@id/title_filter_menu"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_color_yellow" />
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_essay" />
 
             <EditText
                 android:id="@+id/edittextMinimumPrice"
@@ -270,7 +280,7 @@
                 android:text="@string/confirm"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/button_select_filter_color_gray"
+                app:layout_constraintStart_toStartOf="@id/edittextMaximumPrice"
                 app:layout_constraintTop_toBottomOf="@id/edittextMinimumPrice" />
 
             <com.google.android.material.button.MaterialButton
