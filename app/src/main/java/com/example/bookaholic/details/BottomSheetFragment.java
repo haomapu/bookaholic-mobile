@@ -1,6 +1,7 @@
 package com.example.bookaholic.details;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
 
@@ -36,11 +37,13 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     FragmentTransaction fragmentManager;
     Integer type;
     ArrayList<Comment> comments;
-    public BottomSheetFragment(ArrayList<Comment> comments, Integer type) {
+    Context context;
+    public BottomSheetFragment(ArrayList<Comment> comments, Integer type, Context context) {
         this.comments = comments;
         this.type = type;
+        this.context = context;
     }
- public BottomSheetFragment(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,int numberPageContent, String mPublisher, Integer type) {
+ public BottomSheetFragment(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,int numberPageContent, String mPublisher, Integer type, Context context) {
      this.mAuthorContent = authorContent;
      this.mCategoryContent = categoryContent;
      this.mDateContent = dateContent;
@@ -49,14 +52,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
      this.mNumberPageContent = numberPageContent;
      this.type = type;
      this.mPublisher = mPublisher;
+     this.context = context;
  }
 
 
-    public static BottomSheetFragment newInstance(ArrayList<Comment> comments, Integer type) {
-        return new BottomSheetFragment(comments, type);
+    public static BottomSheetFragment newInstance(ArrayList<Comment> comments, Integer type, Context context) {
+        return new BottomSheetFragment(comments, type, context);
     }
-    public static BottomSheetFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,int numberPageContent, String mPublisher, Integer type) {
-        return new BottomSheetFragment(authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent, mPublisher, type);
+    public static BottomSheetFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,int numberPageContent, String mPublisher, Integer type, Context context) {
+        return new BottomSheetFragment(authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent, mPublisher, type, context);
     }
 
     @Override
@@ -71,7 +75,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         });
         fragmentManager = getChildFragmentManager().beginTransaction();
         if (type == 1) {
-            ReviewFragment reviewFragment = ReviewFragment.newInstance(comments);
+            ReviewFragment reviewFragment = ReviewFragment.newInstance(comments, context);
 
             fragmentManager.replace(R.id.fragmentContainer, reviewFragment);
             fragmentManager.commit();

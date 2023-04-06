@@ -28,8 +28,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bookaholic.AddBook;
 import com.example.bookaholic.CartActivity;
 import com.example.bookaholic.Comment;
+import com.example.bookaholic.ManageBook;
 import com.example.bookaholic.Order;
 import com.example.bookaholic.OrderBook;
 import com.example.bookaholic.R;
@@ -187,7 +189,7 @@ public class Detail extends AppCompatActivity {
         for (int i = 0; i < currentBook.getComments().size() && i < 2; i++){
             comments.add(currentBook.getComments().get(i));
         }
-        ReviewAdapter adapter = new ReviewAdapter(comments);
+        ReviewAdapter adapter = new ReviewAdapter(this,comments);
 
         commentListView = findViewById(R.id.commentListView);
         commentListView.setAdapter(adapter);
@@ -252,14 +254,14 @@ public class Detail extends AppCompatActivity {
         showBottomSheetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments(), 1);
+                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments(), 1, Detail.this);
                 bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
             }
         });
         showBookDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getAuthor(), currentBook.getCategory(), currentBook.getPublicationDate(), currentBook.getTypeOfCover(), currentBook.getSize(), currentBook.getNumberOfPages(), currentBook.getPublisher(), 2);
+                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getAuthor(), currentBook.getCategory(), currentBook.getPublicationDate(), currentBook.getTypeOfCover(), currentBook.getSize(), currentBook.getNumberOfPages(), currentBook.getPublisher(), 2, Detail.this);
                 bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
             }
 
@@ -280,7 +282,7 @@ public class Detail extends AppCompatActivity {
         shoppingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Detail.this, CartActivity.class));
+                startActivity(new Intent(Detail.this, AddBook.class));
             }
         });
     }

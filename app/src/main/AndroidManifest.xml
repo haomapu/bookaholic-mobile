@@ -28,6 +28,9 @@
             android:name=".ProfileAcitivity"
             android:exported="false" />
         <activity
+            android:name=".ManageBook"
+            android:exported="false" />
+        <activity
             android:name=".ForgotPassword"
             android:exported="false">
             <meta-data

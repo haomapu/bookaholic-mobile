@@ -26,9 +26,9 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        Comment comment = new Comment("Good book", "Hao", R.drawable.img1,5);
-        ArrayList<Comment> mComment = new ArrayList<>();
-        mComment.add(comment);
+//        Comment comment = new Comment("Good book", "Hao", R.drawable.img1,5);
+//        ArrayList<Comment> mComment = new ArrayList<>();
+//        mComment.add(comment);
 
         ImageButton buttonBack = findViewById(R.id.button_cart_back);
         buttonBack.setOnClickListener(v -> CartActivity.this.finish());

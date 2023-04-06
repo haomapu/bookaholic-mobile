@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
     private ArrayList<Comment> mDataList;
+    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView avatarItem;
@@ -38,8 +40,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         }
     }
 
-    public ReviewAdapter(ArrayList<Comment> dataList) {
-        mDataList = dataList;
+    public ReviewAdapter(Context context, ArrayList<Comment> dataList) {
+        this.mDataList = dataList;
+        this.context = context;
     }
 
     @Override
@@ -52,7 +55,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Comment comment = mDataList.get(position);
-//        holder.avatarItem.setImageResource(comment.getAvatar());
+        Glide.with(context)
+                .load(comment.getAvatar())
+                .into(holder.avatarItem);
         holder.nameItem.setText(comment.getName());
         holder.contentItem.setText(comment.getContent());
         holder.ratingBar.setRating(comment.getRating());

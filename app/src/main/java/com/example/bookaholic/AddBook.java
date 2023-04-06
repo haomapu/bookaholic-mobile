@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.bookaholic.details.Book;
 
 import com.example.bookaholic.databinding.ActivityAddBookBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -270,7 +271,7 @@ public class AddBook extends AppCompatActivity {
            return;
         }
         Book book = new Book(image, name, author, category, desciption, quantity, price
-                , publicationDate, publisher, size, numberOfPages, typeOfCover, images);
+                , publicationDate, publisher, size, numberOfPages, typeOfCover, images, null);
         String key = database.child("Books").push().getKey();
         database.child(key).setValue(book)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

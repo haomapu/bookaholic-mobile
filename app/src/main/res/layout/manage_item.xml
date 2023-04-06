@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+        <ImageView
+            android:id="@+id/bookImageView"
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bookNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Book Name"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/bookRecentAddTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Book Add Recent"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/bookPriceTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Book Price"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/bookQuantityTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Book Quantity"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/bookBuyerTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Book Sold"
+                android:textSize="17sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/updateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update"/>
+
+            <Button
+                android:id="@+id/removeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/red"
+                android:text="Remove"/>
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

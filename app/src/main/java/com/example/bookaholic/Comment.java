@@ -1,12 +1,12 @@
 package com.example.bookaholic;
 
 public class Comment {
-    private String content,name;
-    private int rate, avatar;
+    private String content,name, avatar;
+    private int rate;
 
     public Comment(){
     }
-    public Comment(String content, String name, int avatar,int rate) {
+    public Comment(String content, String name, String avatar,int rate) {
         this.content = content;
         this.rate = rate;
         this.avatar = avatar;
@@ -29,7 +29,7 @@ public class Comment {
         this.rate = rate;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 

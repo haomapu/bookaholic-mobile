@@ -9,8 +9,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -21,7 +24,7 @@ import com.google.firebase.database.Exclude;
 public class Book implements Serializable {
     @Exclude
     public static ArrayList<Book> allBooks = new ArrayList<>();
-    private String title, author, category, description, downloadURL, size,publicationDate,
+    private String imageUrl, title, author, category, description, downloadURL, size,publicationDate,
             publisher, typeOfCover, recentlyDate;
     private ArrayList<Comment> comments = new ArrayList<>();
     private int price, quantity, numberOfPages, buyer;
@@ -30,6 +33,29 @@ public class Book implements Serializable {
     public Book(){
 
     }
+
+    public Book(String imageUrl, String title, String author, String category, String description, int quantity, int price
+            , String publicationDate, String publisher, String size, int numberOfPages, String typeOfCover, ArrayList<String> images, ArrayList<Comment> comments) {
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+        this.size = size;
+        this.numberOfPages = numberOfPages;
+        this.typeOfCover = typeOfCover;
+        this.comments = comments;
+        this.images = images;
+        this.buyer = 0;
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.recentlyDate = currentDate.format(formatter);
+    }
+
     public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images
         ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer) {
         this.title = title;
@@ -92,6 +118,8 @@ public class Book implements Serializable {
 
     public float getRateAvg(){
         float sum = 0;
+        if (comments == null)
+            return 0;
         for (int i = 0; i < comments.size(); i++){
             sum += comments.get(i).getRate();
         }
@@ -133,10 +161,6 @@ public class Book implements Serializable {
     @Exclude
     public Book deepCopy() {
         return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.images, this.quantity, this.size, this.publicationDate, this.publisher,this.typeOfCover, this.recentlyDate, this.numberOfPages, this.buyer);
-    }
-
-    public int getImageResId() {
-        return Integer.parseInt(images.get(0));
     }
 
     @SuppressLint("DefaultLocale")

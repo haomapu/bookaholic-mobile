@@ -1,5 +1,6 @@
 package com.example.bookaholic.details;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,13 @@ import java.util.ArrayList;
 public class ReviewFragment extends Fragment {
     ArrayList<Comment> comments;
     RecyclerView commentListView;
-    public ReviewFragment(ArrayList<Comment> comments) {
+
+    Context context;
+    public ReviewFragment(ArrayList<Comment> comments,Context context) {
         this.comments = comments;
     }
-    public static ReviewFragment newInstance(ArrayList<Comment> comments) {
-        ReviewFragment fragment = new ReviewFragment(comments);
+    public static ReviewFragment newInstance(ArrayList<Comment> comments, Context context) {
+        ReviewFragment fragment = new ReviewFragment(comments, context);
 
         return fragment;
     }
@@ -36,7 +39,7 @@ public class ReviewFragment extends Fragment {
         return view;
     }
     public void initComment(View view){
-        ReviewAdapter adapter = new ReviewAdapter(comments);
+        ReviewAdapter adapter = new ReviewAdapter(context, comments);
         commentListView = view.findViewById(R.id.commentListView);
         commentListView.setAdapter(adapter);
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bookaholic.details.Book;
 
 import java.util.ArrayList;
@@ -39,7 +40,9 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
 
     @Override
     public void onBindViewHolder(@NonNull BestSellerViewHolder holder, int position) {
-        holder.mImageView.setImageResource(listBooks.get(position).getImageResId());
+        Glide.with(context)
+                .load(listBooks.get(position).getImages().get(0))
+                .into(holder.mImageView);
     }
 
     @Override
