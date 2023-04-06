@@ -55,7 +55,6 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
                 .into(holder.mImageView);
         holder.mTextViewTitle.setText(currentBook.getTitle());
         holder.mTextViewPrice.setText(String.valueOf(currentBook.getPrice()));
-        holder.mTextViewRecentAdd.setText(currentBook.getRecentlyDate());
         holder.mTextViewQuantity.setText(String.valueOf(currentBook.getQuantity()));
         holder.mTextViewSold.setText(String.valueOf(currentBook.getBuyer()));
     }
@@ -68,8 +67,8 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView mImageView;
-        public TextView mTextViewTitle, mTextViewPrice, mTextViewRecentAdd, mTextViewQuantity, mTextViewSold;
-        public Button mUpdateButton, mRemoveButton;
+        public TextView mTextViewTitle, mTextViewPrice,  mTextViewQuantity, mTextViewSold;
+        public ImageView mUpdateButton, mRemoveButton;
 
         public ViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -77,7 +76,6 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
             mImageView = itemView.findViewById(R.id.bookImageView);
             mTextViewTitle = itemView.findViewById(R.id.bookNameTextView);
             mTextViewPrice = itemView.findViewById(R.id.bookPriceTextView);
-            mTextViewRecentAdd = itemView.findViewById(R.id.bookRecentAddTextView);
             mTextViewQuantity = itemView.findViewById(R.id.bookQuantityTextView);
             mTextViewSold = itemView.findViewById(R.id.bookBuyerTextView);
             mUpdateButton = itemView.findViewById(R.id.updateButton);

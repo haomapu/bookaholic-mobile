@@ -282,7 +282,7 @@ public class Detail extends AppCompatActivity {
         shoppingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Detail.this, AddBook.class));
+                startActivity(new Intent(Detail.this, ManageBook.class));
             }
         });
     }
