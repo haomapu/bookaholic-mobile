@@ -21,15 +21,17 @@ import com.google.firebase.database.Exclude;
 public class Book implements Serializable {
     @Exclude
     public static ArrayList<Book> allBooks = new ArrayList<>();
-    private String title, author, category, description, downloadURL;
+    private String title, author, category, description, downloadURL, size,publicationDate,
+            publisher, typeOfCover, recentlyDate;
     private ArrayList<Comment> comments = new ArrayList<>();
-    private int price;
+    private int price, quantity, numberOfPages, buyer;
     private ArrayList<String> images = new ArrayList<>();
 
     public Book(){
 
     }
-    public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images) {
+    public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images
+        ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -38,6 +40,14 @@ public class Book implements Serializable {
         this.comments = comments;
         this.price = price;
         this.images = images;
+        this.quantity = quantity;
+        this.size = size;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+        this.typeOfCover = typeOfCover;
+        this.recentlyDate = recentlyDate;
+        this.numberOfPages = numberOfPages;
+        this.buyer = buyer;
     }
 
     public static ArrayList<Book> getAllBooks() {
@@ -122,7 +132,7 @@ public class Book implements Serializable {
     @NonNull
     @Exclude
     public Book deepCopy() {
-        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.images);
+        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.images, this.quantity, this.size, this.publicationDate, this.publisher,this.typeOfCover, this.recentlyDate, this.numberOfPages, this.buyer);
     }
 
     public int getImageResId() {
@@ -164,4 +174,65 @@ public class Book implements Serializable {
         return -1;
     }
 
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity= quantity;
+    }
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+    public Integer getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public String getTypeOfCover() {
+        return typeOfCover;
+    }
+
+    public void setTypeOfCover(String typeOfCover) {
+        this.typeOfCover = typeOfCover;
+    }
+
+    public Integer getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(int buyer) {
+        this.buyer = buyer;
+    }
+
+    public String getRecentlyDate() {
+        return recentlyDate;
+    }
+
+    public void setRecentlyDate(String recentlyDate) {
+        this.recentlyDate = recentlyDate;
+    }
 }

@@ -21,14 +21,15 @@ import com.example.bookaholic.R;
 import java.util.ArrayList;
 
 public class DetailFragment extends Fragment {
-    private String mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent;
+    private String mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mPublisher;
+    private int mNumberPageContent;
 
-    TextView authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent;
+    TextView authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent, publisherContent;
     Integer type;
     public DetailFragment() {
 
     }
-    public static DetailFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,String numberPageContent, Integer type) {
+    public static DetailFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,int numberPageContent, String mPublisher, Integer type) {
         DetailFragment fragment = new DetailFragment();
         fragment.mAuthorContent = authorContent;
         fragment.mCategoryContent = categoryContent;
@@ -37,6 +38,7 @@ public class DetailFragment extends Fragment {
         fragment.mSizeContent = sizeContent;
         fragment.mNumberPageContent = numberPageContent;
         fragment.type = type;
+        fragment.mPublisher = mPublisher;
         return fragment;
     }
 
@@ -64,12 +66,15 @@ public class DetailFragment extends Fragment {
         coverTypeContent = view.findViewById(R.id.coverTypeContent);
         sizeContent = view.findViewById(R.id.sizeContent);
         numberPageContent = view.findViewById(R.id.numberPageContent);
+        publisherContent = view.findViewById(R.id.publisherContent);
+
 
         authorContent.setText(mAuthorContent);
         categoryContent.setText(mCategoryContent);
         dateContent.setText(mDateContent);
         coverTypeContent.setText(mCoverTypeContent);
         sizeContent.setText(mSizeContent);
-        numberPageContent.setText(mNumberPageContent);
+        numberPageContent.setText(String.valueOf(mNumberPageContent));
+        publisherContent.setText(mPublisher);
     }
 }

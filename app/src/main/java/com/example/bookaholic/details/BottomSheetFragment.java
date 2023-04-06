@@ -29,7 +29,8 @@ import java.util.ArrayList;
 public class BottomSheetFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = "BottomSheetFragment";
-    private String mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent;
+    private String mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mPublisher;
+    private int mNumberPageContent;
 
     private CardView mCardView;
     FragmentTransaction fragmentManager;
@@ -39,7 +40,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
         this.comments = comments;
         this.type = type;
     }
- public BottomSheetFragment(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,String numberPageContent, Integer type) {
+ public BottomSheetFragment(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,int numberPageContent, String mPublisher, Integer type) {
      this.mAuthorContent = authorContent;
      this.mCategoryContent = categoryContent;
      this.mDateContent = dateContent;
@@ -47,15 +48,15 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
      this.mSizeContent = sizeContent;
      this.mNumberPageContent = numberPageContent;
      this.type = type;
-
+     this.mPublisher = mPublisher;
  }
 
 
     public static BottomSheetFragment newInstance(ArrayList<Comment> comments, Integer type) {
         return new BottomSheetFragment(comments, type);
     }
-    public static BottomSheetFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,String numberPageContent, Integer type) {
-        return new BottomSheetFragment(authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent, type);
+    public static BottomSheetFragment newInstance(String authorContent,String categoryContent,String dateContent,String coverTypeContent,String sizeContent,int numberPageContent, String mPublisher, Integer type) {
+        return new BottomSheetFragment(authorContent, categoryContent, dateContent, coverTypeContent, sizeContent, numberPageContent, mPublisher, type);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
             fragmentManager.commit();
         }
         else if (type == 2) {
-            DetailFragment detailFragment = DetailFragment.newInstance(mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent, 2);
+            DetailFragment detailFragment = DetailFragment.newInstance(mAuthorContent, mCategoryContent, mDateContent, mCoverTypeContent, mSizeContent, mNumberPageContent, mPublisher, 2);
             fragmentManager.replace(R.id.fragmentContainer, detailFragment);
             fragmentManager.commit();
         }

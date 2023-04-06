@@ -241,7 +241,7 @@ public class Detail extends AppCompatActivity {
     }
     private void initBookDetail(){
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        detailFragment = DetailFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages", 1);
+        detailFragment = DetailFragment.newInstance(currentBook.getAuthor(), currentBook.getCategory(), currentBook.getPublicationDate(), currentBook.getTypeOfCover(), currentBook.getSize(), currentBook.getNumberOfPages(), currentBook.getPublisher(), 1);
         fragmentTransaction.replace(R.id.fragmentBookDetail, detailFragment);
         fragmentTransaction.commit();
     }
@@ -259,7 +259,7 @@ public class Detail extends AppCompatActivity {
         showBookDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance("J.K Rowling", "Novel", "12/12/2003", "Hardcover", "17x25 cm", "549 pages", 2);
+                BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getAuthor(), currentBook.getCategory(), currentBook.getPublicationDate(), currentBook.getTypeOfCover(), currentBook.getSize(), currentBook.getNumberOfPages(), currentBook.getPublisher(), 2);
                 bottomSheetFragment.show(getSupportFragmentManager(), BottomSheetFragment.TAG);
             }
 
