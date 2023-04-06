@@ -21,6 +21,18 @@
         />
 
     <TextView
+        android:id="@+id/errorMessageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Error message"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/cartItemLayout"
+        app:layout_constraintStart_toStartOf="@+id/bookDeleteButton" />
+
+    <TextView
         android:id="@+id/bookNameTextView"
         android:text="Here to show book name"
         android:textSize="20sp"

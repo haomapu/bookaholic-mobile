@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +45,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public interface OnQuantityChangedListener {
         void onQuantityChanged();
     }
-
-
-
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         public ImageView bookImageView;
         public TextView bookNameTextView;
         public TextView bookQuantityTextView;
         public TextView bookPriceTextView;
+        public TextView errorMessageTextView;
         public Button increaseQuantityButton, decreaseQuantityButton, deleteButton;
         private ConstraintLayout layout;
 
@@ -65,6 +64,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             increaseQuantityButton = itemView.findViewById(R.id.bookQuantityIncreaseButton);
             decreaseQuantityButton = itemView.findViewById(R.id.bookQuantityDecreaseButton);
             deleteButton = itemView.findViewById(R.id.bookDeleteButton);
+            errorMessageTextView = itemView.findViewById(R.id.errorMessageTextView);
             layout = itemView.findViewById(R.id.cartItemLayout);
         }
     }
@@ -89,15 +89,23 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.layout.setOnClickListener(v -> startBookDetailsActivity(orderBook.book));
 
         holder.increaseQuantityButton.setOnClickListener(v -> {
-            if (orderBook.getQuantity() == 1)
+            if (orderBook.getQuantity() >= 10) {
+                holder.errorMessageTextView.setText("Quantity limit exceeded");
+                holder.errorMessageTextView.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        holder.errorMessageTextView.setVisibility(View.GONE);
+                    }
+                }, 2000); // 2 seconds delay
                 return;
+            }
             orderBook.increaseQuantity();
             holder.bookQuantityTextView.setText(String.valueOf(orderBook.getQuantity()));
             notifyDataSetChanged();
 
             if (onQuantityChangedListener != null)
                 onQuantityChangedListener.onQuantityChanged();
-
         });
         holder.decreaseQuantityButton.setOnClickListener(v -> {
             if (orderBook.getQuantity() == 1)
