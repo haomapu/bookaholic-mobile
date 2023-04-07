@@ -129,19 +129,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void filterByOptions(ArrayList<String> selectedType, Integer minPrice, Integer maxPrice, ArrayList<String> selectedAuthor) {
+    public void filterByOptions(ArrayList<String> selectedType, Integer minPrice, Integer maxPrice) {
         this.books.clear();
         for (Book book : Book.allBooks) {
-            boolean matchAuthor = false;
             boolean matchType = false;
-            String[] authors = book.getAuthor().replaceAll(" ", "").split(",");
-            String[] types = book.getCategory().replaceAll(" ", "").split(",");
-            for (String author : authors) {
-                if (selectedAuthor.contains(author)) {
-                    matchAuthor = true;
-                    break;
-                }
-            }
+            String[] types = book.getCategory().toLowerCase().replaceAll(" ", "").split(",");
 
             for (String type : types) {
                 if (selectedType.contains(type)) {
@@ -151,8 +143,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             }
 
             if ((selectedType.isEmpty() || matchType)
-                    && book.hasPriceInRange(minPrice, maxPrice)
-                    && (selectedAuthor.isEmpty() || matchAuthor)) {
+                    && book.hasPriceInRange(minPrice, maxPrice)) {
                 this.books.add(book.deepCopy());
             }
         }
