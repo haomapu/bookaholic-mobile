@@ -19,13 +19,19 @@ import java.util.Locale;
 
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class Book implements Serializable {
     @Exclude
     public static ArrayList<Book> allBooks = new ArrayList<>();
     private String imageUrl, title, author, category, description, downloadURL, size,publicationDate,
-            publisher, typeOfCover, recentlyDate;
+            publisher, typeOfCover, recentlyDate, id;
     private ArrayList<Comment> comments = new ArrayList<>();
     private int price, quantity, numberOfPages, buyer;
     private ArrayList<String> images = new ArrayList<>();
@@ -259,4 +265,35 @@ public class Book implements Serializable {
     public void setRecentlyDate(String recentlyDate) {
         this.recentlyDate = recentlyDate;
     }
+
+    public interface OnGetBookIdListener {
+        void onGetBookId(String id);
+    }
+
+    public void getBookId(String title, OnGetBookIdListener listener) {
+        FirebaseDatabase.getInstance().getReference().child("Books")
+                .orderByChild("title").equalTo(title)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
+                            Book book = bookSnapshot.getValue(Book.class);
+                            if (book.getTitle().equals(title)) { // Nếu title của Book hiện tại bằng với title cần tìm
+                                String id = bookSnapshot.getKey(); // Lấy ID của Book hiện tại
+                                listener.onGetBookId(id); // Truyền giá trị ID vào callback
+                                return; // Thoát khỏi vòng lặp vì đã tìm thấy Book
+                            }
+                        }
+                        // Không tìm thấy Book nào có title tương ứng
+                        listener.onGetBookId(null); // Truyền giá trị null vào callback
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                        listener.onGetBookId(null); // Truyền giá trị null vào callback khi có lỗi
+                    }
+                });
+    }
+
 }

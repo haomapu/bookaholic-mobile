@@ -3,6 +3,7 @@ package com.example.bookaholic;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class ManageBook extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Book> books;
+    private ImageView returnBtn;
 
     Context context;
 
@@ -30,6 +32,14 @@ public class ManageBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.manage_view);
+        returnBtn = findViewById(R.id.returnManage);
+
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    onBackPressed();
+            }
+        });
         initManageBook();
     }
 

@@ -6,7 +6,6 @@ import static com.example.bookaholic.MainActivity.firebaseUser;
 
 import android.util.Log;
 
-import com.example.bookaholic.details.Book;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -15,9 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-
 public class FirebaseHelper {
+    private static FirebaseHelper instance;
     private static FirebaseDatabase database;
     private static FirebaseStorage storage;
     private static DatabaseReference currentUserRef, booksRef;
@@ -63,4 +61,15 @@ public class FirebaseHelper {
         }
     }
 
+    public static synchronized FirebaseHelper getInstance() {
+        if (instance == null) {
+            instance = new FirebaseHelper();
+        }
+        return instance;
+    }
+
+    public void removeBook(String bookId, OnCompleteListener<Void> error_removing_book_from_firebase) {
+        DatabaseReference booksRef = database.getReference("Books");
+        booksRef.child(bookId).removeValue();
+    }
 }

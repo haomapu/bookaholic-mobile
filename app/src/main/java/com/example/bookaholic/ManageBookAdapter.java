@@ -2,7 +2,9 @@ package com.example.bookaholic;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bookaholic.details.Book;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -108,15 +113,40 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
             mRemoveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onRemoveClick(position);
-                        }
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Book book = mBooks.get(position);
+                        book.getBookId(book.getTitle(), new Book.OnGetBookIdListener() {
+                            @Override
+                            public void onGetBookId(String id) {
+                                if (id != null) {
+                                    FirebaseHelper.getInstance().removeBook(id, new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                mBooks.remove(position);
+                                                notifyItemRemoved(position);
+                                                updateData(mBooks);
+                                            } else {
+                                                Log.d(TAG, "Error removing book from Firebase", task.getException());
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    System.out.println("Không tìm thấy sách nào");
+                                }
+                            }
+                        });
                     }
                 }
             });
         }
+
+        public void updateData(ArrayList<Book> books) {
+            mBooks = books;
+            notifyDataSetChanged();
+        }
+
     }
 }
 
