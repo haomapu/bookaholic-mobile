@@ -15,7 +15,9 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.R;
@@ -40,6 +42,7 @@ public class Book implements Serializable {
 
     }
 
+    //add
     public Book(String imageUrl, String title, String author, String category, String description, int quantity, int price
             , String publicationDate, String publisher, String size, int numberOfPages, String typeOfCover, ArrayList<String> images, ArrayList<Comment> comments) {
         this.imageUrl = imageUrl;
@@ -60,6 +63,27 @@ public class Book implements Serializable {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.recentlyDate = currentDate.format(formatter);
+    }
+
+    //update
+    public Book(String imageUrl, String title, String author, String category, String description, int quantity, int price
+            , String publicationDate, String publisher, String size, int numberOfPages, String typeOfCover, ArrayList<String> images, ArrayList<Comment> comments, int buyer, String recentlyDate) {
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+        this.publicationDate = publicationDate;
+        this.publisher = publisher;
+        this.size = size;
+        this.numberOfPages = numberOfPages;
+        this.typeOfCover = typeOfCover;
+        this.comments = comments;
+        this.images = images;
+        this.buyer = buyer;
+        this.recentlyDate = recentlyDate;
     }
 
     public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images
@@ -90,9 +114,18 @@ public class Book implements Serializable {
         Book.allBooks = allBooks;
     }
 
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public String getId(){
+        return id;
+    }
     public String getTitle() {
         return title;
     }
+
+    public String getImageUrl(){return imageUrl;};
 
     public void setTitle(String title) {
         this.title = title;
@@ -296,4 +329,26 @@ public class Book implements Serializable {
                 });
     }
 
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("title", title);
+        result.put("author", author);
+        result.put("category", category);
+        result.put("description", description);
+        result.put("quantity", quantity);
+        result.put("price", price);
+        result.put("publicationDate", publicationDate);
+        result.put("publisher", publisher);
+        result.put("size", size);
+        result.put("numberOfPages", numberOfPages);
+        result.put("typeOfCover", typeOfCover);
+        result.put("images", images);
+        result.put("buyer", buyer);
+        result.put("displayablePrice", getDisplayablePrice());
+        result.put("rateAvg", getRateAvg());
+        result.put("recentlyDate", recentlyDate);
+        result.put("id", id);
+
+        return result;
+    }
 }

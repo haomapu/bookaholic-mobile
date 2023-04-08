@@ -62,6 +62,14 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
         holder.mTextViewPrice.setText(String.valueOf(currentBook.getPrice()));
         holder.mTextViewQuantity.setText(String.valueOf(currentBook.getQuantity()));
         holder.mTextViewSold.setText(String.valueOf(currentBook.getBuyer()));
+        holder.mUpdateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, UpdateBook.class);
+                intent.putExtra("selectedBook", currentBook);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

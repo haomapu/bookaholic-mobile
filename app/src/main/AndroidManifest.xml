@@ -49,6 +49,9 @@
             android:name=".AddBook"
             android:exported="false" />
         <activity
+            android:name=".UpdateBook"
+            android:exported="false" />
+        <activity
             android:name=".NoInternetActivity"
             android:exported="false">
             <meta-data
