@@ -50,7 +50,6 @@ public class SignInActivity extends AppCompatActivity{
                 if (!validInputs) {
                     showToast(SignInActivity.this, R.string.empty_text);
                 } else {
-//                    progressBarSignIn.setVisibility(ProgressBar.VISIBLE);
                     if (firebaseAuth != null)
                         firebaseAuth.signInWithEmailAndPassword(email, password)
                                 .addOnCompleteListener(onSignInComplete);
@@ -80,7 +79,6 @@ public class SignInActivity extends AppCompatActivity{
     private final OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
-//            progressBarSignIn.setVisibility(ProgressBar.GONE);
             if (task.isSuccessful()) {
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {

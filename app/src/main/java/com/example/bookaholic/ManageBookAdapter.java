@@ -1,25 +1,17 @@
 package com.example.bookaholic;
 
-import static android.content.ContentValues.TAG;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bookaholic.details.Book;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -62,6 +54,25 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
         holder.mTextViewPrice.setText(String.valueOf(currentBook.getPrice()));
         holder.mTextViewQuantity.setText(String.valueOf(currentBook.getQuantity()));
         holder.mTextViewSold.setText(String.valueOf(currentBook.getBuyer()));
+        holder.mUpdateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, UpdateBook.class);
+                intent.putExtra("selectedBook", currentBook);
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.mRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, RemoveBook.class);
+                intent.putExtra("selectedBook", currentBook);
+                notifyItemRemoved(position);
+                notifyDataSetChanged();
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -113,40 +124,16 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
             mRemoveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Book book = mBooks.get(position);
-                        book.getBookId(book.getTitle(), new Book.OnGetBookIdListener() {
-                            @Override
-                            public void onGetBookId(String id) {
-                                if (id != null) {
-                                    FirebaseHelper.getInstance().removeBook(id, new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                mBooks.remove(position);
-                                                notifyItemRemoved(position);
-                                                updateData(mBooks);
-                                            } else {
-                                                Log.d(TAG, "Error removing book from Firebase", task.getException());
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    System.out.println("Không tìm thấy sách nào");
-                                }
-                            }
-                        });
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onRemoveClick(position);
+
+                        }
                     }
                 }
             });
         }
-
-        public void updateData(ArrayList<Book> books) {
-            mBooks = books;
-            notifyDataSetChanged();
-        }
-
     }
 }
 

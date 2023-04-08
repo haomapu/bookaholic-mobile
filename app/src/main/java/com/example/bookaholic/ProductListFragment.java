@@ -60,7 +60,6 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     private ImageView micButton;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     ArrayList<String> selectedType = new ArrayList<>();
-    ArrayList<String> selectedAuthor = new ArrayList<>();
     Integer minPrice = null, maxPrice = null;
 
     private RecyclerView bestSellerRecyclerView;
@@ -103,10 +102,10 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         recyclerView = view.findViewById(R.id.recyclerview_home);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//
-//        bestSellerAdapter = new BestSellerAdapter(view.getContext(), Book.allBooks);
-//        bestSellerRecyclerView = view.findViewById(R.id.bestSellerRecyclerView);
-//        bestSellerRecyclerView.setAdapter(bestSellerAdapter);
+
+        bestSellerAdapter = new BestSellerAdapter(view.getContext(), Book.allBooks);
+        bestSellerRecyclerView = view.findViewById(R.id.bestSellerRecyclerView);
+        bestSellerRecyclerView.setAdapter(bestSellerAdapter);
 
 
         progressBar = view.findViewById(R.id.progressbar_home_fragment);
@@ -264,7 +263,9 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     @SuppressLint("NotifyDataSetChanged")
     public void notifyAdapter() {
         adapter.setBooks(Book.allBooks);
+        bestSellerAdapter.setBooks(Book.allBooks);
         adapter.notifyDataSetChanged();
+        bestSellerAdapter.notifyDataSetChanged();
     }
 
     public void updateProgressBar() {

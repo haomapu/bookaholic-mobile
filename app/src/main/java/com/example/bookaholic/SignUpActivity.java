@@ -7,7 +7,6 @@ import static com.example.bookaholic.Tools.showToast;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,11 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bookaholic.details.Detail;
-import com.example.bookaholic.SignInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 
@@ -29,7 +25,6 @@ public class SignUpActivity extends AppCompatActivity {
     private final String TAG = "SignUpActivity";
     private Button btnRegister;
     private TextView btnSignIn;
-    private ProgressBar progressBarSignUp;
     private TextInputEditText emailRegister, passRegister, confirmRegister;
     private String email, password, confirm, fullName, phoneNumber;
 
@@ -41,7 +36,6 @@ public class SignUpActivity extends AppCompatActivity {
         emailRegister = findViewById(R.id.editEmailRegister);
         passRegister = findViewById(R.id.editPasswordRegister);
         confirmRegister = findViewById(R.id.editConfirmRegister);
-//        progressBarSignUp = findViewById(R.id.progressbar_signup);
 
         btnSignIn = findViewById(R.id.btnSignIn);
         btnSignIn.setOnClickListener(v -> startSignInActivity());
@@ -53,11 +47,8 @@ public class SignUpActivity extends AppCompatActivity {
         password = Objects.requireNonNull(passRegister.getText()).toString();
         String[] parts = email.split("@");
         fullName = parts[0];
-//        fullName = Objects.requireNonNull(nameInput.getText()).toString();
-//        phoneNumber = Objects.requireNonNull(phoneNumberInput.getText()).toString();
 
         if (checkInputRequirements()) {
-//            progressBarSignUp.setVisibility(ProgressBar.VISIBLE);
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, onCreateAccountCompleteListener);
         }
@@ -72,7 +63,6 @@ public class SignUpActivity extends AppCompatActivity {
                     firebaseUser.sendEmailVerification()
                             .addOnCompleteListener(onSendVerificationEmailComplete);
             } else {
-//                progressBarSignUp.setVisibility(ProgressBar.GONE);
                 showToast(SignUpActivity.this, R.string.failed_to_register);
             }
         }
@@ -83,11 +73,9 @@ public class SignUpActivity extends AppCompatActivity {
         public void onComplete(@NonNull Task<Void> task) {
             if (task.isSuccessful()) {
                 createNewUserInDatabase(fullName, email, phoneNumber);
-//                progressBarSignUp.setVisibility(ProgressBar.GONE);
                 showToast(SignUpActivity.this, R.string.register_successful);
                 startSignInActivity();
             } else {
-//                progressBarSignUp.setVisibility(ProgressBar.GONE);
                 showToast(SignUpActivity.this, R.string.send_verification_email_failed);
             }
         }
@@ -99,16 +87,6 @@ public class SignUpActivity extends AppCompatActivity {
             showToast(this, R.string.invalid_email);
             return false;
         }
-
-//        if (!Tools.checkValidName(fullName)) {
-//            showToast(this, R.string.invalid_name);
-//            return false;
-//        }
-//
-//        if (!Tools.checkValidPhoneNumber(phoneNumber)) {
-//            showToast(this, R.string.invalid_phone_num);
-//            return false;
-//        }
 
         if (!Tools.checkValidPassword(password)) {
             showToast(this, R.string.invalid_password);
