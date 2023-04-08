@@ -299,36 +299,6 @@ public class Book implements Serializable {
         this.recentlyDate = recentlyDate;
     }
 
-    public interface OnGetBookIdListener {
-        void onGetBookId(String id);
-    }
-
-    public void getBookId(String title, OnGetBookIdListener listener) {
-        FirebaseDatabase.getInstance().getReference().child("Books")
-                .orderByChild("title").equalTo(title)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot bookSnapshot : dataSnapshot.getChildren()) {
-                            Book book = bookSnapshot.getValue(Book.class);
-                            if (book.getTitle().equals(title)) { // Nếu title của Book hiện tại bằng với title cần tìm
-                                String id = bookSnapshot.getKey(); // Lấy ID của Book hiện tại
-                                listener.onGetBookId(id); // Truyền giá trị ID vào callback
-                                return; // Thoát khỏi vòng lặp vì đã tìm thấy Book
-                            }
-                        }
-                        // Không tìm thấy Book nào có title tương ứng
-                        listener.onGetBookId(null); // Truyền giá trị null vào callback
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e(TAG, "onCancelled", databaseError.toException());
-                        listener.onGetBookId(null); // Truyền giá trị null vào callback khi có lỗi
-                    }
-                });
-    }
-
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("title", title);

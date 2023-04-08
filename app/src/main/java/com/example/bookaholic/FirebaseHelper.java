@@ -60,16 +60,4 @@ public class FirebaseHelper {
             e.printStackTrace();
         }
     }
-
-    public static synchronized FirebaseHelper getInstance() {
-        if (instance == null) {
-            instance = new FirebaseHelper();
-        }
-        return instance;
-    }
-
-    public void removeBook(String bookId, OnCompleteListener<Void> error_removing_book_from_firebase) {
-        DatabaseReference booksRef = database.getReference("Books");
-        booksRef.child(bookId).removeValue();
-    }
 }

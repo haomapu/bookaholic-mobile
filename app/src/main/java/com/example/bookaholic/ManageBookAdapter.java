@@ -70,6 +70,17 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
                 mContext.startActivity(intent);
             }
         });
+
+        holder.mRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, RemoveBook.class);
+                intent.putExtra("selectedBook", currentBook);
+                notifyItemRemoved(position);
+                notifyDataSetChanged();
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -121,40 +132,16 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
             mRemoveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Book book = mBooks.get(position);
-                        book.getBookId(book.getTitle(), new Book.OnGetBookIdListener() {
-                            @Override
-                            public void onGetBookId(String id) {
-                                if (id != null) {
-                                    FirebaseHelper.getInstance().removeBook(id, new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                mBooks.remove(position);
-                                                notifyItemRemoved(position);
-                                                updateData(mBooks);
-                                            } else {
-                                                Log.d(TAG, "Error removing book from Firebase", task.getException());
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    System.out.println("Không tìm thấy sách nào");
-                                }
-                            }
-                        });
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onRemoveClick(position);
+
+                        }
                     }
                 }
             });
         }
-
-        public void updateData(ArrayList<Book> books) {
-            mBooks = books;
-            notifyDataSetChanged();
-        }
-
     }
 }
 
