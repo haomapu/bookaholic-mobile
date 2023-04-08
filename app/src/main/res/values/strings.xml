@@ -62,21 +62,12 @@
     <string-array name="categories_array">
         <item>Romance</item>
         <item>Mystery</item>
-        <item>Fantasy and Science fiction</item>
         <item>Horror</item>
-        <item>Sefl-help</item>
-        <item>Novel</item>
         <item>Short Stories</item>
         <item>Cookbooks</item>
         <item>Essays</item>
         <item>History</item>
         <item>Science</item>
-        <item>Business</item>
-        <item>Art</item>
-        <item>Psychology</item>
-        <item>Economics</item>
-        <item>Education</item>
-        <item>Comic</item>
     </string-array>
 
 

@@ -1,6 +1,5 @@
 package com.example.bookaholic;
 
-import static android.content.ContentValues.TAG;
 
 import static com.example.bookaholic.Tools.showToast;
 
@@ -12,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
