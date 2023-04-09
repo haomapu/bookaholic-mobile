@@ -2,6 +2,7 @@ package com.example.bookaholic;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import com.example.bookaholic.details.Book;
 import com.example.bookaholic.details.Detail;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.BestSellerViewHolder> {
@@ -84,5 +87,16 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
         } catch (Exception e) {
             Log.d(TAG, e.toString());
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterByBuyer() {
+        this.listBooks.clear();
+        ArrayList<Book> books = Book.allBooks;
+        Collections.sort(books, Comparator.comparingInt(Book::getBuyer).reversed());
+        for (int i = 0; i < Math.min(Book.allBooks.size(), 5); i++) {
+            this.listBooks.add(books.get(i));
+        }
+        notifyDataSetChanged();
     }
 }

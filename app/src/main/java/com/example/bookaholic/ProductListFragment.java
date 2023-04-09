@@ -104,6 +104,7 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         bestSellerAdapter = new BestSellerAdapter(view.getContext(), Book.allBooks);
+        bestSellerAdapter.filterByBuyer();
         bestSellerRecyclerView = view.findViewById(R.id.bestSellerRecyclerView);
         bestSellerRecyclerView.setAdapter(bestSellerAdapter);
 
@@ -264,6 +265,7 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     public void notifyAdapter() {
         adapter.setBooks(Book.allBooks);
         bestSellerAdapter.setBooks(Book.allBooks);
+        bestSellerAdapter.filterByBuyer();
         adapter.notifyDataSetChanged();
         bestSellerAdapter.notifyDataSetChanged();
     }
