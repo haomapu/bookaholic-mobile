@@ -56,6 +56,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
                 .into(holder.mImageView);
         holder.layout.setOnClickListener(v -> startBookDetailsActivity(book));
         holder.nameView.setText(book.getTitle());
+        holder.buyerView.setText(book.getBuyer().toString());
     }
 
     @Override
@@ -67,13 +68,14 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
 
         private ImageView mImageView;
         private ConstraintLayout layout;
-        private TextView nameView;
+        private TextView nameView, buyerView;
 
         public BestSellerViewHolder(@NonNull View itemView) {
             super(itemView);
             layout = itemView.findViewById(R.id.layout_best_seller_itemview);
             mImageView = itemView.findViewById(R.id.bestseller_image);
             nameView = itemView.findViewById(R.id.best_seller_name);
+            buyerView = itemView.findViewById(R.id.textview_bookbuyer);
         }
     }
 
