@@ -183,6 +183,7 @@ public class Detail extends AppCompatActivity {
             }
         });
     }
+
     ArrayList<Comment> comments = new ArrayList<>();
 
     public void initComment(){
@@ -286,11 +287,18 @@ public class Detail extends AppCompatActivity {
 
     public void initShoppingCart(){
         ImageView shoppingBtn = findViewById(R.id.shoppingBtn);
-        shoppingBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Detail.this, ManageBook.class));
-            }
+//        shoppingBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(Detail.this, ManageBook.class));
+//            }
+//        });
+
+        shoppingBtn.setOnClickListener(v -> {
+            Review rateDialog = new Review(v.getContext(), currentBook);
+            rateDialog.getWindow();
+            rateDialog.setCancelable(false);
+            rateDialog.show();
         });
     }
 
