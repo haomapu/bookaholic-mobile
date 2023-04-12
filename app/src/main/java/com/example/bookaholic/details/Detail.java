@@ -249,9 +249,16 @@ public class Detail extends AppCompatActivity {
     }
 
     private void initShowButton(){
-        Button showBottomSheetButton = findViewById(R.id.show_bottom_sheet_button);
+        Button showComment = findViewById(R.id.show_bottom_sheet_button);
         Button showBookDetail = findViewById(R.id.showBookDetail);
-        showBottomSheetButton.setOnClickListener(new View.OnClickListener() {
+        TextView noReviewTxt = findViewById(R.id.noReviewTxt);
+        if (currentBook.getComments().size() <= 2){
+            showComment.setVisibility(View.GONE);
+            if (currentBook.getComments().size() == 0){
+                noReviewTxt.setVisibility(View.VISIBLE);
+            }
+        }
+        showComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BottomSheetFragment bottomSheetFragment = BottomSheetFragment.newInstance(currentBook.getComments(), 1, Detail.this);
