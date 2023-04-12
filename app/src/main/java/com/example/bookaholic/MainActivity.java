@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private UserDataChangedListener userDataChangedListener;
     private BooksDataChangedListener booksDataChangedListener;
     public static UserDataChangedListener listenerForBookDetailsActivity, listenerForBookClassifyActivity;
-
+    private NotificationBadge shopping_badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                 initBooksDatabaseReference(booksDatabaseListener);
             }
         }
+        shopping_badge = findViewById(R.id.shopping_badge);
+        shopping_badge.setNumber(Order.currentOrder.getOrderSize());
     }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {

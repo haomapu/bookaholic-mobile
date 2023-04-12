@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:minHeight="60dp"
+        android:minHeight="70dp"
         android:padding="4dp"
         android:background="?attr/colorPrimary">
         <ImageView
@@ -252,7 +252,8 @@
         android:nestedScrollingEnabled="false"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        tools:listitem="@layout/grid_item"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-    private String fullName, phoneNumber, address, email;
+    private String fullName, phoneNumber, address, email, id, avatar;
     private ArrayList<Integer> favoriteBookIds = new ArrayList<>();
     private Map<String, Integer> quantityByBookId = new HashMap<>();
 
@@ -95,9 +95,11 @@ public class User {
     @Exclude
     public Task<Void> saveToDatabase() {
         firebaseUser = firebaseAuth.getCurrentUser();
+        id = firebaseUser.getUid();
+        avatar = "https://firebasestorage.googleapis.com/v0/b/bookaholic-82677.appspot.com/o/avatar.png?alt=media&token=4254ac57-c606-46d2-a076-2a8770260f3d";
         return FirebaseDatabase.getInstance()
                 .getReference("Users")
-                .child(firebaseUser.getUid())
+                .child(id)
                 .setValue(this);
     }
 
