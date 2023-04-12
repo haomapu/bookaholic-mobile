@@ -1,13 +1,10 @@
 package com.example.bookaholic;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.bookaholic.details.Book;
@@ -57,6 +54,25 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
         holder.mTextViewPrice.setText(String.valueOf(currentBook.getPrice()));
         holder.mTextViewQuantity.setText(String.valueOf(currentBook.getQuantity()));
         holder.mTextViewSold.setText(String.valueOf(currentBook.getBuyer()));
+        holder.mUpdateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, UpdateBook.class);
+                intent.putExtra("selectedBook", currentBook);
+                mContext.startActivity(intent);
+            }
+        });
+
+        holder.mRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, RemoveBook.class);
+                intent.putExtra("selectedBook", currentBook);
+                notifyItemRemoved(position);
+                notifyDataSetChanged();
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -112,6 +128,7 @@ public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.Vi
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             listener.onRemoveClick(position);
+
                         }
                     }
                 }
