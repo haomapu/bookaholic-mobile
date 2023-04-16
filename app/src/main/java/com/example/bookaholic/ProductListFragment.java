@@ -44,7 +44,6 @@ import java.util.Locale;
 
 public class ProductListFragment extends Fragment implements UserDataChangedListener, BooksDataChangedListener{
 
-    private TextView usernameView;
     private ImageButton buttonGoToCart, buttonFilter;
     private SearchView searchView;
     private RecyclerView recyclerView;
@@ -52,19 +51,21 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     private BookAdapter adapter;
     private ScrollView filterContainer;
     private Button buttonTypeScience, buttonTypeRomantic, buttonTypeMystery,
-            buttonTypeHorror, buttonTypeSelfHelp, buttonTypeShortStories,
+            buttonTypeHorror, buttonTypeShortStories,
             buttonTypeCook, buttonTypeEssay, buttonTypeHistory;
     private Button filterConfirmButton, filterResetButton;
     private EditText inputMinPrice, inputMaxPrice;
     public static final Integer RecordAudioRequestCode = 1;
-    private SpeechRecognizer speechRecognizer;
-    private ImageView micButton;
     private ActivityResultLauncher<String> requestPermissionLauncher;
     ArrayList<String> selectedType = new ArrayList<>();
     Integer minPrice = null, maxPrice = null;
 
     private RecyclerView bestSellerRecyclerView;
+    private RecyclerView recentlyAddRecyclerView;
+    private RecyclerView offerRecyclerView;
+    private OfferAdapter offerAdapter;
     private BestSellerAdapter bestSellerAdapter;
+    private RecentlyAddAdapter recentlyAddAdapter;
     public ProductListFragment() {
 
     }
@@ -108,6 +109,19 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         bestSellerRecyclerView = view.findViewById(R.id.bestSellerRecyclerView);
         bestSellerRecyclerView.setAdapter(bestSellerAdapter);
 
+        recentlyAddAdapter = new RecentlyAddAdapter(view.getContext(), Book.allBooks);
+        recentlyAddAdapter.filterByDate();
+        recentlyAddRecyclerView = view.findViewById(R.id.recentlyAddRecyclerView);
+        recentlyAddRecyclerView.setAdapter(recentlyAddAdapter);
+
+        List<Offer> offerList = new ArrayList<>();
+        offerList.add(new Offer(R.drawable.login, "Up to 20%"));
+        offerList.add(new Offer(R.drawable.img1, "Up to 20%"));
+        offerList.add(new Offer(R.drawable.login, "Up to 20%"));
+
+        offerAdapter = new OfferAdapter(offerList);
+        offerRecyclerView = view.findViewById(R.id.offerRecyclerView);
+        offerRecyclerView.setAdapter(offerAdapter);
 
         progressBar = view.findViewById(R.id.progressbar_home_fragment);
         updateProgressBar();
@@ -150,8 +164,6 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
 
         buttonFilter = view.findViewById(R.id.button_filter);
         buttonFilter.setOnClickListener(v -> showFilterMenu());
-
-        micButton = view.findViewById(R.id.img_mic);
 
         return view;
     }
@@ -266,8 +278,11 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         adapter.setBooks(Book.allBooks);
         bestSellerAdapter.setBooks(Book.allBooks);
         bestSellerAdapter.filterByBuyer();
+        recentlyAddAdapter.setBooks(Book.allBooks);
+        recentlyAddAdapter.filterByDate();
         adapter.notifyDataSetChanged();
         bestSellerAdapter.notifyDataSetChanged();
+        recentlyAddAdapter.notifyDataSetChanged();
     }
 
     public void updateProgressBar() {
