@@ -7,10 +7,7 @@ import static com.example.bookaholic.Tools.showToast;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,14 +24,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.bookaholic.AddBook;
-import com.example.bookaholic.CartActivity;
 import com.example.bookaholic.Comment;
-import com.example.bookaholic.ManageBook;
 import com.example.bookaholic.Order;
 import com.example.bookaholic.OrderBook;
 import com.example.bookaholic.R;
 import com.example.bookaholic.SignInActivity;
+import com.example.bookaholic.orderHistory.OrderHistory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -109,23 +103,22 @@ public class Detail extends AppCompatActivity {
                 }
             });
         }
-        shopping_badge.setNumber(Order.currentOrder.getOrderSize());
+        shopping_badge.setNumber(Order.currentOrder.orderSize());
     }
     private void loadData() {
         Intent data = getIntent();
         Bundle bundle = data.getExtras();
         currentBook = Book.findBookByTitle(bundle.getString("bookName"));
-        Log.e("TAG", currentBook.getAuthor());
         //Set data to screen
 
     }
     public void initFavorite(){
         ImageView imageViewHeart = findViewById(R.id.image_view_heart);
         Integer bookID = Book.idOfBookWithName(currentBook.getTitle());
-//        if (currentSyncedUser.likeBookWithId(bookID))
+        if (currentSyncedUser.likeBookWithId(bookID))
             imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
-//        else
-//            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
+        else
+            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
 
         imageViewHeart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,8 +166,8 @@ public class Detail extends AppCompatActivity {
         descriptionTxt = findViewById(R.id.descriptionTxt);
 
         titleTxt.setText(currentBook.getTitle());
-        priceTxt.setText(currentBook.getDisplayablePrice());
-        ratingBar.setRating(currentBook.getRateAvg());
+        priceTxt.setText(currentBook.displayablePrice());
+        ratingBar.setRating(currentBook.rateAvg());
         descriptionTxt.setText(currentBook.getDescription());
         descriptionTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +214,7 @@ public class Detail extends AppCompatActivity {
                 else {
                     Order.currentOrder.addOrderBook(orderBook);
                     toastMessage = R.string.added_to_cart;
-                    shopping_badge.setNumber(Order.currentOrder.getOrderSize());
+                    shopping_badge.setNumber(Order.currentOrder.orderSize());
                     showToast(Detail.this, toastMessage);
 
                     }
@@ -287,19 +280,19 @@ public class Detail extends AppCompatActivity {
 
     public void initShoppingCart(){
         ImageView shoppingBtn = findViewById(R.id.shoppingBtn);
-//        shoppingBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(Detail.this, ManageBook.class));
-//            }
-//        });
-
-        shoppingBtn.setOnClickListener(v -> {
-            Review rateDialog = new Review(v.getContext(), currentBook);
-            rateDialog.getWindow();
-            rateDialog.setCancelable(false);
-            rateDialog.show();
+        shoppingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Detail.this, OrderHistory.class));
+            }
         });
+
+//        shoppingBtn.setOnClickListener(v -> {
+//            Review rateDialog = new Review(v.getContext(), currentBook);
+//            rateDialog.getWindow();
+//            rateDialog.setCancelable(false);
+//            rateDialog.show();
+//        });
     }
 
     public void initAmountBtn(){

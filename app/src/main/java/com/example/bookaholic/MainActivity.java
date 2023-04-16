@@ -5,7 +5,6 @@ import static com.example.bookaholic.FirebaseHelper.initBooksDatabaseReference;
 import static com.example.bookaholic.FirebaseHelper.initCurrentUserDatabaseReference;
 
 import com.example.bookaholic.details.Book;
-import com.example.bookaholic.details.Detail;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,21 +15,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.example.bookaholic.details.Detail;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nex3z.notificationbadge.NotificationBadge;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 interface UserDataChangedListener {
     void updateUserRelatedViews();
@@ -138,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         shopping_badge = findViewById(R.id.shopping_badge);
-        shopping_badge.setNumber(Order.currentOrder.getOrderSize());
+        shopping_badge.setNumber(Order.currentOrder.orderSize());
     }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {
