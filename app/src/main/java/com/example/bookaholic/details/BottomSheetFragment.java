@@ -3,6 +3,7 @@ package com.example.bookaholic.details;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -103,6 +104,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));;
     }
 }

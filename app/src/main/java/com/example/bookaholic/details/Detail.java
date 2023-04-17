@@ -287,12 +287,7 @@ public class Detail extends AppCompatActivity {
             }
         });
 
-//        shoppingBtn.setOnClickListener(v -> {
-//            Review rateDialog = new Review(v.getContext(), currentBook);
-//            rateDialog.getWindow();
-//            rateDialog.setCancelable(false);
-//            rateDialog.show();
-//        });
+
     }
 
     public void initAmountBtn(){

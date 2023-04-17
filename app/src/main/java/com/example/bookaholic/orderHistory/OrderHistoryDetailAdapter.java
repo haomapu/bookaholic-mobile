@@ -1,9 +1,13 @@
 package com.example.bookaholic.orderHistory;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,10 +17,12 @@ import com.bumptech.glide.Glide;
 import com.example.bookaholic.OrderBook;
 import com.example.bookaholic.R;
 import com.example.bookaholic.details.Book;
+import com.example.bookaholic.details.Detail;
+import com.example.bookaholic.details.Review;
 
 import java.util.ArrayList;
 
-        public class OrderDetailAdapter extends RecyclerView.Adapter<com.example.bookaholic.orderHistory.OrderDetailAdapter.ViewHolder> {
+        public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
             private ArrayList<OrderBook> mDataList;
             private Context context;
 
@@ -24,16 +30,19 @@ import java.util.ArrayList;
                 public ImageView bookImageView;
         public TextView titleTxt, quantityTxt, priceTxt;
 
+        public Button reviewBtn;
+
         public ViewHolder(View itemView) {
             super(itemView);
             bookImageView = itemView.findViewById(R.id.bookImageView);
             titleTxt = itemView.findViewById(R.id.titleTxt);
             quantityTxt = itemView.findViewById(R.id.quantityTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
+            reviewBtn = itemView.findViewById(R.id.reviewBtn);
         }
     }
 
-    public OrderDetailAdapter(Context context, ArrayList<OrderBook> dataList) {
+    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList) {
         this.mDataList = dataList;
         this.context = context;
     }
@@ -41,7 +50,7 @@ import java.util.ArrayList;
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.order_detail_item, parent, false);
+                .inflate(R.layout.order_history_detail_item, parent, false);
         return new ViewHolder(itemView);
     }
 
@@ -54,9 +63,24 @@ import java.util.ArrayList;
                 .load(book.getImages().get(0))
                 .into(holder.bookImageView);
 
+        holder.reviewBtn.setOnClickListener(v -> {
+            Review rateDialog = new Review(v.getContext(), book);
+            rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+            rateDialog.setCancelable(false);
+            rateDialog.show();
+        });
         holder.titleTxt.setText(book.getTitle());
         holder.quantityTxt.setText(String.valueOf(orderBook.getQuantity()));
         holder.priceTxt.setText(String.valueOf(book.getPrice() * orderBook.getQuantity()));
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, Detail.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("bookName", book.getTitle());
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        });
     }
 
     @Override

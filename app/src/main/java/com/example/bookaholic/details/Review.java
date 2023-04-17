@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 
 import com.example.bookaholic.Comment;
+import static com.example.bookaholic.MainActivity.currentSyncedUser;
 import com.example.bookaholic.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +48,6 @@ public class Review extends Dialog {
         final AppCompatButton rateNowBtn = findViewById(R.id.rateNowBtn);
         final AppCompatButton laterBtn = findViewById(R.id.laterBtn);
         final RatingBar ratingBar = findViewById(R.id.ratingBar);
-        final ImageView ratingImage = findViewById(R.id.ratingImage);
         final EditText contentReview = findViewById(R.id.content);
 
         rateNowBtn.setOnClickListener(v -> {
@@ -60,19 +60,19 @@ public class Review extends Dialog {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists() && dataSnapshot.hasChildren()){
-                        Comment newComment = new Comment("Hi", "hao", "https://firebasestorage.googleapis.com/v0/b/bookaholic-82677.appspot.com/o/avatar.png?alt=media&token=4254ac57-c606-46d2-a076-2a8770260f3d", 4);
+                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), ratingBar.getNumStars());
                         ArrayList<Comment> comments = new ArrayList<>();
                         for (DataSnapshot commentSnapshot : dataSnapshot.getChildren()) {
                             Comment comment = commentSnapshot.getValue(Comment.class);
                             comments.add(comment);
                         }
-                        comments.add(newComment);
+                        comments.add(0, newComment);
 
                         myRef.setValue(comments);
                     } else {
-                        Comment comment = new Comment("Hello", "hao", "https://firebasestorage.googleapis.com/v0/b/bookaholic-82677.appspot.com/o/avatar.png?alt=media&token=4254ac57-c606-46d2-a076-2a8770260f3d", 4);
+                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), ratingBar.getNumStars());
                         ArrayList<Comment> comments = new ArrayList<>();
-                        comments.add(comment);
+                        comments.add(0, newComment);
                         myRef.setValue(comments);
                     }
                 }
@@ -83,15 +83,6 @@ public class Review extends Dialog {
                 }
             });
 
-            System.out.println(myRef);
-            // Push new data to the database
-//                String data = "Hello, Firebase!";
-//            DatabaseReference newRef = myRef.push();
-//
-//            Comment comment = new Comment(newRef.getKey(), content, "1",
-//                    book.getId(), "", userRate, false, "NgocHai");
-
-//            newRef.setValue(comment);
             dismiss();
         });
 

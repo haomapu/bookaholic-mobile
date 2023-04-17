@@ -6,14 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.bookaholic.Comment;
 import com.example.bookaholic.Order;
 import com.example.bookaholic.R;
 
@@ -59,7 +55,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.totalTxt.setText(order.getTotalPrice().toString());
         holder.quantityTxt.setText(order.quantity().toString());
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, OrderDetail.class);
+            Intent intent = new Intent(context, OrderHistoryDetail.class);
             Bundle bundle = new Bundle();
             bundle.putString("position", String.valueOf(position));
             intent.putExtras(bundle);

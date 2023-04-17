@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     android:padding="10dp"
     android:background="@drawable/rounded_rectangle">
@@ -63,18 +63,30 @@
 
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reviewBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Review"
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
 
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnPrimary"
+            android:padding="5dp"/>
         <TextView
             android:id="@+id/priceTxt"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:text="50.000 đ"
-            android:textSize="17sp"/>
-    </LinearLayout>
+            android:textSize="24sp"/>
+    </RelativeLayout>
 
 </LinearLayout>
