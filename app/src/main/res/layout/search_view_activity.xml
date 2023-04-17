@@ -4,36 +4,33 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProductListFragment">
+    tools:context=".SearchResultsActivity">
+
+    <ImageView
+        android:id="@+id/returnBtnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/baseline_keyboard_return_32" />
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchview_home"
+        android:id="@+id/searchview_searching"
         android:layout_width="280dp"
         android:layout_height="40dp"
         android:background="@drawable/super_rounded_rectangle"
         android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="5dp"
         android:paddingVertical="5dp"
         app:iconifiedByDefault="false"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toEndOf="@+id/returnBtnSearch">
 
     </androidx.appcompat.widget.SearchView>
 
-    <com.nex3z.notificationbadge.NotificationBadge
-        android:id="@+id/shopping_badge"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imagebutton_home_mycart"
-        app:layout_constraintEnd_toStartOf="@+id/imagebutton_home_mycart"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/imagebutton_home_mycart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:nbMaxTextLength="2" />
-
     <ImageButton
-        android:id="@+id/imagebutton_home_mycart"
+        android:id="@+id/imagebutton_search_mycart"
         style="@style/cartBtn"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -41,12 +38,12 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/cart"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toEndOf="@id/button_filter"
+        app:layout_constraintStart_toEndOf="@id/button_filter_search"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         style="@style/filter"
-        android:id="@+id/button_filter"
+        android:id="@+id/button_filter_search"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="18dp"
@@ -54,79 +51,29 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/filter"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toEndOf="@id/searchview_home"
+        app:layout_constraintStart_toEndOf="@id/searchview_searching"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/offerRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchview_home"
-        android:orientation="horizontal" />
-
     <TextView
-        android:id="@+id/top_5_best_seller"
+        android:id="@+id/title_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center_horizontal"
-        android:text="@string/top_5_best_seller"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:layout_margin="20dp"
+        android:text="@string/search_result"
+        android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/offerRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@id/searchview_searching" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bestSellerRecyclerView"
+        android:id="@+id/recyclerview_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_5_best_seller"
-        android:orientation="horizontal" />
-
-    <TextView
-        android:id="@+id/recently_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center_horizontal"
-        android:text="@string/recently_add"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/bestSellerRecyclerView"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recentlyAddRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recently_add"
-        android:orientation="horizontal" />
+        app:layout_constraintTop_toBottomOf="@id/title_search" />
 
     <ScrollView
-        android:id="@+id/filters_container"
+        android:id="@+id/filters_container_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_rectangle_filter"
@@ -140,7 +87,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/title_filter_menu"
+                android:id="@+id/title_filter_menu_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
@@ -153,7 +100,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/title_type_filter"
+                android:id="@+id/title_type_filter_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -161,11 +108,11 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorOnSurface"
-                app:layout_constraintStart_toStartOf="@id/title_filter_menu"
-                app:layout_constraintTop_toBottomOf="@id/title_filter_menu" />
+                app:layout_constraintStart_toStartOf="@id/title_filter_menu_search"
+                app:layout_constraintTop_toBottomOf="@id/title_filter_menu_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_science"
+                android:id="@+id/button_select_filter_type_science_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -173,11 +120,11 @@
                 android:text="@string/science"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/title_type_filter"
-                app:layout_constraintTop_toBottomOf="@id/title_type_filter" />
+                app:layout_constraintStart_toStartOf="@id/title_type_filter_search"
+                app:layout_constraintTop_toBottomOf="@id/title_type_filter_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_romance"
+                android:id="@+id/button_select_filter_type_romance_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -185,11 +132,11 @@
                 android:text="@string/romance"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/button_select_filter_type_science"
-                app:layout_constraintTop_toTopOf="@id/button_select_filter_type_science" />
+                app:layout_constraintStart_toEndOf="@id/button_select_filter_type_science_search"
+                app:layout_constraintTop_toTopOf="@id/button_select_filter_type_science_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_mystery"
+                android:id="@+id/button_select_filter_type_mystery_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -197,11 +144,11 @@
                 android:text="@string/mystery"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/title_type_filter"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_science" />
+                app:layout_constraintStart_toStartOf="@id/title_type_filter_search"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_science_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_horror"
+                android:id="@+id/button_select_filter_type_horror_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -209,11 +156,11 @@
                 android:text="@string/horror"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_romance" />
+                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance_search"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_romance_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_shortstories"
+                android:id="@+id/button_select_filter_type_shortstories_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -221,10 +168,10 @@
                 android:text="@string/shortstories"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_horror" />
+                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance_search"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_horror_search" />
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_cookbooks"
+                android:id="@+id/button_select_filter_type_cookbooks_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -232,11 +179,11 @@
                 android:text="@string/cookbooks"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/title_type_filter"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_mystery" />
+                app:layout_constraintStart_toStartOf="@id/title_type_filter_search"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_mystery_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_essay"
+                android:id="@+id/button_select_filter_type_essay_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -244,11 +191,11 @@
                 android:text="@string/essay"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/title_type_filter"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_cookbooks" />
+                app:layout_constraintStart_toStartOf="@id/title_type_filter_search"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_cookbooks_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_select_filter_type_history"
+                android:id="@+id/button_select_filter_type_history_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -256,11 +203,11 @@
                 android:text="@string/history"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_shortstories" />
+                app:layout_constraintStart_toStartOf="@id/button_select_filter_type_romance_search"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_shortstories_search" />
 
             <TextView
-                android:id="@+id/title_price_filter"
+                android:id="@+id/title_price_filter_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -268,11 +215,11 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorOnSurface"
-                app:layout_constraintStart_toStartOf="@id/title_filter_menu"
-                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_essay" />
+                app:layout_constraintStart_toStartOf="@id/title_filter_menu_search"
+                app:layout_constraintTop_toBottomOf="@id/button_select_filter_type_essay_search" />
 
             <EditText
-                android:id="@+id/edittextMinimumPrice"
+                android:id="@+id/edittextMinimumPrice_search"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -284,11 +231,11 @@
                 android:paddingVertical="5dp"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@id/title_price_filter"
-                app:layout_constraintTop_toBottomOf="@id/title_price_filter" />
+                app:layout_constraintStart_toStartOf="@id/title_price_filter_search"
+                app:layout_constraintTop_toBottomOf="@id/title_price_filter_search" />
 
             <EditText
-                android:id="@+id/edittextMaximumPrice"
+                android:id="@+id/edittextMaximumPrice_search"
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -301,11 +248,11 @@
                 android:paddingVertical="5dp"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/edittextMinimumPrice"
-                app:layout_constraintTop_toBottomOf="@id/title_price_filter" />
+                app:layout_constraintStart_toEndOf="@id/edittextMinimumPrice_search"
+                app:layout_constraintTop_toBottomOf="@id/title_price_filter_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_filter_confirm"
+                android:id="@+id/button_filter_confirm_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -314,19 +261,19 @@
                 android:text="@string/confirm"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/edittextMaximumPrice"
-                app:layout_constraintTop_toBottomOf="@id/edittextMinimumPrice" />
+                app:layout_constraintStart_toStartOf="@id/edittextMaximumPrice_search"
+                app:layout_constraintTop_toBottomOf="@id/edittextMinimumPrice_search" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_filter_reset"
+                android:id="@+id/button_filter_reset_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:backgroundTint="#dc3545"
                 android:text="@string/reset"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toStartOf="@id/button_filter_confirm"
-                app:layout_constraintTop_toTopOf="@id/button_filter_confirm" />
+                app:layout_constraintEnd_toStartOf="@id/button_filter_confirm_search"
+                app:layout_constraintTop_toTopOf="@id/button_filter_confirm_search" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

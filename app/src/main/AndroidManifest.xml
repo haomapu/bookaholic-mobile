@@ -71,6 +71,9 @@
             android:name=".CartActivity"
             android:exported="false" />
         <activity
+            android:name=".SearchResultsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignInActivity"
             android:exported="false">
             <meta-data
