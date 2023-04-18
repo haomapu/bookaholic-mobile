@@ -96,7 +96,7 @@ public class RecentlyAddAdapter extends RecyclerView.Adapter<RecentlyAddAdapter.
     public void filterByDate() {
         this.listBooks.clear();
         ArrayList<Book> books = Book.allBooks;
-        books.sort(Comparator.comparing(Book::getDate));
+        Collections.sort(books, Comparator.comparing(Book::getDate).reversed());
         for (int i = 0; i < Math.min(Book.allBooks.size(), 5); i++) {
             this.listBooks.add(books.get(i));
         }

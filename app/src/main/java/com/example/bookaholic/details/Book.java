@@ -76,7 +76,7 @@ public class Book implements Serializable {
     }
 
     public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images
-        ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer, LocalDate date) {
+            ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer, LocalDate date) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -186,7 +186,8 @@ public class Book implements Serializable {
     }
 
     public LocalDate getDate() {
-        return date;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(this.recentlyDate,formatter);
     }
 
     public void setDate(LocalDate date) {

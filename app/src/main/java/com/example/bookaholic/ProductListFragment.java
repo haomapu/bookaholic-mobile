@@ -112,9 +112,9 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         recentlyAddRecyclerView.setAdapter(recentlyAddAdapter);
 
         List<Offer> offerList = new ArrayList<>();
-        offerList.add(new Offer(R.drawable.login, "Up to 20%"));
-        offerList.add(new Offer(R.drawable.img1, "Up to 20%"));
-        offerList.add(new Offer(R.drawable.login, "Up to 20%"));
+        offerList.add(new Offer(R.drawable.sales1, "Up to 20%"));
+        offerList.add(new Offer(R.drawable.sales2, "Up to 50%"));
+        offerList.add(new Offer(R.drawable.sales3, "Up to 30%"));
 
         offerAdapter = new OfferAdapter(offerList);
         offerRecyclerView = view.findViewById(R.id.offerRecyclerView);
