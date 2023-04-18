@@ -183,19 +183,19 @@
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorSecondaryVariant"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/btn_order"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
-                    android:minHeight="48dp"
-                    android:text="Mật khẩu thanh toán dùng để xác thực mỗi khi thực hiện chuyển hoặc rút tiền"
+                    android:text="Lịch sử Order"
                     android:textSize="15sp"
                     android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/btn_update_infor"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -212,7 +212,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/btn_order" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
