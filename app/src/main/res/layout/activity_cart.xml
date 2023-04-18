@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/textiew_cart_title"
-            android:text="Giỏ hàng của tôi"
+            android:text="My Cart"
             android:textSize="24sp"
             android:textColor="@color/text"
             android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
-                android:text="Tổng tiền:"
+                android:text="Total"
                 android:textColor="@color/text"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -106,7 +106,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="center_vertical"
-                android:text="Phí vận chuyển:"
+                android:text="Ship"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp" />
 
@@ -135,7 +135,7 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
-                android:text="Tiền hàng:"
+                android:text="Item"
                 android:textColor="@color/text_gray"
                 android:textSize="16sp" />
             <TextView
@@ -179,8 +179,8 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:paddingVertical="10dp"
-                android:text="Đặt hàng"
                 android:textColor="@color/white"
+                android:text="Order"
                 android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
