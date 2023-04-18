@@ -22,6 +22,8 @@ import com.example.bookaholic.details.Book;
 import com.example.bookaholic.details.Detail;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class RecentlyAddAdapter extends RecyclerView.Adapter<RecentlyAddAdapter.RecentlyAddViewHolder> {
@@ -92,7 +94,12 @@ public class RecentlyAddAdapter extends RecyclerView.Adapter<RecentlyAddAdapter.
 
     @SuppressLint("NotifyDataSetChanged")
     public void filterByDate() {
+        this.listBooks.clear();
         ArrayList<Book> books = Book.allBooks;
+        books.sort(Comparator.comparing(Book::getDate));
+        for (int i = 0; i < Math.min(Book.allBooks.size(), 5); i++) {
+            this.listBooks.add(books.get(i));
+        }
         notifyDataSetChanged();
 
     }

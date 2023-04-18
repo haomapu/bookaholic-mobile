@@ -21,6 +21,7 @@ public class Book implements Serializable {
     public static ArrayList<Book> allBooks = new ArrayList<>();
     private String imageUrl, title, author, category, description, downloadURL, size,publicationDate,
             publisher, typeOfCover, recentlyDate, id;
+    private LocalDate date;
     private ArrayList<Comment> comments = new ArrayList<>();
     private int price, quantity, numberOfPages, buyer;
     private ArrayList<String> images = new ArrayList<>();
@@ -31,7 +32,7 @@ public class Book implements Serializable {
 
     //add
     public Book(String imageUrl, String title, String author, String category, String description, int quantity, int price
-            , String publicationDate, String publisher, String size, int numberOfPages, String typeOfCover, ArrayList<String> images, ArrayList<Comment> comments) {
+            , String publicationDate, String publisher, String size, int numberOfPages, String typeOfCover, ArrayList<String> images, ArrayList<Comment> comments, LocalDate date) {
         this.imageUrl = imageUrl;
         this.title = title;
         this.author = author;
@@ -50,6 +51,7 @@ public class Book implements Serializable {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.recentlyDate = currentDate.format(formatter);
+        this.date = date;
     }
 
     //update
@@ -74,7 +76,7 @@ public class Book implements Serializable {
     }
 
     public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images
-        ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer) {
+        ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer, LocalDate date) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -91,6 +93,7 @@ public class Book implements Serializable {
         this.recentlyDate = recentlyDate;
         this.numberOfPages = numberOfPages;
         this.buyer = buyer;
+        this.date = LocalDate.now();
     }
 
     public static ArrayList<Book> getAllBooks() {
@@ -182,10 +185,18 @@ public class Book implements Serializable {
         this.images = images;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     @NonNull
     @Exclude
     public Book deepCopy() {
-        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.images, this.quantity, this.size, this.publicationDate, this.publisher,this.typeOfCover, this.recentlyDate, this.numberOfPages, this.buyer);
+        return new Book(this.title, this.author, this.category, this.description, this.downloadURL, this.comments, this.price, this.images, this.quantity, this.size, this.publicationDate, this.publisher,this.typeOfCover, this.recentlyDate, this.numberOfPages, this.buyer, this.date);
     }
 
     @SuppressLint("DefaultLocale")
