@@ -25,7 +25,7 @@
     <color name="brown">#2D0002</color>
 
     <color name="seed">#0072f1</color>
-    <color name="md_theme_light_primary">#005AC2</color>
+    <color name="md_theme_light_primary">#CC00FF</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#D8E2FF</color>
     <color name="md_theme_light_onPrimaryContainer">#001A41</color>
