@@ -153,9 +153,6 @@ public class CartActivity extends AppCompatActivity {
         voucherButton.setOnClickListener(v ->{
             Intent intent = new Intent(this, VoucherActivity.class);
             startActivity(intent);
-
-
-
         });
     }
     public void initConfirmButton() {
