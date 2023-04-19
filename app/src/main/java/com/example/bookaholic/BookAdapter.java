@@ -130,6 +130,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @SuppressLint("NotifyDataSetChanged")
     public void filterByOptions(ArrayList<String> selectedType, Integer minPrice, Integer maxPrice) {
         this.books.clear();
+        if (selectedType == null) {
+            selectedType = new ArrayList<>();
+        }
         for (Book book : Book.allBooks) {
             boolean matchType = false;
             String[] types = book.getCategory().toLowerCase().replaceAll(" ", "").split(",");

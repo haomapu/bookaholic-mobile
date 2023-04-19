@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.bookaholic.orderHistory.OrderHistory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,7 +47,7 @@ public class ProfileFragment extends Fragment {
 
     private ImageView imgviewTakeCam, imgviewBack;
     private EditText edtPhone, edtName, edtEmail, edtAddress;
-    private Button btnUpdateInfo;
+    private Button btnUpdateInfo, btnOrderHistory;
     private ImageButton buttonSignOut;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -146,10 +147,13 @@ public class ProfileFragment extends Fragment {
             edtName.setText(currentUser.getFullName());
         }
 
-
-
         btnUpdateInfo = view.findViewById(R.id.btn_update_infor);
+        btnOrderHistory = view.findViewById(R.id.btn_order);
 
+        btnOrderHistory.setOnClickListener(view1 -> {
+            Intent intent = new Intent(this.getActivity(), OrderHistory.class);
+            startActivity(intent);
+        });
 
         btnUpdateInfo.setOnClickListener(view1 -> {
 

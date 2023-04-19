@@ -37,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -268,7 +269,7 @@ public class AddBook extends AppCompatActivity {
            return;
         }
         Book book = new Book(image, name, author, category, desciption, quantity, price
-                , publicationDate, publisher, size, numberOfPages, typeOfCover, images, null);
+                , publicationDate, publisher, size, numberOfPages, typeOfCover, images, null, LocalDate.now());
         String key = database.child("Books").push().getKey();
         book.setId(key);
         database.child(key).setValue(book)

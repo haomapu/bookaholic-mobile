@@ -6,48 +6,36 @@ import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookaholic.details.Book;
-import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class ProductListFragment extends Fragment implements UserDataChangedListener, BooksDataChangedListener{
+public class SearchResultsActivity extends AppCompatActivity {
 
     private ImageButton buttonGoToCart, buttonFilter;
+    private ImageView returnBtnSearch;
     private SearchView searchView;
     private RecyclerView recyclerView;
-    ProgressBar progressBar;
     private BookAdapter adapter;
     private ScrollView filterContainer;
     private Button buttonTypeScience, buttonTypeRomantic, buttonTypeMystery,
@@ -55,93 +43,48 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
             buttonTypeCook, buttonTypeEssay, buttonTypeHistory;
     private Button filterConfirmButton, filterResetButton;
     private EditText inputMinPrice, inputMaxPrice;
-    public static final Integer RecordAudioRequestCode = 1;
-    private ActivityResultLauncher<String> requestPermissionLauncher;
     ArrayList<String> selectedType = new ArrayList<>();
     Integer minPrice = null, maxPrice = null;
 
-    private RecyclerView bestSellerRecyclerView;
-    private RecyclerView recentlyAddRecyclerView;
-    private RecyclerView offerRecyclerView;
-    private OfferAdapter offerAdapter;
-    private BestSellerAdapter bestSellerAdapter;
-    private RecentlyAddAdapter recentlyAddAdapter;
-    public ProductListFragment() {
-
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            // TODO: Reload arguments from savedInstanceState
+        setContentView(R.layout.search_view_activity);
+        adapter = new BookAdapter(this, Book.allBooks);
+        Intent intent = this.getIntent();
+        adapter.filterByOptions(intent.getStringArrayListExtra("selectedType"), intent.getIntExtra("minPrice", Integer.MIN_VALUE), intent.getIntExtra("maxPrice", Integer.MAX_VALUE));
+        if (this.getIntent().getStringExtra("query") != null) {
+            adapter.filterByName(this.getIntent().getStringExtra("query"));
         }
-        requestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                    if (isGranted) {
-                        Toast.makeText(this.requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this.requireContext(), "Permission Denied. Feature is unavailable! ", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        recyclerView = findViewById(R.id.recyclerview_search);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (ContextCompat.checkSelfPermission(this.requireContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            checkPermission();
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO);
-        }
-    }
-
-    @SuppressLint({"ClickableViewAccessibility", "MissingInflatedId"})
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_product_list, container, false);
-
-        adapter = new BookAdapter(view.getContext(), Book.allBooks);
-
-        bestSellerAdapter = new BestSellerAdapter(view.getContext(), Book.allBooks);
-        bestSellerAdapter.filterByBuyer();
-        bestSellerRecyclerView = view.findViewById(R.id.bestSellerRecyclerView);
-        bestSellerRecyclerView.setAdapter(bestSellerAdapter);
-
-        recentlyAddAdapter = new RecentlyAddAdapter(view.getContext(), Book.allBooks);
-        recentlyAddAdapter.filterByDate();
-        recentlyAddRecyclerView = view.findViewById(R.id.recentlyAddRecyclerView);
-        recentlyAddRecyclerView.setAdapter(recentlyAddAdapter);
-
-        List<Offer> offerList = new ArrayList<>();
-        offerList.add(new Offer(R.drawable.sales1, "Up to 20%"));
-        offerList.add(new Offer(R.drawable.sales2, "Up to 50%"));
-        offerList.add(new Offer(R.drawable.sales3, "Up to 30%"));
-
-        offerAdapter = new OfferAdapter(offerList);
-        offerRecyclerView = view.findViewById(R.id.offerRecyclerView);
-        offerRecyclerView.setAdapter(offerAdapter);
-
-        searchView = view.findViewById(R.id.searchview_home);
+        searchView = findViewById(R.id.searchview_searching);
         searchView.setOnQueryTextListener(searchQueryTextListener);
 
-        buttonGoToCart = view.findViewById(R.id.imagebutton_home_mycart);
-//        updateCartButton();
+        buttonGoToCart = findViewById(R.id.imagebutton_search_mycart);
         buttonGoToCart.setOnClickListener(v -> startCartActivity());
-
-        filterContainer = view.findViewById(R.id.filters_container);
-
-        filterConfirmButton = view.findViewById(R.id.button_filter_confirm);
-        filterResetButton = view.findViewById(R.id.button_filter_reset);
+        returnBtnSearch = findViewById(R.id.returnBtnSearch);
+        returnBtnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        filterContainer = findViewById(R.id.filters_container_search);
+        filterConfirmButton = findViewById(R.id.button_filter_confirm_search);
+        filterResetButton = findViewById(R.id.button_filter_reset_search);
         filterConfirmButton.setOnClickListener(v -> onConfirm());
         filterResetButton.setOnClickListener(v -> resetFilters());
 
-        buttonTypeScience = view.findViewById(R.id.button_select_filter_type_science);
-        buttonTypeHorror = view.findViewById(R.id.button_select_filter_type_horror);
-        buttonTypeCook = view.findViewById(R.id.button_select_filter_type_cookbooks);
-        buttonTypeEssay = view.findViewById(R.id.button_select_filter_type_essay);
-        buttonTypeHistory = view.findViewById(R.id.button_select_filter_type_history);
-        buttonTypeShortStories = view.findViewById(R.id.button_select_filter_type_shortstories);
-        buttonTypeMystery = view.findViewById(R.id.button_select_filter_type_mystery);
-        buttonTypeRomantic = view.findViewById(R.id.button_select_filter_type_romance);
+        buttonTypeScience = findViewById(R.id.button_select_filter_type_science_search);
+        buttonTypeHorror = findViewById(R.id.button_select_filter_type_horror_search);
+        buttonTypeCook = findViewById(R.id.button_select_filter_type_cookbooks_search);
+        buttonTypeEssay = findViewById(R.id.button_select_filter_type_essay_search);
+        buttonTypeHistory = findViewById(R.id.button_select_filter_type_history_search);
+        buttonTypeShortStories = findViewById(R.id.button_select_filter_type_shortstories_search);
+        buttonTypeMystery = findViewById(R.id.button_select_filter_type_mystery_search);
+        buttonTypeRomantic = findViewById(R.id.button_select_filter_type_romance_search);
 
         buttonTypeScience.setOnClickListener(filterSelectListener);
         buttonTypeHorror.setOnClickListener(filterSelectListener);
@@ -152,47 +95,44 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         buttonTypeMystery.setOnClickListener(filterSelectListener);
         buttonTypeRomantic.setOnClickListener(filterSelectListener);
 
-        inputMinPrice = view.findViewById(R.id.edittextMinimumPrice);
-        inputMaxPrice = view.findViewById(R.id.edittextMaximumPrice);
+        inputMinPrice = findViewById(R.id.edittextMinimumPrice_search);
+        inputMaxPrice = findViewById(R.id.edittextMaximumPrice_search);
 
-
-        buttonFilter = view.findViewById(R.id.button_filter);
+        buttonFilter = findViewById(R.id.button_filter_search);
         buttonFilter.setOnClickListener(v -> showFilterMenu());
 
-
-        return view;
     }
 
     View.OnClickListener filterSelectListener = v -> {
-        if (v.getId() == R.id.button_select_filter_type_science) {
+        if (v.getId() == R.id.button_select_filter_type_science_search) {
             if (selectedType.contains("science")) selectedType.remove("science");
             else selectedType.add("science");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_romance) {
+        } else if (v.getId() == R.id.button_select_filter_type_romance_search) {
             if (selectedType.contains("romance")) selectedType.remove("romance");
             else selectedType.add("romance");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_mystery) {
+        } else if (v.getId() == R.id.button_select_filter_type_mystery_search) {
             if (selectedType.contains("mystery")) selectedType.remove("mystery");
             else selectedType.add("mystery");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_horror) {
+        } else if (v.getId() == R.id.button_select_filter_type_horror_search) {
             if (selectedType.contains("horror")) selectedType.remove("horror");
             else selectedType.add("horror");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_shortstories) {
+        } else if (v.getId() == R.id.button_select_filter_type_shortstories_search) {
             if (selectedType.contains("shortstories")) selectedType.remove("shortstories");
             else selectedType.add("shortstories");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_history) {
+        } else if (v.getId() == R.id.button_select_filter_type_history_search) {
             if (selectedType.contains("history")) selectedType.remove("history");
             else selectedType.add("history");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_essay) {
+        } else if (v.getId() == R.id.button_select_filter_type_essay_search) {
             if (selectedType.contains("essay")) selectedType.remove("essay");
             else selectedType.add("essay");
             updateTypeFilterButtons();
-        } else if (v.getId() == R.id.button_select_filter_type_cookbooks) {
+        } else if (v.getId() == R.id.button_select_filter_type_cookbooks_search) {
             if (selectedType.contains("cookbooks")) selectedType.remove("cookbooks");
             else selectedType.add("cookbooks");
             updateTypeFilterButtons();
@@ -271,26 +211,9 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     @SuppressLint("NotifyDataSetChanged")
     public void notifyAdapter() {
         adapter.setBooks(Book.allBooks);
-        bestSellerAdapter.setBooks(Book.allBooks);
-        bestSellerAdapter.filterByBuyer();
-        recentlyAddAdapter.setBooks(Book.allBooks);
-        recentlyAddAdapter.filterByDate();
         adapter.notifyDataSetChanged();
-        bestSellerAdapter.notifyDataSetChanged();
-        recentlyAddAdapter.notifyDataSetChanged();
     }
 
-    public void updateProgressBar() {
-        try {
-            progressBar.setVisibility(adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
-        } catch (Exception exception) {
-            Log.d(TAG, exception.toString());
-        }
-    }
-    @Override
-    public void updateUserRelatedViews() {
-
-    }
     private void hideFilterMenu() {
         Log.d(TAG, "hide filter now");
         ObjectAnimator animator = ObjectAnimator.ofFloat(filterContainer, "translationX", 0);
@@ -316,26 +239,21 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         if (!maxPriceString.isEmpty())
             maxPrice = Integer.parseInt(inputMaxPrice.getText().toString());
 
-        Intent intent = new Intent(ProductListFragment.this.getActivity(), SearchResultsActivity.class);
+        Intent intent = new Intent(SearchResultsActivity.this, SearchResultsActivity.class);
         intent.putExtra("selectedType",selectedType);
         intent.putExtra("minPrice",minPrice);
         intent.putExtra("maxPrice",maxPrice);
         startActivity(intent);
     }
-    @Override
-    public void updateBooksRelatedViews() {
-        notifyAdapter();
-        updateProgressBar();
-    }
 
     private void startCartActivity() {
-        startActivity(new Intent(ProductListFragment.this.getActivity(), CartActivity.class));
+        startActivity(new Intent(SearchResultsActivity.this, CartActivity.class));
     }
 
     private final SearchView.OnQueryTextListener searchQueryTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
-            Intent intent = new Intent(ProductListFragment.this.getActivity(), SearchResultsActivity.class);
+            Intent intent = new Intent(SearchResultsActivity.this, SearchResultsActivity.class);
             intent.putExtra("query", query);
             startActivity(intent);
             return true;
@@ -346,14 +264,6 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
             return false;
         }
     };
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
-    private void checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(this.requireActivity(), new String[]{Manifest.permission.RECORD_AUDIO}, RecordAudioRequestCode);
-        }
-    }
 }
+

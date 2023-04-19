@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="text_highlight">#CC00FF</color>
+    <color name="text">#223263</color>
+    <color name="text_gray">#9098B1</color>
+    <color name="container_primary">#CC00FF</color>
+    <color name="container_secondary">#7041EE</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -19,7 +25,7 @@
     <color name="brown">#2D0002</color>
 
     <color name="seed">#0072f1</color>
-    <color name="md_theme_light_primary">#005AC2</color>
+    <color name="md_theme_light_primary">#CC00FF</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#D8E2FF</color>
     <color name="md_theme_light_onPrimaryContainer">#001A41</color>
