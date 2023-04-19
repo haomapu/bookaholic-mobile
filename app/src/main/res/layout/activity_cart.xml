@@ -62,36 +62,43 @@
         android:layout_weight="1"
 >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textview_cart_total_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
                 android:text="Tổng tiền:"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-
+            <TextView
+                android:id="@+id/discountPriceTextview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/cartTotalPriceTextView"
+                android:layout_alignBottom="@id/cartTotalPriceTextView"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="000.000đ"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/cartTotalPriceTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:gravity="end"
                 android:text="000.000đ"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -156,19 +163,18 @@
             android:orientation="horizontal"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent">
-            <EditText
-                android:id="@+id/voucherTextView"
+            <Button
+                android:id="@+id/voucherButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:focusableInTouchMode="true"
+                android:backgroundTint="@color/dark_green"
                 android:gravity="center"
-                android:hint="Enter voucher code here"
-                android:inputType="text"
                 android:padding="5dp"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:paddingVertical="10dp"
+                android:text="Voucher"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/confirmButton"

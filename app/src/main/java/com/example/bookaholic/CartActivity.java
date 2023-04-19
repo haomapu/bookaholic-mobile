@@ -1,15 +1,24 @@
 package com.example.bookaholic;
 
+import static android.view.View.GONE;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bookaholic.cart.Voucher;
+import com.example.bookaholic.cart.VoucherActivity;
 import com.example.bookaholic.details.Book;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,16 +36,20 @@ public class CartActivity extends AppCompatActivity {
     private CartAdapter mCartAdapter;
     private TextView mTotalPriceTextView, mShippingFeeTextView, mCartTotalPriceTextView;
     private ArrayList<OrderBook> mBookList;
-
-    private Button confirmButton;
-
+    private TextView discountPriceTextview;
+    private Button confirmButton, voucherButton;
+    float cartTotalPrice;
+    float newPrice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-
+        discountPriceTextview = findViewById(R.id.discountPriceTextview);
         initConfirmButton();
+        initVoucherButton();
+        discountPriceTextview.setPaintFlags(discountPriceTextview.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+
         ImageButton buttonBack = findViewById(R.id.button_cart_back);
         buttonBack.setOnClickListener(v -> CartActivity.this.finish());
 
@@ -67,7 +80,7 @@ public class CartActivity extends AppCompatActivity {
         if (mBookList.size() != 0) {
             shippingFee = 30000;
         }
-        float cartTotalPrice = totalPrice + shippingFee;
+        cartTotalPrice = totalPrice + shippingFee;
 
         mShippingFeeTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(shippingFee) + " đ");
         mTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(totalPrice) + " đ");
@@ -113,10 +126,62 @@ public class CartActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Voucher.currentVoucher == null){
+            discountPriceTextview.setVisibility(GONE);
+        } else {
+            discountPriceTextview.setVisibility(View.VISIBLE);
+            discountPriceTextview.setText(String.valueOf(cartTotalPrice));
+            if (Voucher.currentVoucher.getTypeVoucher().contains("Price")){
+                newPrice = cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher();
+                mCartTotalPriceTextView.setText(String.valueOf(newPrice));
+                Order.currentOrder.setTotalPrice((newPrice));
+            }
+            else {
+                mCartTotalPriceTextView.setText(String.valueOf(cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher()*cartTotalPrice));
+            }
+        }
+    }
+
+
+    public void initVoucherButton(){
+        voucherButton = findViewById(R.id.voucherButton);
+
+        voucherButton.setOnClickListener(v ->{
+            Intent intent = new Intent(this, VoucherActivity.class);
+            startActivity(intent);
+
+
+
+        });
+    }
     public void initConfirmButton() {
         confirmButton = findViewById(R.id.confirmButton);
+
         confirmButton.setOnClickListener(v -> {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
+            for (OrderBook orderBook : Order.currentOrder.getOrderBooks()){
+                if (orderBook.getBook().getQuantity() < orderBook.getQuantity()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Error");
+                    builder.setMessage(orderBook.getBook().getTitle() + " exceeded available stock");
+                    builder.setPositiveButton("OK", null);
+                    builder.show();
+                    return;
+                }
+            }
+
+            for (OrderBook orderBook : Order.currentOrder.getOrderBooks()){
+                DatabaseReference quantityRef = database.getReference("Books").child(orderBook.getBook().getId()).child("quantity");
+                quantityRef.setValue(orderBook.getBook().getQuantity() - orderBook.getQuantity());
+                DatabaseReference buyerRef = database.getReference("Books")
+                        .child(orderBook.getBook().getId()).child("buyer");
+                buyerRef.setValue(orderBook.getBook().getBuyer() + 1);
+            }
+
             DatabaseReference myRef = database.getReference("Users")
                     .child(MainActivity.currentSyncedUser.getId()).child("orderHistory");
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -128,13 +193,14 @@ public class CartActivity extends AppCompatActivity {
                             Order order = orderHistorySnapshot.getValue(Order.class);
                             orderHistory.add(order);
                         }
+                        Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getFullName());
                         orderHistory.add(Order.currentOrder);
 
                         myRef.setValue(orderHistory);
                     } else {
                         ArrayList<Order> orderHistory = new ArrayList<>();
+                        Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getFullName());
                         orderHistory.add(Order.currentOrder);
-
                         myRef.setValue(orderHistory);
                     }
                 }
@@ -144,6 +210,19 @@ public class CartActivity extends AppCompatActivity {
                     // Handle errors here
                 }
             });
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Order Submitted");
+            builder.setMessage("Your order has been successfully submitted!");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Order.currentOrder = new Order();
+
+                }
+            });
+            builder.show();
         });
+
+
     }
 }

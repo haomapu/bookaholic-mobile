@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
         buttonFavorite.setOnClickListener(onBottomNavBarButtonClicked);
         buttonProfile.setOnClickListener(onBottomNavBarButtonClicked);
-        InitShoppingCartListener();
         setUpDefaultFragment();
+
     }
 
     private void setUpDefaultFragment() {
@@ -91,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 buttonHome.setImageResource(R.drawable.home_selected);
                 userDataChangedListener = fragmentHome;
                 booksDataChangedListener = fragmentHome;
+                shopping_badge.setNumber(Order.currentOrder.orderSize());
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
+
             } else if (viewId == R.id.bottomNavBarButtonFavorite) {
                 Log.d(TAG, "Favorite button clicked!");
                 buttonFavorite.setImageResource(R.drawable.favorite_selected);
@@ -128,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 initCurrentUserDatabaseReference(currentUserDatabaseListener);
                 initBooksDatabaseReference(booksDatabaseListener);
+                InitShoppingCartListener();
             }
         }
         shopping_badge = findViewById(R.id.shopping_badge);
@@ -177,5 +180,6 @@ public class MainActivity extends AppCompatActivity {
     }
     private void InitShoppingCartListener() {
         Order order = new Order();
+
     }
 }

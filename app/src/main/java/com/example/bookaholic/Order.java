@@ -12,6 +12,8 @@ public class Order {
     private String orderStatus;
     private String createdAt;
 
+    private String orderOwner;
+
     public Order() {
         this.orderBooks = new ArrayList<>();
         this.address = "";
@@ -20,6 +22,7 @@ public class Order {
         Date now = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         createdAt = dateFormat.format(now);
+        orderOwner = "";
     }
 
     public Order(ArrayList<OrderBook> orderBooks, String address, double totalPrice, String orderStatus, String createdAt) {
@@ -28,6 +31,8 @@ public class Order {
         this.totalPrice = totalPrice;
         this.orderStatus = orderStatus;
         this.createdAt = createdAt;
+        orderOwner = MainActivity.currentSyncedUser.getFullName();
+
     }
 
     public ArrayList<OrderBook> getOrderBooks() {
@@ -94,5 +99,13 @@ public class Order {
 
     public Integer quantity() {
         return orderBooks.size();
+    }
+
+    public String getOrderOwner() {
+        return orderOwner;
+    }
+
+    public void setOrderOwner(String orderOwner) {
+        this.orderOwner = orderOwner;
     }
 }
