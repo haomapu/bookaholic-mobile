@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -21,7 +23,7 @@ public class Book implements Serializable {
     public static ArrayList<Book> allBooks = new ArrayList<>();
     private String imageUrl, title, author, category, description, downloadURL, size,publicationDate,
             publisher, typeOfCover, recentlyDate, id;
-    private LocalDate date;
+    private Date date;
     private ArrayList<Comment> comments = new ArrayList<>();
     private int price, quantity, numberOfPages, buyer;
     private ArrayList<String> images = new ArrayList<>();
@@ -32,7 +34,7 @@ public class Book implements Serializable {
 
     //add
     public Book(String imageUrl, String title, String author, String category, String description, int quantity, int price
-            , String publicationDate, String publisher, String size, int numberOfPages, String typeOfCover, ArrayList<String> images, ArrayList<Comment> comments, LocalDate date) {
+            , String publicationDate, String publisher, String size, int numberOfPages, String typeOfCover, ArrayList<String> images, ArrayList<Comment> comments, Date date) {
         this.imageUrl = imageUrl;
         this.title = title;
         this.author = author;
@@ -48,9 +50,9 @@ public class Book implements Serializable {
         this.comments = comments;
         this.images = images;
         this.buyer = 0;
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        this.recentlyDate = currentDate.format(formatter);
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        this.recentlyDate = dateFormat.format(currentDate);
         this.date = date;
     }
 
@@ -76,7 +78,7 @@ public class Book implements Serializable {
     }
 
     public Book(String title, String author, String category, String description, String downloadURL, ArrayList<Comment> comments, int price, ArrayList<String> images
-            ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer, LocalDate date) {
+            ,int quantity, String size, String publicationDate, String publisher, String typeOfCover, String recentlyDate, int numberOfPages, int buyer, Date date) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -93,7 +95,7 @@ public class Book implements Serializable {
         this.recentlyDate = recentlyDate;
         this.numberOfPages = numberOfPages;
         this.buyer = buyer;
-        this.date = LocalDate.now();
+        this.date = date;
     }
 
     public static ArrayList<Book> getAllBooks() {
@@ -185,12 +187,16 @@ public class Book implements Serializable {
         this.images = images;
     }
 
-    public LocalDate getDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return LocalDate.parse(this.recentlyDate,formatter);
+    public Date getDate() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return formatter.parse(recentlyDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

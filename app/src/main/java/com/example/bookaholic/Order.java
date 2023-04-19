@@ -20,7 +20,7 @@ public class Order {
         this.totalPrice = 0;
         this.orderStatus = "Incomplete";
         Date now = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         createdAt = dateFormat.format(now);
         orderOwner = "";
     }

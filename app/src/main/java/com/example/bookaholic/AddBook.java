@@ -269,7 +269,7 @@ public class AddBook extends AppCompatActivity {
            return;
         }
         Book book = new Book(image, name, author, category, desciption, quantity, price
-                , publicationDate, publisher, size, numberOfPages, typeOfCover, images, null, LocalDate.now());
+                , publicationDate, publisher, size, numberOfPages, typeOfCover, images, null, new Date());
         String key = database.child("Books").push().getKey();
         book.setId(key);
         database.child(key).setValue(book)

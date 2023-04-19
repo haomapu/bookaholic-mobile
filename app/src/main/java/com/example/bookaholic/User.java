@@ -122,7 +122,7 @@ public class User {
     }
 
     public ArrayList<Order> getOrderHistory() {
-        return orderHistory;
+        return this.orderHistory;
     }
 
     public void setOrderHistory(ArrayList<Order> orderHistory) {
