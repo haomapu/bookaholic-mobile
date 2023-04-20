@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
 
     private ImageView imgviewTakeCam, imgviewBack;
     private EditText edtPhone, edtName, edtEmail, edtAddress;
-    private Button btnUpdateInfo, btnOrderHistory;
+    private Button btnUpdateInfo, btnOrderHistory, btnChangePass;
     private ImageButton buttonSignOut;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -139,6 +139,12 @@ public class ProfileFragment extends Fragment {
         edtAddress = view.findViewById(R.id.edt_address);
         edtName = view.findViewById(R.id.edt_name);
         buttonSignOut = view.findViewById(R.id.button_profile_logout);
+        btnChangePass = view.findViewById(R.id.btn_change_pass);
+
+        btnChangePass.setOnClickListener(view1 -> {
+                Intent intent = new Intent(this.getActivity(), ChangePassActivity.class);
+                startActivity(intent);
+        });
 
         if(currentUser!=null){
             edtAddress.setText(currentUser.getAddress());
