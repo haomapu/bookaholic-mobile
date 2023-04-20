@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                 Book.allBooks.add(dataSnapshot.getValue(Book.class));
             }
-            booksDataChangedListener.updateBooksRelatedViews();
+            booksDataChangedListener.updateBooksRelatedViews();     
         }
 
         @Override
