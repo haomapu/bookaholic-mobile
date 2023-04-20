@@ -27,8 +27,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:layout_width="0dp"
-        android:ellipsize="end"
-        android:maxLines="1"
+        android:maxLines="3"
         android:layout_weight="1"
         android:textColor="?attr/colorOnSurface"
         android:layout_height="wrap_content"
@@ -47,51 +46,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/textview_bookname_home_itemview"
-        app:layout_constraintBottom_toTopOf="@id/textview_booktypetitle_home_itemview"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/textview_bookname_home_itemview"/>
-
-    <TextView
-        android:id="@+id/textview_booktypetitle_home_itemview"
-        android:text="@string/book_type"
-        android:textSize="20sp"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textview_bookprice_home_itemview"
-        app:layout_constraintStart_toStartOf="@id/textview_bookname_home_itemview"
-        app:layout_constraintBottom_toTopOf="@id/textview_bookauthortitle_home_itemview"/>
-
-    <TextView
-        android:id="@+id/textview_booktype_home_itemview"
-        android:textSize="20sp"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        app:layout_constraintStart_toEndOf="@id/textview_booktypetitle_home_itemview"
-        app:layout_constraintTop_toTopOf="@id/textview_booktypetitle_home_itemview"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textview_bookauthortitle_home_itemview"
-        android:text="@string/book_author"
-        android:textSize="20sp"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/textview_booktypetitle_home_itemview"
-        app:layout_constraintStart_toStartOf="@id/textview_bookname_home_itemview"
-        app:layout_constraintBottom_toBottomOf="@id/imageview_book_home_itemview"/>
-
-    <TextView
-        android:id="@+id/textview_bookauthor_home_itemview"
-        android:textSize="20sp"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        app:layout_constraintStart_toEndOf="@id/textview_bookauthortitle_home_itemview"
-        app:layout_constraintTop_toTopOf="@id/textview_bookauthortitle_home_itemview"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

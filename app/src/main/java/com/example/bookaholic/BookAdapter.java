@@ -87,8 +87,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             imageView = itemView.findViewById(R.id.imageview_book_home_itemview);
             nameView = itemView.findViewById(R.id.textview_bookname_home_itemview);
             priceView = itemView.findViewById(R.id.textview_bookprice_home_itemview);
-            typesView = itemView.findViewById(R.id.textview_booktype_home_itemview);
-            authorView = itemView.findViewById(R.id.textview_bookauthor_home_itemview);
             layout = itemView.findViewById(R.id.layout_book_home_itemview);
         }
     }
@@ -111,8 +109,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
                     .into(holder.imageView);
             holder.nameView.setText(book.getTitle());
             holder.priceView.setText(book.displayablePrice());
-            holder.typesView.setText(book.getCategory());
-            holder.authorView.setText(book.getAuthor());
             holder.layout.setOnClickListener(v -> startBookDetailsActivity(book));
 
             OnSuccessListener<byte[]> onDownloadImageSuccessListener = bytes -> {
