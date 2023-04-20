@@ -90,7 +90,6 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="000.000đ"
-                android:textColor="?attr/colorOnPrimary"
                 android:textSize="12sp"
                 android:textStyle="bold" />
             <TextView

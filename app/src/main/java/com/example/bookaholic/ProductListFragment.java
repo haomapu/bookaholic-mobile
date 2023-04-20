@@ -66,6 +66,8 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
     private OfferAdapter offerAdapter;
     private BestSellerAdapter bestSellerAdapter;
     private RecentlyAddAdapter recentlyAddAdapter;
+    private NotificationBadge shopping_badge;
+
     public ProductListFragment() {
 
     }
@@ -119,6 +121,9 @@ public class ProductListFragment extends Fragment implements UserDataChangedList
         offerAdapter = new OfferAdapter(offerList);
         offerRecyclerView = view.findViewById(R.id.offerRecyclerView);
         offerRecyclerView.setAdapter(offerAdapter);
+
+        shopping_badge = view.findViewById(R.id.shopping_badge);
+        shopping_badge.setNumber(Order.currentOrder.orderSize());
 
         searchView = view.findViewById(R.id.searchview_home);
         searchView.setOnQueryTextListener(searchQueryTextListener);
