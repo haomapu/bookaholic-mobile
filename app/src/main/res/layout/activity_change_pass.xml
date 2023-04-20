@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="36dp"
-        android:text="ResetPassword"
+        android:text="Reset Password"
         android:gravity="center_horizontal"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:textStyle="bold"
@@ -33,7 +33,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passChange"
+        android:id="@+id/passOldChange"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="351dp"
         android:layout_height="wrap_content"
@@ -45,7 +45,17 @@
         app:boxCornerRadiusTopStart="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotImage"/>
+        app:layout_constraintTop_toBottomOf="@+id/forgotImage">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editOldPassChange"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 
@@ -55,14 +65,14 @@
         android:layout_width="351dp"
         android:layout_height="wrap_content"
         android:hint="Enter your new password"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         app:boxCornerRadiusBottomEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passChange">
+        app:layout_constraintTop_toBottomOf="@+id/passOldChange">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editNewPassChange"
