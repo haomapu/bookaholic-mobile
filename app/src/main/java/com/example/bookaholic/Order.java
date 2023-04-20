@@ -31,7 +31,7 @@ public class Order {
         this.totalPrice = totalPrice;
         this.orderStatus = orderStatus;
         this.createdAt = createdAt;
-        orderOwner = MainActivity.currentSyncedUser.getFullName();
+        orderOwner = MainActivity.currentSyncedUser.getId();
 
     }
 

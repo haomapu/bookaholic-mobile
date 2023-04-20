@@ -133,11 +133,13 @@ public class CartActivity extends AppCompatActivity {
         if (Voucher.currentVoucher == null){
             discountPriceTextview.setVisibility(GONE);
         } else {
+
             discountPriceTextview.setVisibility(View.VISIBLE);
-            discountPriceTextview.setText(String.valueOf(cartTotalPrice));
+            discountPriceTextview.setText(NumberFormat.getNumberInstance(Locale.US).format(cartTotalPrice) + " đ");
             if (Voucher.currentVoucher.getTypeVoucher().contains("Price")){
                 newPrice = cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher();
-                mCartTotalPriceTextView.setText(String.valueOf(newPrice));
+                mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(newPrice) + " đ");
+
                 Order.currentOrder.setTotalPrice((newPrice));
             }
             else {
@@ -190,13 +192,13 @@ public class CartActivity extends AppCompatActivity {
                             Order order = orderHistorySnapshot.getValue(Order.class);
                             orderHistory.add(order);
                         }
-                        Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getFullName());
+                        Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
                         orderHistory.add(Order.currentOrder);
 
                         myRef.setValue(orderHistory);
                     } else {
                         ArrayList<Order> orderHistory = new ArrayList<>();
-                        Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getFullName());
+                        Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
                         orderHistory.add(Order.currentOrder);
                         myRef.setValue(orderHistory);
                     }

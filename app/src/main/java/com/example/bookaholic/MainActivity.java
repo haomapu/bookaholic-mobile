@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 buttonHome.setImageResource(R.drawable.home_selected);
                 userDataChangedListener = fragmentHome;
                 booksDataChangedListener = fragmentHome;
-                shopping_badge.setNumber(Order.currentOrder.orderSize());
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
 
             } else if (viewId == R.id.bottomNavBarButtonFavorite) {
@@ -130,11 +129,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 initCurrentUserDatabaseReference(currentUserDatabaseListener);
                 initBooksDatabaseReference(booksDatabaseListener);
-                InitShoppingCartListener();
             }
         }
-        shopping_badge = findViewById(R.id.shopping_badge);
-        shopping_badge.setNumber(Order.currentOrder.orderSize());
+
     }
 
     private final ValueEventListener currentUserDatabaseListener = new ValueEventListener() {
@@ -179,7 +176,5 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
     private void InitShoppingCartListener() {
-        Order order = new Order();
-
     }
 }

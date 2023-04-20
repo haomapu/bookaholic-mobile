@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bookaholic.CartActivity;
 import com.example.bookaholic.Comment;
 import com.example.bookaholic.Order;
 import com.example.bookaholic.OrderBook;
@@ -283,7 +284,7 @@ public class Detail extends AppCompatActivity {
         shoppingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Detail.this, OrderHistory.class));
+                startActivity(new Intent(Detail.this, CartActivity.class));
             }
         });
 
