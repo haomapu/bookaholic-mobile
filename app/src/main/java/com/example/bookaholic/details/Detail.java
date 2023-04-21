@@ -117,7 +117,7 @@ public class Detail extends AppCompatActivity {
         ImageView imageViewHeart = findViewById(R.id.image_view_heart);
         Integer bookID = Book.idOfBookWithName(currentBook.getTitle());
         if (currentSyncedUser.likeBookWithId(bookID))
-            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
+            imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
         else
             imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this,R.color.md_theme_light_onSurfaceVariant), PorterDuff.Mode.SRC_IN);
 
@@ -155,7 +155,7 @@ public class Detail extends AppCompatActivity {
 //                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.black), PorterDuff.Mode.SRC_IN);
 //                }
 //                else {
-//                    imageViewHeart.setColor(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
+//                    imageViewHeart.setColorFilter(ContextCompat.getColor(Detail.this, R.color.red), PorterDuff.Mode.SRC_IN);
 //                }
             }
         });

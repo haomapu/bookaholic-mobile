@@ -193,6 +193,7 @@ public class CartActivity extends AppCompatActivity {
                             orderHistory.add(order);
                         }
                         Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
+                        Order.currentOrder.setId(MainActivity.currentSyncedUser.getOrderHistory().size());
                         orderHistory.add(Order.currentOrder);
 
                         myRef.setValue(orderHistory);

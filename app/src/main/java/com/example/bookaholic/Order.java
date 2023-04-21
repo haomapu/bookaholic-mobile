@@ -11,7 +11,7 @@ public class Order {
     private double totalPrice;
     private String orderStatus;
     private String createdAt;
-
+    private int id;
     private String orderOwner;
 
     public Order() {
@@ -23,15 +23,17 @@ public class Order {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         createdAt = dateFormat.format(now);
         orderOwner = "";
+        id = 0;
     }
 
-    public Order(ArrayList<OrderBook> orderBooks, String address, double totalPrice, String orderStatus, String createdAt) {
+    public Order(ArrayList<OrderBook> orderBooks, String address, double totalPrice, String orderStatus, String createdAt, int id) {
         this.orderBooks = orderBooks;
         this.address = address;
         this.totalPrice = totalPrice;
         this.orderStatus = orderStatus;
         this.createdAt = createdAt;
         orderOwner = MainActivity.currentSyncedUser.getId();
+        this.id = id;
 
     }
 
@@ -107,5 +109,13 @@ public class Order {
 
     public void setOrderOwner(String orderOwner) {
         this.orderOwner = orderOwner;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
