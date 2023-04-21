@@ -72,7 +72,6 @@ public class Detail extends AppCompatActivity {
         context = this;
         returnBtn = findViewById(R.id.returnBtn);
         int test = getResources().getIdentifier("avatar1", "drawable", getPackageName());
-        System.out.println(test);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

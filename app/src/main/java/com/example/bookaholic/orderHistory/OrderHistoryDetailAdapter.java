@@ -25,6 +25,7 @@ import java.util.ArrayList;
         public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
             private ArrayList<OrderBook> mDataList;
             private Context context;
+            private String status;
 
             public static class ViewHolder extends RecyclerView.ViewHolder {
                 public ImageView bookImageView;
@@ -42,9 +43,10 @@ import java.util.ArrayList;
         }
     }
 
-    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList) {
+    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList, String status) {
         this.mDataList = dataList;
         this.context = context;
+        this.status = status;
     }
 
     @Override
@@ -62,18 +64,21 @@ import java.util.ArrayList;
         Glide.with(holder.bookImageView.getContext())
                 .load(book.getImages().get(0))
                 .into(holder.bookImageView);
+        if (status.contains("Complete")){
+            holder.reviewBtn.setOnClickListener(v -> {
+                Review rateDialog = new Review(v.getContext(), book);
+                rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        holder.reviewBtn.setOnClickListener(v -> {
-            Review rateDialog = new Review(v.getContext(), book);
-            rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                rateDialog.setCancelable(false);
+                rateDialog.show();
+            });
+        } else {
+            holder.reviewBtn.setVisibility(View.GONE);
+        }
 
-            rateDialog.setCancelable(false);
-            rateDialog.show();
-        });
         holder.titleTxt.setText(book.getTitle());
         holder.quantityTxt.setText(String.valueOf(orderBook.getQuantity()));
         holder.priceTxt.setText(String.valueOf(book.getPrice() * orderBook.getQuantity()));
-
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, Detail.class);
             Bundle bundle = new Bundle();

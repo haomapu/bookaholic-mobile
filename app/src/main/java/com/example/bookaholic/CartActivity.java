@@ -143,7 +143,10 @@ public class CartActivity extends AppCompatActivity {
                 Order.currentOrder.setTotalPrice((newPrice));
             }
             else {
-                mCartTotalPriceTextView.setText(String.valueOf(cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher()*cartTotalPrice));
+                newPrice = cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher() * cartTotalPrice * ((float) 0.01);
+                mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(newPrice) + " đ");
+
+                Order.currentOrder.setTotalPrice((newPrice));
             }
         }
     }
@@ -161,13 +164,24 @@ public class CartActivity extends AppCompatActivity {
         confirmButton = findViewById(R.id.confirmButton);
 
         confirmButton.setOnClickListener(v -> {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            for (OrderBook orderBook : Order.currentOrder.getOrderBooks()){
-                if (orderBook.getBook().getQuantity() < orderBook.getQuantity()){
+            if (Order.currentOrder == null){
+                return;
+            }
+            if (Order.currentOrder.orderSize() == 0){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Error");
-                    builder.setMessage(orderBook.getBook().getTitle() + " exceeded available stock");
+                    builder.setMessage("No book is choose");
                     builder.setPositiveButton("OK", null);
+                    builder.show();
+                return;
+            }
+              FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    for (OrderBook orderBook : Order.currentOrder.getOrderBooks()){
+                        if (orderBook.getBook().getQuantity() < orderBook.getQuantity()){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            builder.setTitle("Error");
+                            builder.setMessage(orderBook.getBook().getTitle() + " exceeded available stock");
+                            builder.setPositiveButton("OK", null);
                     builder.show();
                     return;
                 }

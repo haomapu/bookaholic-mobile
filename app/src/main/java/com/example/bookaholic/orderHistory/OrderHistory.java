@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.bookaholic.MainActivity;
 import com.example.bookaholic.R;
@@ -22,6 +24,13 @@ public class OrderHistory extends AppCompatActivity {
         else {
             initOrderHistory();
         }
+        ImageView returnBtn = findViewById(R.id.returnBtn);
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     public void initOrderHistory(){

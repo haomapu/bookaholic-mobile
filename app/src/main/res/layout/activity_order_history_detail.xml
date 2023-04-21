@@ -29,23 +29,6 @@
             android:textSize="24sp"
             android:textColor="?attr/colorOnPrimary"
             android:layout_toRightOf="@id/returnBtn"/>
-        <ImageView
-            android:id="@+id/shoppingBtn"
-            android:src="@drawable/baseline_shopping_cart_32"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentEnd="true"
-            app:tint="?attr/colorOnSurfaceInverse"/>
-        <com.nex3z.notificationbadge.NotificationBadge
-            android:id="@+id/shopping_badge"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_toStartOf="@id/shoppingBtn"
-            android:layout_alignTop="@id/shoppingBtn"
-            android:layout_marginTop="-13dp"
-            android:layout_marginRight="-10dp"
-            app:nbMaxTextLength="2"/>
     </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
