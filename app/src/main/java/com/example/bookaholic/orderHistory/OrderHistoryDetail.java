@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import static com.example.bookaholic.MainActivity.currentSyncedUser;
 
@@ -22,9 +25,16 @@ public class OrderHistoryDetail extends AppCompatActivity {
         setContentView(R.layout.activity_order_history_detail);
         loadData();
         ArrayList<OrderBook> orderBooks= currentSyncedUser.getOrderHistory().get(Integer.valueOf(position)).getOrderBooks();
+        String orderStatus= currentSyncedUser.getOrderHistory().get(Integer.valueOf(position)).getOrderStatus();
         orderDetailRV = findViewById(R.id.orderDetailRV);
-
-        OrderHistoryDetailAdapter orderDetailAdapter = new OrderHistoryDetailAdapter(this, orderBooks);
+        ImageView returnBtn = findViewById(R.id.returnBtn);
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        OrderHistoryDetailAdapter orderDetailAdapter = new OrderHistoryDetailAdapter(this, orderBooks, orderStatus);
         orderDetailRV.setAdapter(orderDetailAdapter);
     }
 
