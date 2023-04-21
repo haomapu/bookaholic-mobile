@@ -60,7 +60,7 @@
     <string name="image_empty">Vui lòng chọn ảnh</string>
     <string name="wishlist_title">Wishlist</string>
     <string name="top_5_best_seller">Top 5 Best Seller</string>
-    <string name="recently_add">Recently Add</string>
+    <string name="recently_add">Recently Added</string>
     <string name="search_result">Search Result</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
