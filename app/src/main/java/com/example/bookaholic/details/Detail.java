@@ -89,7 +89,7 @@ public class Detail extends AppCompatActivity {
         for (int i = 0; i < images.size(); i++){
             final View singleFrame = getLayoutInflater().inflate(R.layout.image_detail,null);
             singleFrame.setId(i);
-            ImageView single_image = (ImageView) singleFrame.findViewById(R.id.single_image);
+            ImageView single_image = singleFrame.findViewById(R.id.single_image);
             Glide.with(context)
                     .load(images.get(i))
                     .into(single_image);

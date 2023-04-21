@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class Review extends Dialog {
 
-    private float userRate = 0;
+    private final float userRate = 0;
     private Book book;
 
     public Review(@NonNull Context context) {

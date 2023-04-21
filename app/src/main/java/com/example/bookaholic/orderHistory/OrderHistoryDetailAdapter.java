@@ -23,8 +23,8 @@ import com.example.bookaholic.details.Review;
 import java.util.ArrayList;
 
         public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
-            private ArrayList<OrderBook> mDataList;
-            private Context context;
+            private final ArrayList<OrderBook> mDataList;
+            private final Context context;
 
             public static class ViewHolder extends RecyclerView.ViewHolder {
                 public ImageView bookImageView;
@@ -89,9 +89,10 @@ import java.util.ArrayList;
     }
 
     public static class OrderDetail {
-        private String bookImageUrl, bookTitle;
-        private int quantity;
-        private double price;
+        private final String bookImageUrl;
+        private final String bookTitle;
+        private final int quantity;
+        private final double price;
 
         public OrderDetail(String bookImageUrl, String bookTitle, int quantity, double price) {
             this.bookImageUrl = bookImageUrl;

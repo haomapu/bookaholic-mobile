@@ -13,7 +13,7 @@ import java.util.List;
 
 public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHolder> {
 
-    private List<Offer> offerList;
+    private final List<Offer> offerList;
     public OfferAdapter(List<Offer> OfferList){
         this.offerList = OfferList;
     }
@@ -38,13 +38,13 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
 
     public class OfferViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView mImageview;
-        private TextView mText;
+        private final ImageView mImageview;
+        private final TextView mText;
         public OfferViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mImageview = itemView.findViewById(R.id.offerImage);
-            mText = (TextView)itemView.findViewById(R.id.offerText);
+            mText = itemView.findViewById(R.id.offerText);
         }
     }
 }

@@ -58,7 +58,7 @@ public class AddBook extends AppCompatActivity {
     private int quantity, price, numberOfPages;
 
 //    private ArrayList<Comment> comments = new ArrayList<>();
-    private ArrayList<String> images = new ArrayList<>();
+    private final ArrayList<String> images = new ArrayList<>();
     private TextView tvDate;
 
     @Override

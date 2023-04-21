@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
-    private Context mContext;
-    private ArrayList<Book> mItems;
+    private final Context mContext;
+    private final ArrayList<Book> mItems;
 
 
     public GridAdapter(Context context, ArrayList<Book> items) {

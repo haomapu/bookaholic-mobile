@@ -108,7 +108,7 @@ public class ProfileFragment extends Fragment {
             Log.d(TAG, error.toString());
         }
 
-        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+        final ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {

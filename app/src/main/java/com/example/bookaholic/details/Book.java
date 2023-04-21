@@ -117,7 +117,7 @@ public class Book implements Serializable {
         return title;
     }
 
-    public String getImageUrl(){return imageUrl;};
+    public String getImageUrl(){return imageUrl;}
 
     public void setTitle(String title) {
         this.title = title;

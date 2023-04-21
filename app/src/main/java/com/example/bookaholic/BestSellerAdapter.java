@@ -28,7 +28,7 @@ import java.util.List;
 
 public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.BestSellerViewHolder> {
     private List<Book> listBooks;
-    private Context context;
+    private final Context context;
     public BestSellerAdapter(Context context, List<Book> listBooks) {
         this.context = context;
         this.setBooks((ArrayList<Book>) listBooks);
@@ -57,6 +57,7 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
         holder.layout.setOnClickListener(v -> startBookDetailsActivity(book));
         holder.nameView.setText(book.getTitle());
         holder.buyerView.setText(book.getBuyer().toString());
+        holder.price.setText(book.displayablePrice());
     }
 
     @Override
@@ -66,16 +67,18 @@ public class BestSellerAdapter extends RecyclerView.Adapter<BestSellerAdapter.Be
 
     public class BestSellerViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView mImageView;
-        private ConstraintLayout layout;
-        private TextView nameView, buyerView;
-
+        private final ImageView mImageView;
+        private final ConstraintLayout layout;
+        private final TextView nameView;
+        private final TextView buyerView;
+        private final TextView price;
         public BestSellerViewHolder(@NonNull View itemView) {
             super(itemView);
             layout = itemView.findViewById(R.id.layout_best_seller_itemview);
             mImageView = itemView.findViewById(R.id.bestseller_image);
             nameView = itemView.findViewById(R.id.best_seller_name);
             buyerView = itemView.findViewById(R.id.textview_bookbuyer);
+            price = itemView.findViewById(R.id.best_seller_price);
         }
     }
 

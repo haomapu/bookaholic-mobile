@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
 
-    private ArrayList<Order> mDataList;
-    private Context context;
+    private final ArrayList<Order> mDataList;
+    private final Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView dateTxt, statusTxt, addressTxt, totalTxt, quantityTxt;
@@ -69,8 +69,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     public static class MyData {
-        private String createdAt, address, orderStatus;
-        private float totalPrice;
+        private final String createdAt;
+        private final String address;
+        private final String orderStatus;
+        private final float totalPrice;
         private Integer quantity;
 
         public MyData(String createdAt, String address, String orderStatus, float totalPrice, Integer quantity) {

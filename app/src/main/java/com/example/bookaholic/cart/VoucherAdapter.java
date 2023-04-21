@@ -18,8 +18,8 @@ import com.example.bookaholic.R;
 import java.util.ArrayList;
 
 public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.ViewHolder> {
-    private ArrayList<Voucher> voucherList;
-    private Context context;
+    private final ArrayList<Voucher> voucherList;
+    private final Context context;
     private OnApplyClickListener onApplyClickListener;
 
 
