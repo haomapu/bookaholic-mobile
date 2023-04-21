@@ -23,14 +23,9 @@ import com.example.bookaholic.details.Review;
 import java.util.ArrayList;
 
         public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
-<<<<<<< HEAD
-            private final ArrayList<OrderBook> mDataList;
-            private final Context context;
-=======
             private ArrayList<OrderBook> mDataList;
             private Context context;
             private String status;
->>>>>>> 13e24cda42bbe21e772cd7f02da8d0d2aee4ebe8
 
             public static class ViewHolder extends RecyclerView.ViewHolder {
                 public ImageView bookImageView;
