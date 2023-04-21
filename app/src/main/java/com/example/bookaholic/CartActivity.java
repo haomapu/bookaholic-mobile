@@ -208,12 +208,15 @@ public class CartActivity extends AppCompatActivity {
                         }
                         Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
                         Order.currentOrder.setId(MainActivity.currentSyncedUser.getOrderHistory().size());
+                        Order.currentOrder.setAddress(MainActivity.currentSyncedUser.getAddress());
                         orderHistory.add(Order.currentOrder);
 
                         myRef.setValue(orderHistory);
                     } else {
                         ArrayList<Order> orderHistory = new ArrayList<>();
                         Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
+                        Order.currentOrder.setAddress(MainActivity.currentSyncedUser.getAddress());
+
                         orderHistory.add(Order.currentOrder);
                         myRef.setValue(orderHistory);
                     }
