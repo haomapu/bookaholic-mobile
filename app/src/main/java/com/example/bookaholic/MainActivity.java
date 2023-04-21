@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        shopping_badge = findViewById(R.id.shopping_badge);
+        shopping_badge.setNumber(Order.currentOrder.orderSize());
 
         if (!Tools.isOnline(this)) {
             startActivity(new Intent(this, NoInternetActivity.class));
