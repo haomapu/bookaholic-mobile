@@ -20,9 +20,11 @@ import com.example.bookaholic.details.Book;
 import com.example.bookaholic.details.Detail;
 import com.example.bookaholic.details.Review;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
-        public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
+public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
             private ArrayList<OrderBook> mDataList;
             private Context context;
             private String status;
@@ -77,10 +79,10 @@ import java.util.ArrayList;
         } else {
             holder.reviewBtn.setVisibility(View.GONE);
         }
+        holder.priceTxt.setText(NumberFormat.getNumberInstance(Locale.US).format(book.getPrice() * orderBook.getQuantity()) + " đ");
 
         holder.titleTxt.setText(book.getTitle());
         holder.quantityTxt.setText(String.valueOf(orderBook.getQuantity()));
-        holder.priceTxt.setText(String.valueOf(book.getPrice() * orderBook.getQuantity()));
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, Detail.class);
             Bundle bundle = new Bundle();

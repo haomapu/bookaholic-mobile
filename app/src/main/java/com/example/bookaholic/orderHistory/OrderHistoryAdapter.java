@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookaholic.Order;
 import com.example.bookaholic.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
 
@@ -60,7 +62,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             holder.statusTxt.setTextColor(Color.RED);
         }
         holder.addressTxt.setText(order.getAddress());
-        holder.totalTxt.setText(order.getTotalPrice().toString());
+        holder.totalTxt.setText(NumberFormat.getNumberInstance(Locale.US).format(order.getTotalPrice()) + " đ");
         holder.quantityTxt.setText(order.quantity().toString());
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, OrderHistoryDetail.class);
