@@ -26,6 +26,7 @@ import java.util.ArrayList;
             private ArrayList<OrderBook> mDataList;
             private Context context;
             private String status;
+            private Double orderTotal;
 
             public static class ViewHolder extends RecyclerView.ViewHolder {
                 public ImageView bookImageView;
@@ -43,10 +44,11 @@ import java.util.ArrayList;
         }
     }
 
-    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList, String status) {
+    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList, String status, Double orderTotal) {
         this.mDataList = dataList;
         this.context = context;
         this.status = status;
+        this.orderTotal = orderTotal;
     }
 
     @Override

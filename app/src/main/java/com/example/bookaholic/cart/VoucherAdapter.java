@@ -1,6 +1,7 @@
 package com.example.bookaholic.cart;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,14 +10,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bookaholic.CartActivity;
 import com.example.bookaholic.R;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.ViewHolder> {
@@ -80,7 +87,31 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.ViewHold
             @Override
             public void onClick(View view) {
 //                Voucher.currentVoucher = voucher;
-                onApplyClickListener.onApplyClicked(voucher);
+                String givenDateString = voucher.getEndVoucher(); // example given date in string format
+                String startDate = voucher.getStartVoucher(); // example given date in string format
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); // date format
+                Date currentDate = Calendar.getInstance().getTime(); // current date
+
+                try {
+                    Date givenDate = df.parse(givenDateString); // parse given date string to date object
+                    Date startDateFormat = df.parse(startDate); // parse given date string to date object
+                    // compare the two dates
+                    if (currentDate.after(givenDate) && currentDate.before(startDateFormat)) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Error");
+                        builder.setMessage("This cart is expired");
+                        builder.setPositiveButton("OK", null);
+                        builder.show();
+                    } else if (currentDate.before(givenDate)) {
+                        // current date is before given date
+                        onApplyClickListener.onApplyClicked(voucher);
+                    } else {
+                        // current date is the same as given date
+                        System.out.println("Current date is the same as the given date");
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
 

@@ -26,6 +26,7 @@ public class OrderHistoryDetail extends AppCompatActivity {
         loadData();
         ArrayList<OrderBook> orderBooks= currentSyncedUser.getOrderHistory().get(Integer.valueOf(position)).getOrderBooks();
         String orderStatus= currentSyncedUser.getOrderHistory().get(Integer.valueOf(position)).getOrderStatus();
+        Double orderTotal= currentSyncedUser.getOrderHistory().get(Integer.valueOf(position)).getTotalPrice();
         orderDetailRV = findViewById(R.id.orderDetailRV);
         ImageView returnBtn = findViewById(R.id.returnBtn);
         returnBtn.setOnClickListener(new View.OnClickListener() {
@@ -34,7 +35,7 @@ public class OrderHistoryDetail extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        OrderHistoryDetailAdapter orderDetailAdapter = new OrderHistoryDetailAdapter(this, orderBooks, orderStatus);
+        OrderHistoryDetailAdapter orderDetailAdapter = new OrderHistoryDetailAdapter(this, orderBooks, orderStatus, orderTotal);
         orderDetailRV.setAdapter(orderDetailAdapter);
     }
 
