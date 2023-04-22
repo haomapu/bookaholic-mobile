@@ -60,7 +60,7 @@ public class Review extends Dialog {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.exists() && dataSnapshot.hasChildren()){
-                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), ratingBar.getNumStars());
+                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), (int) ratingBar.getRating());
                         ArrayList<Comment> comments = new ArrayList<>();
                         for (DataSnapshot commentSnapshot : dataSnapshot.getChildren()) {
                             Comment comment = commentSnapshot.getValue(Comment.class);
@@ -70,7 +70,7 @@ public class Review extends Dialog {
 
                         myRef.setValue(comments);
                     } else {
-                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), ratingBar.getNumStars());
+                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), (int) ratingBar.getRating());
                         ArrayList<Comment> comments = new ArrayList<>();
                         comments.add(0, newComment);
                         myRef.setValue(comments);
