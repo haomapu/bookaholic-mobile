@@ -9,6 +9,7 @@ public class Order {
     private ArrayList<OrderBook> orderBooks;
     private String address;
     private double totalPrice;
+    private double discountPrice;
     private String orderStatus;
     private String createdAt;
     private int id;
@@ -117,5 +118,13 @@ public class Order {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public double getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(double discountPrice) {
+        this.discountPrice = discountPrice;
     }
 }

@@ -4,6 +4,7 @@ import com.example.bookaholic.details.Book;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Voucher implements Serializable {
@@ -11,6 +12,7 @@ public class Voucher implements Serializable {
 
     private String id, nameVoucher, idVoucher, typeVoucher, startVoucher, endVoucher;
     private int discountVoucher, minimumVoucher, quantityVoucher, limitVoucher;
+    private ArrayList<String> userID;
 
     @Exclude
     public static ArrayList<Voucher> allVouchers = new ArrayList<>();
@@ -26,9 +28,10 @@ public class Voucher implements Serializable {
         this.minimumVoucher = voucher.minimumVoucher;
         this.quantityVoucher = voucher.quantityVoucher;
         this.limitVoucher = voucher.limitVoucher;
+        this.userID = voucher.userID;
     }
     public Voucher(String nameVoucher, String idVoucher, String typeVoucher, String startVoucher, String endVoucher,
-                   int discountVoucher, int minimumVoucher, int quantityVoucher, int limitVoucher){
+                   int discountVoucher, int minimumVoucher, int quantityVoucher, int limitVoucher, ArrayList<String> userID){
         this.nameVoucher = nameVoucher;
         this.idVoucher = idVoucher;
         this.typeVoucher = typeVoucher;
@@ -38,6 +41,7 @@ public class Voucher implements Serializable {
         this.minimumVoucher = minimumVoucher;
         this.quantityVoucher = quantityVoucher;
         this.limitVoucher = limitVoucher;
+        this.userID = userID;
     }
 
     public static Voucher findVoucherByName(String title) {
@@ -129,4 +133,22 @@ public class Voucher implements Serializable {
         return limitVoucher;
     }
 
+    public ArrayList<String> getUserID() {
+        return userID;
+    }
+
+    public void setUserID(ArrayList<String> userID) {
+        this.userID = userID;
+    }
+
+    public boolean checkVoucher(String id) {
+        if (userID == null)
+            return false;
+        for (int i = 0; i < userID.size(); i++){
+            if (id.equalsIgnoreCase(userID.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
 }

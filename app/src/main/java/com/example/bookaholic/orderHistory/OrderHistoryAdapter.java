@@ -51,7 +51,6 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(OrderHistoryAdapter.ViewHolder holder, int position) {
         Order order = mDataList.get(position);
-        System.out.println(order.getCreatedAt());
         holder.dateTxt.setText(order.getCreatedAt());
         holder.statusTxt.setText(order.getOrderStatus());
         if (order.getOrderStatus().contains("Incomplete")){

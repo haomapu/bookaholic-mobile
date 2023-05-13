@@ -29,10 +29,11 @@ public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistory
             private Context context;
             private String status;
             private Double orderTotal;
+            private Double discountPrice;
 
             public static class ViewHolder extends RecyclerView.ViewHolder {
                 public ImageView bookImageView;
-        public TextView titleTxt, quantityTxt, priceTxt;
+        public TextView titleTxt, quantityTxt, priceTxt, discountPriceTextview, cartTotalPriceTextView, shippingFeeTextView, totalPriceTextView;
 
         public Button reviewBtn;
 
@@ -43,14 +44,19 @@ public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistory
             quantityTxt = itemView.findViewById(R.id.quantityTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
             reviewBtn = itemView.findViewById(R.id.reviewBtn);
+            discountPriceTextview = itemView.findViewById(R.id.discountPriceTextview);
+            cartTotalPriceTextView = itemView.findViewById(R.id.cartTotalPriceTextView);
+            totalPriceTextView = itemView.findViewById(R.id.totalPriceTextView);
+            shippingFeeTextView = itemView.findViewById(R.id.shippingFeeTextView);
         }
     }
 
-    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList, String status, Double orderTotal) {
+    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList, String status, Double orderTotal, Double discountPrice) {
         this.mDataList = dataList;
         this.context = context;
         this.status = status;
         this.orderTotal = orderTotal;
+        this.discountPrice = discountPrice;
     }
 
     @Override

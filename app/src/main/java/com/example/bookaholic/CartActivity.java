@@ -30,6 +30,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
     private RecyclerView mCartRecyclerView;
@@ -141,12 +142,14 @@ public class CartActivity extends AppCompatActivity {
                 mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(newPrice) + " đ");
 
                 Order.currentOrder.setTotalPrice((newPrice));
+                Order.currentOrder.setDiscountPrice((cartTotalPrice - newPrice));
             }
             else {
                 newPrice = cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher() * cartTotalPrice * ((float) 0.01);
                 mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(newPrice) + " đ");
 
                 Order.currentOrder.setTotalPrice((newPrice));
+                Order.currentOrder.setDiscountPrice((cartTotalPrice - newPrice));
             }
         }
     }
@@ -212,6 +215,29 @@ public class CartActivity extends AppCompatActivity {
                         orderHistory.add(Order.currentOrder);
 
                         myRef.setValue(orderHistory);
+                        if (Voucher.currentVoucher != null) {
+                            DatabaseReference voucherRef = database.getReference("Vouchers").child(Voucher.currentVoucher.getId()).child("userID");
+                            voucherRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists() && snapshot.hasChildren()){
+                                        ArrayList<String> userIDs = (ArrayList<String>) snapshot.getValue();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                    else {
+                                        ArrayList<String> userIDs = new ArrayList<>();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
                     } else {
                         ArrayList<Order> orderHistory = new ArrayList<>();
                         Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
@@ -219,6 +245,29 @@ public class CartActivity extends AppCompatActivity {
 
                         orderHistory.add(Order.currentOrder);
                         myRef.setValue(orderHistory);
+                        if (Voucher.currentVoucher != null) {
+                            DatabaseReference voucherRef = database.getReference("Vouchers").child(Voucher.currentVoucher.getId()).child("userID");
+                            voucherRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists() && snapshot.hasChildren()){
+                                        ArrayList<String> userIDs = (ArrayList<String>) snapshot.getValue();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                    else {
+                                        ArrayList<String> userIDs = new ArrayList<>();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
                     }
                 }
 
