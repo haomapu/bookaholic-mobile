@@ -14,6 +14,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:visibility="invisible"
         android:src="@drawable/ic_back_white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
