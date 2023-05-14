@@ -16,11 +16,11 @@ public class BranchListViewAdapter extends BaseAdapter {
 
     private final ArrayList<Branch> branches;
 
-    private Date currentTime = Calendar.getInstance().getTime();
-    private SimpleDateFormat h_sdf = new SimpleDateFormat("HH");
-    private SimpleDateFormat m_sdf = new SimpleDateFormat("mm");
-    private int h = Integer.parseInt(h_sdf.format(currentTime));
-    private int m = Integer.parseInt(m_sdf.format(currentTime));
+    private final Date currentTime = Calendar.getInstance().getTime();
+    private final SimpleDateFormat h_sdf = new SimpleDateFormat("HH");
+    private final SimpleDateFormat m_sdf = new SimpleDateFormat("mm");
+    private final int h = Integer.parseInt(h_sdf.format(currentTime));
+    private final int m = Integer.parseInt(m_sdf.format(currentTime));
 
     public BranchListViewAdapter(ArrayList<Branch> branches) {
         this.branches = branches;

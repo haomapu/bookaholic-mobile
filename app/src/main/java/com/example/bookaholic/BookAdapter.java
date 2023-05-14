@@ -32,7 +32,7 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
 
     private ArrayList<Book> books;
-    private Context context;
+    private final Context context;
 
     public BookAdapter(Context context, ArrayList<Book> books) {
         this.context = context;
@@ -78,9 +78,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageView;
-        private TextView nameView, priceView, typesView, authorView;
-        private ConstraintLayout layout;
+        private final ImageView imageView;
+        private final TextView nameView;
+        private final TextView priceView;
+        private TextView typesView;
+        private TextView authorView;
+        private final ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

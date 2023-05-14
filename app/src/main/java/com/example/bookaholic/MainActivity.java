@@ -11,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public static FirebaseAuth firebaseAuth;
     public static FirebaseUser firebaseUser;
     public static User currentSyncedUser;
+    private TextView home, wishlist, profile;
 
     private ImageButton buttonHome;
     private ImageButton buttonFavorite;
@@ -66,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         buttonFavorite = findViewById(R.id.bottomNavBarButtonFavorite);
         buttonProfile = findViewById(R.id.bottomNavBarButtonProfile);
 
+
+        home = findViewById(R.id.home);
+        wishlist = findViewById(R.id.wishlist);
+        profile = findViewById(R.id.profile);
         buttonHome.setOnClickListener(onBottomNavBarButtonClicked);
         buttonFavorite.setOnClickListener(onBottomNavBarButtonClicked);
         buttonProfile.setOnClickListener(onBottomNavBarButtonClicked);
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpDefaultFragment() {
         resetSelectedBottomNavbarButton();
         buttonHome.setImageResource(R.drawable.home_selected);
+        home.setTextColor(Color.parseColor("#7041EE"));
         userDataChangedListener = fragmentHome;
         booksDataChangedListener = fragmentHome;
         switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
@@ -89,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
             if (viewId == R.id.bottomNavBarButtonHome) {
                 Log.d(TAG, "Home button clicked!");
                 buttonHome.setImageResource(R.drawable.home_selected);
+                home.setTextColor(Color.parseColor("#7041EE"));
+                wishlist.setTextColor(Color.BLACK);
+                profile.setTextColor(Color.BLACK);
                 userDataChangedListener = fragmentHome;
                 booksDataChangedListener = fragmentHome;
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentHome);
@@ -96,12 +107,18 @@ public class MainActivity extends AppCompatActivity {
             } else if (viewId == R.id.bottomNavBarButtonFavorite) {
                 Log.d(TAG, "Favorite button clicked!");
                 buttonFavorite.setImageResource(R.drawable.favorite_selected);
+                wishlist.setTextColor(Color.parseColor("#7041EE"));
+                home.setTextColor(Color.BLACK);
+                profile.setTextColor(Color.BLACK);
                 userDataChangedListener = fragmentWishlist;
                 booksDataChangedListener = fragmentWishlist;
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentWishlist);
             } else if (viewId == R.id.bottomNavBarButtonProfile) {
                 Log.d(TAG, "Profile button clicked!");
                 buttonProfile.setImageResource(R.drawable.profile_selected);
+                profile.setTextColor(Color.parseColor("#7041EE"));
+                home.setTextColor(Color.BLACK);
+                wishlist.setTextColor(Color.BLACK);
                 switchFragment(R.id.fragmentcontainerMainActivity, fragmentProfile);
             } else {
                 Log.d(TAG, "Don't know which button clicked!");
@@ -118,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        shopping_badge = findViewById(R.id.shopping_badge);
+        if (shopping_badge != null){
+            shopping_badge.setNumber(Order.currentOrder.orderSize());
+        }
 
         if (!Tools.isOnline(this)) {
             startActivity(new Intent(this, NoInternetActivity.class));

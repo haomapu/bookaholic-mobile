@@ -104,6 +104,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));;
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 }

@@ -20,15 +20,20 @@ import com.example.bookaholic.details.Book;
 import com.example.bookaholic.details.Detail;
 import com.example.bookaholic.details.Review;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
-        public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
+public class OrderHistoryDetailAdapter extends RecyclerView.Adapter<OrderHistoryDetailAdapter.ViewHolder> {
             private ArrayList<OrderBook> mDataList;
             private Context context;
+            private String status;
+            private Double orderTotal;
+            private Double discountPrice;
 
             public static class ViewHolder extends RecyclerView.ViewHolder {
                 public ImageView bookImageView;
-        public TextView titleTxt, quantityTxt, priceTxt;
+        public TextView titleTxt, quantityTxt, priceTxt, discountPriceTextview, cartTotalPriceTextView, shippingFeeTextView, totalPriceTextView;
 
         public Button reviewBtn;
 
@@ -39,12 +44,19 @@ import java.util.ArrayList;
             quantityTxt = itemView.findViewById(R.id.quantityTxt);
             priceTxt = itemView.findViewById(R.id.priceTxt);
             reviewBtn = itemView.findViewById(R.id.reviewBtn);
+            discountPriceTextview = itemView.findViewById(R.id.discountPriceTextview);
+            cartTotalPriceTextView = itemView.findViewById(R.id.cartTotalPriceTextView);
+            totalPriceTextView = itemView.findViewById(R.id.totalPriceTextView);
+            shippingFeeTextView = itemView.findViewById(R.id.shippingFeeTextView);
         }
     }
 
-    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList) {
+    public OrderHistoryDetailAdapter(Context context, ArrayList<OrderBook> dataList, String status, Double orderTotal, Double discountPrice) {
         this.mDataList = dataList;
         this.context = context;
+        this.status = status;
+        this.orderTotal = orderTotal;
+        this.discountPrice = discountPrice;
     }
 
     @Override
@@ -62,18 +74,21 @@ import java.util.ArrayList;
         Glide.with(holder.bookImageView.getContext())
                 .load(book.getImages().get(0))
                 .into(holder.bookImageView);
+        if (status.contains("Complete")){
+            holder.reviewBtn.setOnClickListener(v -> {
+                Review rateDialog = new Review(v.getContext(), book);
+                rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        holder.reviewBtn.setOnClickListener(v -> {
-            Review rateDialog = new Review(v.getContext(), book);
-            rateDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                rateDialog.setCancelable(false);
+                rateDialog.show();
+            });
+        } else {
+            holder.reviewBtn.setVisibility(View.GONE);
+        }
+        holder.priceTxt.setText(NumberFormat.getNumberInstance(Locale.US).format(book.getPrice() * orderBook.getQuantity()) + " đ");
 
-            rateDialog.setCancelable(false);
-            rateDialog.show();
-        });
         holder.titleTxt.setText(book.getTitle());
         holder.quantityTxt.setText(String.valueOf(orderBook.getQuantity()));
-        holder.priceTxt.setText(String.valueOf(book.getPrice() * orderBook.getQuantity()));
-
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, Detail.class);
             Bundle bundle = new Bundle();
@@ -89,9 +104,10 @@ import java.util.ArrayList;
     }
 
     public static class OrderDetail {
-        private String bookImageUrl, bookTitle;
-        private int quantity;
-        private double price;
+        private final String bookImageUrl;
+        private final String bookTitle;
+        private final int quantity;
+        private final double price;
 
         public OrderDetail(String bookImageUrl, String bookTitle, int quantity, double price) {
             this.bookImageUrl = bookImageUrl;

@@ -29,7 +29,7 @@ import java.util.List;
 public class RecentlyAddAdapter extends RecyclerView.Adapter<RecentlyAddAdapter.RecentlyAddViewHolder> {
 
     private List<Book> listBooks;
-    private Context context;
+    private final Context context;
 
     public RecentlyAddAdapter(Context context, List<Book> listBooks) {
         this.context = context;
@@ -58,6 +58,7 @@ public class RecentlyAddAdapter extends RecyclerView.Adapter<RecentlyAddAdapter.
         holder.layout.setOnClickListener(v -> startBookDetailActivity(book));
         holder.nameView.setText(book.getTitle());
         holder.buyerView.setText(book.getBuyer().toString());
+        holder.price.setText(book.displayablePrice());
     }
 
     @Override
@@ -66,9 +67,11 @@ public class RecentlyAddAdapter extends RecyclerView.Adapter<RecentlyAddAdapter.
     }
 
     public class RecentlyAddViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImageView;
-        private ConstraintLayout layout;
-        private TextView nameView, buyerView;
+        private final ImageView mImageView;
+        private final ConstraintLayout layout;
+        private final TextView nameView;
+        private final TextView buyerView;
+        private final TextView price;
 
 
         public RecentlyAddViewHolder(@NonNull View itemView) {
@@ -77,6 +80,7 @@ public class RecentlyAddAdapter extends RecyclerView.Adapter<RecentlyAddAdapter.
             mImageView = itemView.findViewById(R.id.recentlyadd_image);
             nameView = itemView.findViewById(R.id.recently_add_name);
             buyerView = itemView.findViewById(R.id.textview_bookbuyer);
+            price = itemView.findViewById(R.id.recentlyadd_price);
         }
     }
 

@@ -68,7 +68,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="10">
+        android:layout_weight="12">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reviewBtn"
             android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:text="50.000 đ"
-            android:textSize="24sp"/>
+            android:textSize="17sp"/>
     </RelativeLayout>
 
 </LinearLayout>

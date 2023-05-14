@@ -2,6 +2,7 @@ package com.example.bookaholic.orderHistory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookaholic.Order;
 import com.example.bookaholic.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
 
-    private ArrayList<Order> mDataList;
-    private Context context;
+    private final ArrayList<Order> mDataList;
+    private final Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView dateTxt, statusTxt, addressTxt, totalTxt, quantityTxt;
@@ -48,11 +51,17 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(OrderHistoryAdapter.ViewHolder holder, int position) {
         Order order = mDataList.get(position);
-        System.out.println(order.getCreatedAt());
         holder.dateTxt.setText(order.getCreatedAt());
         holder.statusTxt.setText(order.getOrderStatus());
+        if (order.getOrderStatus().contains("Incomplete")){
+            holder.statusTxt.setTextColor(Color.YELLOW);
+        } else if (order.getOrderStatus().contains("Complete")) {
+            holder.statusTxt.setTextColor(Color.GREEN);
+        } else if (order.getOrderStatus().contains("Denied")) {
+            holder.statusTxt.setTextColor(Color.RED);
+        }
         holder.addressTxt.setText(order.getAddress());
-        holder.totalTxt.setText(order.getTotalPrice().toString());
+        holder.totalTxt.setText(NumberFormat.getNumberInstance(Locale.US).format(order.getTotalPrice()) + " đ");
         holder.quantityTxt.setText(order.quantity().toString());
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, OrderHistoryDetail.class);
@@ -69,8 +78,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     public static class MyData {
-        private String createdAt, address, orderStatus;
-        private float totalPrice;
+        private final String createdAt;
+        private final String address;
+        private final String orderStatus;
+        private final float totalPrice;
         private Integer quantity;
 
         public MyData(String createdAt, String address, String orderStatus, float totalPrice, Integer quantity) {

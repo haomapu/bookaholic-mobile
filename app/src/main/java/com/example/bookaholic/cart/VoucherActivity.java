@@ -1,12 +1,16 @@
 package com.example.bookaholic.cart;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.example.bookaholic.MainActivity;
+import com.example.bookaholic.Order;
 import com.example.bookaholic.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +61,79 @@ public class VoucherActivity extends AppCompatActivity implements OnApplyClickLi
     }
     @Override
     public void onApplyClicked(Voucher voucher) {
+        if (Order.currentOrder == null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Error");
+            builder.setMessage("This cart is not qualified");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    onBackPressed();
+
+                    finish();
+                }
+            });
+            builder.show();
+            return;
+        }
+        if (Order.currentOrder.getTotalPrice() < voucher.getMinimumVoucher()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Error");
+            builder.setMessage("This cart is not qualified");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    onBackPressed();
+
+                    finish();
+                }
+            });
+            builder.show();
+            return;
+        }
+        if (Order.currentOrder.orderSize() == 0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Error");
+            builder.setMessage("This cart is not qualified");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    onBackPressed();
+
+                    finish();
+                }
+            });
+            builder.show();
+            return;
+        }
+        if (voucher.getQuantityVoucher() == 0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Error");
+            builder.setMessage("This voucher is exceeded");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    onBackPressed();
+                    finish();
+                }
+            });
+            builder.show();
+            return;
+        }
+        if (voucher.checkVoucher(MainActivity.currentSyncedUser.getId())){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Error");
+            builder.setMessage("Limit apply 1 time");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    onBackPressed();
+                    finish();
+                }
+            });
+            builder.show();
+            return;
+        }
         Voucher.currentVoucher = voucher;
         onBackPressed();
     }

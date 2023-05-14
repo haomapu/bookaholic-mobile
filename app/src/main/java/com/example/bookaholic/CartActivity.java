@@ -30,6 +30,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
     private RecyclerView mCartRecyclerView;
@@ -141,9 +142,14 @@ public class CartActivity extends AppCompatActivity {
                 mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(newPrice) + " đ");
 
                 Order.currentOrder.setTotalPrice((newPrice));
+                Order.currentOrder.setDiscountPrice((cartTotalPrice - newPrice));
             }
             else {
-                mCartTotalPriceTextView.setText(String.valueOf(cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher()*cartTotalPrice));
+                newPrice = cartTotalPrice - Voucher.currentVoucher.getDiscountVoucher() * cartTotalPrice * ((float) 0.01);
+                mCartTotalPriceTextView.setText(NumberFormat.getNumberInstance(Locale.US).format(newPrice) + " đ");
+
+                Order.currentOrder.setTotalPrice((newPrice));
+                Order.currentOrder.setDiscountPrice((cartTotalPrice - newPrice));
             }
         }
     }
@@ -161,13 +167,24 @@ public class CartActivity extends AppCompatActivity {
         confirmButton = findViewById(R.id.confirmButton);
 
         confirmButton.setOnClickListener(v -> {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            for (OrderBook orderBook : Order.currentOrder.getOrderBooks()){
-                if (orderBook.getBook().getQuantity() < orderBook.getQuantity()){
+            if (Order.currentOrder == null){
+                return;
+            }
+            if (Order.currentOrder.orderSize() == 0){
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Error");
-                    builder.setMessage(orderBook.getBook().getTitle() + " exceeded available stock");
+                    builder.setMessage("No book is choose");
                     builder.setPositiveButton("OK", null);
+                    builder.show();
+                return;
+            }
+              FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    for (OrderBook orderBook : Order.currentOrder.getOrderBooks()){
+                        if (orderBook.getBook().getQuantity() < orderBook.getQuantity()){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                            builder.setTitle("Error");
+                            builder.setMessage(orderBook.getBook().getTitle() + " exceeded available stock");
+                            builder.setPositiveButton("OK", null);
                     builder.show();
                     return;
                 }
@@ -194,14 +211,63 @@ public class CartActivity extends AppCompatActivity {
                         }
                         Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
                         Order.currentOrder.setId(MainActivity.currentSyncedUser.getOrderHistory().size());
+                        Order.currentOrder.setAddress(MainActivity.currentSyncedUser.getAddress());
                         orderHistory.add(Order.currentOrder);
 
                         myRef.setValue(orderHistory);
+                        if (Voucher.currentVoucher != null) {
+                            DatabaseReference voucherRef = database.getReference("Vouchers").child(Voucher.currentVoucher.getId()).child("userID");
+                            voucherRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists() && snapshot.hasChildren()){
+                                        ArrayList<String> userIDs = (ArrayList<String>) snapshot.getValue();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                    else {
+                                        ArrayList<String> userIDs = new ArrayList<>();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
                     } else {
                         ArrayList<Order> orderHistory = new ArrayList<>();
                         Order.currentOrder.setOrderOwner(MainActivity.currentSyncedUser.getId());
+                        Order.currentOrder.setAddress(MainActivity.currentSyncedUser.getAddress());
+
                         orderHistory.add(Order.currentOrder);
                         myRef.setValue(orderHistory);
+                        if (Voucher.currentVoucher != null) {
+                            DatabaseReference voucherRef = database.getReference("Vouchers").child(Voucher.currentVoucher.getId()).child("userID");
+                            voucherRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists() && snapshot.hasChildren()){
+                                        ArrayList<String> userIDs = (ArrayList<String>) snapshot.getValue();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                    else {
+                                        ArrayList<String> userIDs = new ArrayList<>();
+                                        userIDs.add(MainActivity.currentSyncedUser.getId());
+                                        voucherRef.setValue(userIDs);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
                     }
                 }
 

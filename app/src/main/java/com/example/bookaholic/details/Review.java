@@ -2,14 +2,19 @@ package com.example.bookaholic.details;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.media.Rating;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 
 
@@ -26,7 +31,7 @@ import java.util.ArrayList;
 
 public class Review extends Dialog {
 
-    private float userRate = 0;
+    private final float userRate = 0;
     private Book book;
 
     public Review(@NonNull Context context) {
@@ -49,6 +54,60 @@ public class Review extends Dialog {
         final AppCompatButton laterBtn = findViewById(R.id.laterBtn);
         final RatingBar ratingBar = findViewById(R.id.ratingBar);
         final EditText contentReview = findViewById(R.id.content);
+        final TextView review1 = findViewById(R.id.review1);
+        final TextView review2 = findViewById(R.id.review2);
+        final TextView review3 = findViewById(R.id.review3);
+        final TextView review4= findViewById(R.id.review4);
+        review1.setOnClickListener(v -> {
+            review1.setBackgroundResource(R.drawable.ic_cat_bg_2);
+            review1.setTextColor(Color.WHITE);
+            review2.setTextColor(Color.BLACK);
+            review3.setTextColor(Color.BLACK);
+            review4.setTextColor(Color.BLACK);
+
+            review2.setBackgroundResource(R.drawable.ic_cat_bg);
+            review3.setBackgroundResource(R.drawable.ic_cat_bg);
+            review4.setBackgroundResource(R.drawable.ic_cat_bg);
+            contentReview.setText(review1.getText());
+            ratingBar.setRating(5);
+        });
+        review2.setOnClickListener(v -> {
+            review2.setBackgroundResource(R.drawable.ic_cat_bg_2);
+            review1.setBackgroundResource(R.drawable.ic_cat_bg);
+            review3.setBackgroundResource(R.drawable.ic_cat_bg);
+            review4.setBackgroundResource(R.drawable.ic_cat_bg);
+            review2.setTextColor(Color.WHITE);
+            review1.setTextColor(Color.BLACK);
+            review3.setTextColor(Color.BLACK);
+            review4.setTextColor(Color.BLACK);
+            contentReview.setText(review2.getText());
+            ratingBar.setRating(4);
+        });
+        review3.setOnClickListener(v -> {
+            review3.setBackgroundResource(R.drawable.ic_cat_bg_2);
+            review3.setTextColor(Color.WHITE);
+            review2.setTextColor(Color.BLACK);
+            review1.setTextColor(Color.BLACK);
+            review4.setTextColor(Color.BLACK);
+            review2.setBackgroundResource(R.drawable.ic_cat_bg);
+            review1.setBackgroundResource(R.drawable.ic_cat_bg);
+            review4.setBackgroundResource(R.drawable.ic_cat_bg);
+            contentReview.setText(review3.getText());
+            ratingBar.setRating(3);
+        });
+        review4.setOnClickListener(v -> {
+            review4.setBackgroundResource(R.drawable.ic_cat_bg_2);
+            review4.setTextColor(Color.WHITE);
+            review2.setTextColor(Color.BLACK);
+            review3.setTextColor(Color.BLACK);
+            review1.setTextColor(Color.BLACK);
+
+            review2.setBackgroundResource(R.drawable.ic_cat_bg);
+            review3.setBackgroundResource(R.drawable.ic_cat_bg);
+            review1.setBackgroundResource(R.drawable.ic_cat_bg);
+            contentReview.setText(review4.getText());
+            ratingBar.setRating(2);
+        });
 
         rateNowBtn.setOnClickListener(v -> {
             String content = contentReview.getText().toString();
@@ -59,18 +118,35 @@ public class Review extends Dialog {
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int sum = 0;
                     if(dataSnapshot.exists() && dataSnapshot.hasChildren()){
-                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), ratingBar.getNumStars());
+                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), (int) ratingBar.getRating());
                         ArrayList<Comment> comments = new ArrayList<>();
                         for (DataSnapshot commentSnapshot : dataSnapshot.getChildren()) {
                             Comment comment = commentSnapshot.getValue(Comment.class);
+                            if (comment.getName().equalsIgnoreCase(newComment.getName())){
+                                sum++;
+                            }
+                            if (sum >= 2){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("Error");
+                                builder.setMessage("You can review this book 2 times");
+                                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        onBackPressed();
+                                    }
+                                });
+                                builder.show();
+                                return;
+                            }
                             comments.add(comment);
                         }
                         comments.add(0, newComment);
 
                         myRef.setValue(comments);
                     } else {
-                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), ratingBar.getNumStars());
+                        Comment newComment = new Comment(content, currentSyncedUser.getFullName(), currentSyncedUser.getAvatar(), (int) ratingBar.getRating());
                         ArrayList<Comment> comments = new ArrayList<>();
                         comments.add(0, newComment);
                         myRef.setValue(comments);
@@ -88,22 +164,6 @@ public class Review extends Dialog {
 
         laterBtn.setOnClickListener(v -> dismiss());
 
-//        ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
-//            if (rating <= 1) {
-//                ratingImage.setImageResource(R.drawable.ic_1_star);
-//            } else if (rating <= 2) {
-//                ratingImage.setImageResource(R.drawable.ic_2_star);
-//            } else if (rating <= 3) {
-//                ratingImage.setImageResource(R.drawable.ic_3_star);
-//            } else if (rating <= 4) {
-//                ratingImage.setImageResource(R.drawable.ic_4_star);
-//            } else {
-//                ratingImage.setImageResource(R.drawable.ic_5_star);
-//            }
-//
-//            animateImage(ratingImage);
-//            userRate = rating;
-//        });
     }
 
     private void animateImage(ImageView ratingImage) {

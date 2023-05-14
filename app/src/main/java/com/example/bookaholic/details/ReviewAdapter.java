@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
-    private ArrayList<Comment> mDataList;
-    private Context context;
+    private final ArrayList<Comment> mDataList;
+    private final Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView avatarItem;
@@ -69,10 +69,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     }
 
     public static class MyData {
-        private int mAvatar;
-        private String mName;
-        private String mContent;
-        private float mRating;
+        private final int mAvatar;
+        private final String mName;
+        private final String mContent;
+        private final float mRating;
 
         public MyData(int avatar, String name, String content, float rating) {
             mAvatar = avatar;

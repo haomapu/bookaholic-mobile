@@ -25,8 +25,8 @@ import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-    private ArrayList<OrderBook> mBookList;
-    private Context context;
+    private final ArrayList<OrderBook> mBookList;
+    private final Context context;
     private OnQuantityChangedListener onQuantityChangedListener;
     private onDeleteListener onDeleteListener;
 
@@ -49,7 +49,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         public TextView bookPriceTextView;
         public TextView errorMessageTextView;
         public Button increaseQuantityButton, decreaseQuantityButton, deleteButton;
-        private ConstraintLayout layout;
+        private final ConstraintLayout layout;
 
         public CartViewHolder(View itemView) {
             super(itemView);

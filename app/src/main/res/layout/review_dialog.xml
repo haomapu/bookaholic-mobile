@@ -56,7 +56,70 @@
                 android:layout_gravity="center"
                 android:background="@drawable/edit_text_border"
                 android:gravity="center" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
 
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/review1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@drawable/ic_cat_bg"
+                    android:padding="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Excellent book"
+                    android:textColor="#616161" />
+
+                <TextView
+                    android:id="@+id/review2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_cat_bg"
+                    android:padding="8dp"
+
+                    android:gravity="center"
+                    android:text="Must Try"
+                    android:textColor="#616161" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/review3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_cat_bg"
+                    android:padding="8dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+
+                    android:gravity="center"
+                    android:text="Average read"
+                    android:textColor="#616161" />
+
+                <TextView
+                    android:id="@+id/review4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_cat_bg"
+                    android:padding="8dp"
+                    android:layout_marginTop="10dp"
+
+                    android:gravity="center"
+                    android:text="Disappointing"
+                    android:textColor="#616161" />
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

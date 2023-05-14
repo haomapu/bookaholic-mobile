@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class ManageBookAdapter extends RecyclerView.Adapter<ManageBookAdapter.ViewHolder> {
 
-    private ArrayList<Book> mBooks;
-    private Context mContext;
+    private final ArrayList<Book> mBooks;
+    private final Context mContext;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
